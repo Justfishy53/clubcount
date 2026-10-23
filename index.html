@@ -242,7 +242,43 @@ ol.howto{margin:0;padding-left:18px;line-height:1.7;font-size:15px}
 .ev-foot .mono{color:var(--mut);font-size:10.5px}
 .tonight{display:inline-flex;align-items:center;gap:6px;color:var(--ac);font-size:13.5px;font-weight:600;grid-column:1/-1}
 
-nav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);background:var(--bg);padding-bottom:max(6px,env(safe-area-inset-bottom,0px));position:relative;z-index:600}
+.ev.hl{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}
+.ev-btns{display:flex;gap:8px;flex-wrap:wrap}
+
+/* two apps in one file: guests never see club parts, clubs (klubi.html) never see guest-only parts */
+body:not(.club) [data-club]{display:none!important}
+body.club [data-guest]{display:none!important}
+nav button{position:relative}
+nav button .badge{position:absolute;top:6px;left:calc(50% + 7px);width:9px;height:9px;border-radius:50%;background:var(--bad);border:2px solid var(--bg)}
+
+/* club login */
+.gate{position:fixed;inset:0;z-index:1400;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow-y:auto;
+  padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.gate form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:12px}
+.gate h1{margin:6px 0 0;font-family:var(--f-disp);font-weight:900;text-transform:uppercase;font-size:56px;line-height:.86}
+.gate h1 span{display:block;color:var(--ac)}
+.gate input,.gate select{background:var(--raise);border:1px solid var(--line);border-radius:10px;padding:12px}
+.gate input{letter-spacing:.2em}
+
+/* club statistics */
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{gap:6px}
+.kpi .disp{font-size:44px;font-weight:900;line-height:.9}
+.delta{font-size:13.5px;font-weight:600}
+.delta.up{color:var(--ok)} .delta.down{color:var(--bad)} .delta.flat{color:var(--mut)}
+.wk{display:flex;align-items:flex-end;gap:8px;height:140px;border-bottom:1px solid var(--line)}
+.wk > div{flex:1 1 0;min-width:0;display:flex;align-items:flex-end;gap:2px;height:100%}
+.wk i{flex:1 1 0;border-radius:3px 3px 0 0;min-height:2px}
+.wk i.a{background:rgba(244,240,248,0.22)} .wk i.b{background:var(--ac)} .wk i.none{background:transparent}
+.wk-ax{display:flex;gap:8px;color:var(--mut)} .wk-ax span{flex:1 1 0;text-align:center}
+.legend{display:flex;flex-wrap:wrap;gap:14px;color:var(--mut);font-size:13px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.hrs{display:flex;align-items:flex-end;gap:4px;height:100px;border-bottom:1px solid var(--line)}
+.hrs i{flex:1 1 0;min-width:0;background:rgba(244,240,248,0.22);border-radius:3px 3px 0 0;min-height:2px}
+.hrs i.pk{background:var(--ac)}
+.sample{background:color-mix(in srgb,var(--mid) 12%,transparent);border:1px solid color-mix(in srgb,var(--mid) 50%,transparent);border-radius:14px;padding:10px 12px;font-size:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+
+nav{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border-top:1px solid var(--line);background:var(--bg);padding-bottom:max(6px,env(safe-area-inset-bottom,0px));position:relative;z-index:600}
 nav button{background:none;border:0;padding:9px 0 6px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--mut);font-size:11.5px}
 nav button svg{width:22px;height:22px}
 nav button[aria-selected=true]{color:var(--ac)}
@@ -310,7 +346,7 @@ nav button[aria-selected=true]{color:var(--ac)}
     </section>
 
     <!-- UKS -->
-    <section class="view gut" id="v-door" role="tabpanel" aria-label="Uks" hidden>
+    <section class="view gut" id="v-door" role="tabpanel" aria-label="Uks" hidden data-club>
       <div class="door" id="door">
         <div class="door-head">
           <div style="min-width:0">
@@ -347,9 +383,32 @@ nav button[aria-selected=true]{color:var(--ac)}
       </div>
     </section>
 
+    <!-- STATISTIKA (ainult klubile) -->
+    <section class="view gut" id="v-stats" role="tabpanel" aria-label="Statistika" hidden data-club>
+      <div class="intro">
+        <h1>Sinu<span>õhtud.</span></h1>
+        <p id="stVenue"></p>
+      </div>
+      <div id="stBody" style="display:flex;flex-direction:column;gap:12px;margin-top:16px"></div>
+    </section>
+
     <!-- INFO -->
     <section class="view gut" id="v-info" role="tabpanel" aria-label="Info" hidden>
-      <div class="sec">
+      <div class="sec" data-guest>
+        <h2>Teavitused</h2>
+        <div class="card" style="gap:0">
+          <div class="field"><label for="s-notify">Uued üritused<span>Anname teada, kui D3 või Club Studio lisab uue ürituse</span></label><input type="checkbox" class="sw" id="s-notify"></div>
+        </div>
+        <p class="privacy" id="notifyNote"></p>
+      </div>
+      <div class="sec" data-guest>
+        <h2>Kust rahvaarv tuleb</h2>
+        <div class="card">
+          <p style="margin:0">Klubi uksel on kaamera, mis loeb, kui palju inimesi tuleb sisse ja läheb välja. Videot ei salvestata ja nägusid ei tuvastata. Äppi jõuab ainult number.</p>
+          <p class="privacy">Kui koha juures on kirjas „Rahvaarv pole ühendatud“, siis seal veel loendurit pole.</p>
+        </div>
+      </div>
+      <div class="sec" data-club>
         <h2>Ukse seaded</h2>
         <div class="card" style="gap:0">
           <div class="field"><label for="s-cap">Mahutavus<span>Lubatud inimesi korraga</span></label><input type="number" id="s-cap" min="1" max="20000" inputmode="numeric"></div>
@@ -358,11 +417,11 @@ nav button[aria-selected=true]{color:var(--ac)}
         </div>
         <button class="btn btn-danger" id="resetBtn">Lõpeta õhtu ja nulli loendur</button>
       </div>
-      <div class="sec">
+      <div class="sec" data-club>
         <h2>Jaga loendust</h2>
         <div class="card" id="share"></div>
       </div>
-      <div class="sec">
+      <div class="sec" data-club>
         <h2>Ukseseade</h2>
         <div class="card" id="kSetup">
           <p style="margin:0">Vana telefon või tahvel võib uksel ise lugeda, ilma et keegi seda hoiaks. Ukseseadme režiimis avaneb äpp kohe AI kaamera päris loendusega, ekraan jääb põlema ja rikke korral proovib seade iga 30 sekundi järel ise uuesti. Kell 06:00 lõpetab see õhtu ja nullib loenduri.</p>
@@ -384,7 +443,7 @@ nav button[aria-selected=true]{color:var(--ac)}
           </form>
         </div>
       </div>
-      <div class="sec">
+      <div class="sec" data-club>
         <h2>Kuidas kaamera loeb</h2>
         <div class="card">
           <p style="margin:0">Pildil on üle ukse tõmmatud lilla joon. Kes läheb üle joone ukse poolt saali poole, see tuli sisse. Kes läheb vastupidi, see läks välja.</p>
@@ -396,6 +455,13 @@ nav button[aria-selected=true]{color:var(--ac)}
           <p class="privacy">Kui keegi seisab joonel või astub tagasi, siis seda ei loeta. Joone ümber on väike vahe ja inimene peab olema näha vähemalt kahel kaadril. Kõige paremini töötab, kui telefon on ukse kohal või kõrval ja inimesed liiguvad pildil üle joone, mitte otse kaamera poole. Kui tihe grupp läheb kõrvuti, võib mõni jääda lugemata.</p>
           <button class="btn" id="tryAi">Proovi kaamerat</button>
           <p class="privacy">Kogu pildituvastus toimub telefonis endas. Videot ei salvestata ega saadeta kuhugi ning nägusid ei tuvastata. Eestis tuleb kaamerast uksel siiski teavitada sildiga.</p>
+        </div>
+      </div>
+      <div class="sec" data-club>
+        <h2>Konto</h2>
+        <div class="card">
+          <p style="margin:0" id="clubWho"></p>
+          <button class="btn btn-line" id="logoutBtn">Logi välja</button>
         </div>
       </div>
       <div class="sec" id="installSec">
@@ -410,11 +476,12 @@ nav button[aria-selected=true]{color:var(--ac)}
   </main>
 
   <nav class="gut" role="tablist">
-    <button role="tab" data-v="v-list" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Kohad</button>
-    <button role="tab" data-v="v-events" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 5v12" stroke-dasharray="2 2.2"/></svg>Üritused</button>
-    <button role="tab" data-v="v-map" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Kaart</button>
-    <button role="tab" data-v="v-door" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><circle cx="15" cy="12" r="1" fill="currentColor"/></svg>Uks</button>
-    <button role="tab" data-v="v-info" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Info</button>
+    <button role="tab" data-v="v-list" aria-selected="true" data-guest><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Kohad</button>
+    <button role="tab" data-v="v-events" aria-selected="false" data-guest><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 5v12" stroke-dasharray="2 2.2"/></svg>Üritused</button>
+    <button role="tab" data-v="v-map" aria-selected="false" data-guest><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Kaart</button>
+    <button role="tab" data-v="v-door" aria-selected="false" data-club><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><circle cx="15" cy="12" r="1" fill="currentColor"/></svg>Uks</button>
+    <button role="tab" data-v="v-stats" aria-selected="false" data-club><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20h16M7 16v-5M12 16V6M17 16v-8"/></svg>Statistika</button>
+    <button role="tab" data-v="v-info" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span data-guest>Info</span><span data-club>Seaded</span></button>
   </nav>
 </div>
 
@@ -470,6 +537,19 @@ nav button[aria-selected=true]{color:var(--ac)}
     </form>
   </div>
 </div>
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="Klubi sisselogimine" hidden data-club>
+  <form id="gateForm">
+    <div class="logo"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></span><span class="disp">Clubcount</span></div>
+    <h1>Klubi<span>vaade.</span></h1>
+    <p class="mut" style="margin:0">Siin seadistab klubi ukse kaamera ja näeb oma statistikat. Külastajad seda vaadet ei näe.</p>
+    <label class="mono mut" for="gVenue">Klubi</label>
+    <select id="gVenue"></select>
+    <label class="mono mut" for="gPin">PIN-kood</label>
+    <input type="password" id="gPin" inputmode="numeric" autocomplete="off" placeholder="PIN-kood">
+    <p class="privacy" id="gNote"></p>
+    <button class="btn" type="submit" id="gBtn">Logi sisse</button>
+  </form>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="venues.js"></script>
@@ -483,6 +563,10 @@ const hm=t=>{const d=new Date(t);return pad2(d.getHours())+':'+pad2(d.getMinutes
 const mm=m=>pad2(Math.floor(m/60)%24)+':'+pad2(m%60);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let inFrame=true;try{inFrame=window.self!==window.top}catch(e){}
+/* klubi.html is the same app in club mode: door counter, camera and statistics behind a PIN. index.html is the guest app. */
+const CLUB=/klubi\.html$/i.test(location.pathname);
+document.body.classList.toggle('club',CLUB);
+if(CLUB)document.title='Clubcount · klubi';
 
 /* ---------- Venues come from venues.js (tools/make-venues.ps1: OpenStreetMap + hand-checked data, 19.10.2026).
    Hours are parsed from OSM opening_hours into minutes from midnight; close may pass 24:00.
@@ -544,6 +628,10 @@ function load(){
   d.favs=(Array.isArray(d.favs)?d.favs:[]).map(id=>OLD_IDS[id]||id); d.filter=d.filter||'all';
   d.area=d.area||'all'; d.q='';
   d.kiosk=Object.assign({on:false,pin:null},d.kiosk||{});
+  d.club=Object.assign({on:false,venue:null,pins:{}},d.club||{});
+  d.hist=Array.isArray(d.hist)?d.hist:[];            // one summary per finished night, kept on the club's own device
+  d.notify=!!d.notify; d.seenEv=Array.isArray(d.seenEv)?d.seenEv:null; d.notifiedEv=Array.isArray(d.notifiedEv)?d.notifiedEv:[];
+  d.statSample=!!d.statSample;
   return d;
 }
 let S=load();
@@ -619,6 +707,7 @@ function renderList(){
         ${L?`<span class="pill mono"><span class="dot pulse"></span>${L.st.label}</span>`:''}
         ${openLabel(os)}
         <span><span class="mut">Sissepääs</span> <b class="tab">${euro(price)}</b></span>
+        ${v.age?`<span><span class="mut">Vanus</span> <b>${esc(v.age)}</b></span>`:''}
         ${L?`<span><span class="mut">Järjekord</span> <b class="tab">${L.queue?L.queue+' min':'Pole'}</b></span>`:''}
       </div>
       ${v.about?`<p class="v-about">${esc(v.about)}</p>`:''}
@@ -689,14 +778,14 @@ function dayLabel(s){
 let evDay='all';
 function evCard(e){
   const d=parseYmd(e.date),v=e.venue?venueById(e.venue):null,now=ymd(new Date()),today=e.date<=now;
-  return `<article class="ev">
+  return `<article class="ev" id="ev-${e.id}">
     <div class="ev-date${today?' soon':''}"><span class="mono">${e.date<now?'Praegu':today?'Täna':DAYS_LONG[d.getDay()].slice(0,3)}</span><span class="disp tab">${d.getDate()}</span><span class="mono">${MON[d.getMonth()]}</span></div>
     <div class="ev-body">
       <div class="disp ev-title">${esc(e.title)}</div>
       <div class="ev-where">${v?`<button data-id="${v.id}">${esc(v.name)}</button>`:esc(e.place)} · <span class="tab">${e.time}${e.end?'–'+e.end:''}</span>${e.age?' · '+esc(e.age):''}</div>
       ${e.lineup&&e.lineup.length?`<div class="ev-line">${e.lineup.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
       ${e.note?`<p class="ev-note">${esc(e.note)}</p>`:''}
-      <div class="ev-foot"><span class="mono">${esc(e.src)}</span><a class="back" href="${esc(e.url)}" target="_blank" rel="noopener">Info ja piletid ↗</a></div>
+      <div class="ev-foot"><span class="mono">${esc(e.src)}</span><span class="ev-btns"><button class="back" data-share="${e.id}" aria-label="Jaga sõbraga">Jaga</button><a class="back" href="${esc(e.url)}" target="_blank" rel="noopener">Info ja piletid ↗</a></span></div>
     </div></article>`;
 }
 function renderEvents(){
@@ -708,7 +797,87 @@ function renderEvents(){
   $('evList').innerHTML=rows.length?rows.map(evCard).join(''):`<div class="empty">Praegu pole ühtegi üritust kirjas. Vaata varsti uuesti.</div>`;
 }
 $('evDays').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;evDay=b.dataset.d;renderEvents()});
-$('evList').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(b)openSheet(b.dataset.id)});
+$('evList').addEventListener('click',e=>{
+  const s=e.target.closest('[data-share]');if(s){shareEvent(s.dataset.share);return}
+  const b=e.target.closest('[data-id]');if(b)openSheet(b.dataset.id);
+});
+
+/* ---------- sharing: the phone's own share sheet, or copy the link where there is none ---------- */
+const APP_URL='https://justfishy53.github.io/clubcount/';
+function appUrl(){return !inFrame&&/^https?:$/.test(location.protocol)?location.origin+location.pathname.replace(/(index|klubi)\.html$/,''):APP_URL}
+async function shareIt(title,text,url){
+  if(navigator.share){try{await navigator.share({title,text,url});return}catch(err){if(err&&err.name==='AbortError')return}}
+  try{await navigator.clipboard.writeText(text+' '+url);toast('Link kopeeritud. Kleebi see sõbrale.')}catch(err){toast(text+' '+url)}
+}
+function shareEvent(id){
+  const e=EVENTS.find(x=>x.id===id);if(!e)return;
+  const v=e.venue?venueById(e.venue):null;
+  const lbl=dayLabel(e.date),when=lbl==='Käib praegu'?'käib praegu':lbl.toLowerCase()+' kell '+e.time;
+  shareIt(e.title,`${e.title} · ${v?v.name:e.place}, ${when}. Tuled ka?`,appUrl()+'#e-'+e.id);
+}
+function shareVenue(id){
+  const v=venueById(id);if(!v)return;
+  shareIt(v.name,`${v.name} · ${v.addr||v.area}. Lähme?`,appUrl()+'#v-'+v.id);
+}
+/* a shared link (#e-… or #v-…) opens that event or place */
+function openHash(){
+  const h=location.hash;
+  if(h.startsWith('#e-')){
+    const id=h.slice(3);if(!EVENTS.some(e=>e.id===id))return;
+    evDay='all';show('v-events');
+    const el=$('ev-'+id);if(el){el.classList.add('hl');setTimeout(()=>el.scrollIntoView({block:'center'}),60)}
+  }else if(h.startsWith('#v-')&&venueById(h.slice(3)))openSheet(h.slice(3));
+}
+
+/* ---------- new events from D3 / Club Studio: red dot on the tab, a toast, and a phone notification if allowed ---------- */
+function topEventIds(){return EVENTS.filter(e=>TOP.includes(e.venue)).map(e=>e.id)}
+function newTopEvents(){return S.seenEv?upcoming().filter(e=>TOP.includes(e.venue)&&!S.seenEv.includes(e.id)):[]}
+async function mirrorSeen(){
+  // the service worker can't read localStorage, so it gets its own copy for checks in the background
+  try{if(!('caches' in window))return;const c=await caches.open('cc-meta');await c.put('cc-seen',new Response(JSON.stringify({ids:S.seenEv||[],notified:S.notifiedEv,notify:!!S.notify})))}catch(e){}
+}
+function markSeen(){S.seenEv=topEventIds();save();mirrorSeen();renderBadge()}
+function renderBadge(){
+  const b=document.querySelector('nav [data-v=v-events]');if(!b)return;
+  let dot=b.querySelector('.badge');const n=newTopEvents().length;
+  if(n&&!dot){dot=document.createElement('span');dot.className='badge';dot.setAttribute('aria-label',n+' uut üritust');b.appendChild(dot)}
+  else if(!n&&dot)dot.remove();
+}
+async function checkNewEvents(){
+  if(!S.seenEv){markSeen();return}   // first visit: what is already listed doesn't count as new
+  renderBadge();
+  const fresh=newTopEvents().filter(e=>!S.notifiedEv.includes(e.id));if(!fresh.length)return;
+  S.notifiedEv=S.notifiedEv.concat(fresh.map(e=>e.id)).slice(-200);save();mirrorSeen();
+  const e=fresh[0],msg=venueById(e.venue).name+' lisas uue ürituse: '+e.title+(fresh.length>1?' (+'+(fresh.length-1)+' veel)':'');
+  toast(msg);
+  if(S.notify&&'Notification' in window&&Notification.permission==='granted'){
+    const opts={body:msg,icon:'icon-192.png',tag:'cc-new-events',data:{url:'./#e-'+e.id}};
+    try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();if(reg)reg.showNotification('Clubcount',opts);else new Notification('Clubcount',opts)}catch(err){}
+  }
+}
+async function regPeriodic(){
+  // Android: an installed app can check for new events in the background about twice a day
+  try{
+    if(!navigator.serviceWorker||!navigator.serviceWorker.controller)return;
+    const reg=await navigator.serviceWorker.ready;if(!('periodicSync' in reg))return;
+    const st=await navigator.permissions.query({name:'periodic-background-sync'});
+    if(st.state==='granted')await reg.periodicSync.register('cc-events',{minInterval:12*3600e3});
+  }catch(e){}
+}
+function renderNotify(){
+  $('s-notify').checked=!!S.notify;
+  const p='Notification' in window?Notification.permission:'none';
+  $('notifyNote').textContent=!S.notify?'Kui lülitad sisse, küsib telefon luba teavitusi näidata.'
+    :p==='denied'?'Teavitused on telefonis keelatud. Luba need brauseri või telefoni seadetes. Uue ürituse juures näed äpis siiski punast täppi.'
+    :p==='none'?'See brauser teavitusi ei toeta. Uue ürituse juures näed äpis punast täppi.'
+    :'Sees. Androidis kontrollib avakuvale lisatud äpp uusi üritusi ka taustal. iPhone\'is näed teavitust, kui äpi avad.';
+}
+$('s-notify').addEventListener('change',async e=>{
+  S.notify=e.target.checked;save();mirrorSeen();
+  if(S.notify&&'Notification' in window&&Notification.permission==='default'){try{await Notification.requestPermission()}catch(err){}}
+  if(S.notify)regPeriodic();
+  renderNotify();
+});
 
 /* ---------- detail sheet ---------- */
 let openId=null;
@@ -738,13 +907,13 @@ function renderSheet(){
       <div class="disp" style="font-size:34px;color:var(--off)">Pole ühendatud</div>
       <p class="mut" style="margin:0;font-size:14.5px">Selle koha uksel pole veel Clubcounti loendurit. Kui klubi selle käivitab, näed siin rahvaarvu ja järjekorda.</p></div>`;
   const evs=upcoming().filter(e=>e.venue===v.id);
-  const party=evs.length?`<div class="card"><span class="mono mut">Tulevad üritused</span><div class="kv">${evs.map(e=>`<div><span>${dayLabel(e.date)} · ${e.time}</span><span><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></span></div>`).join('')}</div></div>`:'';
+  const party=evs.length?`<div class="card"><span class="mono mut">Tulevad üritused</span><div class="kv">${evs.map(e=>`<div><span>${dayLabel(e.date)} · ${e.time}</span><span><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a> · <a href="#" data-shareev="${e.id}">jaga</a></span></div>`).join('')}</div></div>`:'';
   const links=[`<a class="back" href="https://www.google.com/maps/search/?api=1&query=${v.lat},${v.lon}" target="_blank" rel="noopener">Ava kaardil ↗</a>`];
   if(v.web)links.push(`<a class="back" href="${v.web}" target="_blank" rel="noopener">Koduleht ↗</a>`);
   $('sheetIn').innerHTML=`
     <div class="sheet-top">
       <button class="back" data-close>← Tagasi</button>
-      <button class="back" data-star="${v.id}" aria-pressed="${fav}" style="${fav?'color:var(--ac);border-color:var(--ac)':''}">${fav?'★ Lemmik':'☆ Lisa lemmikuks'}</button>
+      <span class="ev-btns"><button class="back" data-sharev="${v.id}">Jaga</button><button class="back" data-star="${v.id}" aria-pressed="${fav}" style="${fav?'color:var(--ac);border-color:var(--ac)':''}">${fav?'★ Lemmik':'☆ Lisa lemmikuks'}</button></span>
     </div>
     <div style="display:flex;flex-direction:column;gap:6px">
       <div class="disp" style="font-size:52px;font-weight:900">${esc(v.name)}</div>
@@ -778,6 +947,8 @@ function renderSheet(){
 }
 $('sheet').addEventListener('click',e=>{
   if(e.target.closest('[data-close]')){closeSheet();return}
+  const sv=e.target.closest('[data-sharev]');if(sv){shareVenue(sv.dataset.sharev);return}
+  const se=e.target.closest('[data-shareev]');if(se){e.preventDefault();shareEvent(se.dataset.shareev);return}
   const s=e.target.closest('[data-star]');if(s){const id=s.dataset.star,i=S.favs.indexOf(id);if(i>=0)S.favs.splice(i,1);else S.favs.push(id);save();renderSheet();renderList()}
   const dp=e.target.closest('[data-delphoto]');if(dp){e.preventDefault();try{localStorage.removeItem('cc-photo-'+dp.dataset.delphoto)}catch(err){}renderSheet();renderList()}
 });
@@ -849,7 +1020,7 @@ function renderDoor(){
   $('door').className='door st-'+s.key;
   const sel=$('dVenue');
   if(!sel.options.length)sel.innerHTML=VENUES.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
-  sel.value=S.door.venue; sel.disabled=S.door.events.length>0;
+  sel.value=S.door.venue; sel.disabled=CLUB||S.door.events.length>0;   // in club mode the device belongs to the logged-in club
   $('dInfo').textContent=S.door.start?'Õhtu algas '+hm(S.door.start)+(st.aiIn+st.aiOut?' · AI luges '+(st.aiIn+st.aiOut):''):(S.door.events.length?'':'Esimene loendus alustab õhtu');
   $('dPill').lastElementChild.textContent=s.label;
   $('dOcc').textContent=st.occ;$('dCap').textContent='/ '+cap;
@@ -1099,7 +1270,23 @@ function renderSet(){$('s-cap').value=S.door.cap;$('s-hard').checked=!!S.door.ha
 $('s-cap').addEventListener('change',e=>{const v=Math.max(1,Math.min(20000,parseInt(e.target.value,10)||200));S.door.cap=v;e.target.value=v;save();doorPush()});
 ['hard','vib'].forEach(k=>$('s-'+k).addEventListener('change',e=>{S.door[k]=e.target.checked;save()}));
 let armR=null;
+/* summary of tonight for the club's statistics: visitors, peak and when, arrivals per hour */
+function nightSummary(){
+  const ev=S.door.events;if(!ev.length||!S.door.start)return null;
+  let occ=0,peak=0,peakAt=ev[0].t,inT=0,outT=0;const hours={};
+  for(const e of ev){occ+=e.d;if(e.d>0){inT++;const h=new Date(e.t).getHours();hours[h]=(hours[h]||0)+1}else outT++;if(occ>peak){peak=occ;peakAt=e.t}}
+  const d=new Date(S.door.start);if(d.getHours()<6)d.setDate(d.getDate()-1);
+  return {date:ymd(d),venue:S.door.venue,in:inT,out:outT,peak,peakAt,hours};
+}
+function archiveNight(){
+  const s=nightSummary();if(!s)return;
+  const old=S.hist.find(h=>h.date===s.date&&h.venue===s.venue);
+  if(old){old.in+=s.in;old.out+=s.out;if(s.peak>old.peak){old.peak=s.peak;old.peakAt=s.peakAt}for(const h in s.hours)old.hours[h]=(old.hours[h]||0)+s.hours[h]}
+  else S.hist.push(s);
+  S.hist=S.hist.slice(-400);
+}
 function endNight(){
+  archiveNight();
   const st=dstats();S.door.events=[];S.door.start=null;S.door.queue=0;save();doorPushNow();
   toast('Õhtu lõpetatud. Sisse tuli '+st.inT+', tipp oli '+st.peak+'.');renderDoor();renderList();renderMarkers();renderCamCounts();
 }
@@ -1163,7 +1350,7 @@ $('kPinForm').addEventListener('submit',e=>{
 function renderKSetup(){
   const sel=$('kVenue');
   if(!sel.options.length)sel.innerHTML=VENUES.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
-  sel.value=S.door.venue;
+  sel.value=S.door.venue; sel.disabled=CLUB;
   $('kPinNote').textContent=CLOUD.url?'PIN-kood kontrollitakse Clubcounti tagapõhjas. Sama PIN-iga saab ukseseadmest väljuda.':
     'Tagapõhi pole veel seadistatud, nii et number jääb ainult sellesse seadmesse. Vali PIN-kood (vähemalt 4 numbrit), millega saab ukseseadmest väljuda.';
 }
@@ -1193,25 +1380,149 @@ $('installBtn').addEventListener('click',async()=>{if(!deferred)return;deferred.
 if((window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone)$('installSec').hidden=true;
 if(!inFrame&&'serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 
+/* ---------- club login: with the backend the PIN is checked there (door_check); until then the club sets its PIN on this device ---------- */
+function renderGate(){
+  const show=CLUB&&!S.club.on;$('gate').hidden=!show;if(!show)return;
+  const sel=$('gVenue');
+  if(!sel.options.length)sel.innerHTML=VENUES.filter(v=>v.kind==='Klubi').concat(VENUES.filter(v=>v.kind!=='Klubi')).map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
+  if(S.club.venue)sel.value=S.club.venue;
+  gateNote();
+}
+function gateNote(){
+  const first=!CLUB_CLOUD()&&!S.club.pins[$('gVenue').value];
+  $('gNote').textContent=CLUB_CLOUD()?'PIN-koodi annab Clubcount klubile.':first?'Esimene kord selles seadmes: vali PIN-kood (vähemalt 4 numbrit). Sellega saad edaspidi sisse.':'Sisesta selle seadme klubi PIN-kood.';
+  $('gBtn').textContent=first?'Loo PIN ja logi sisse':'Logi sisse';
+}
+const CLUB_CLOUD=()=>!!CLOUD.url;
+$('gVenue').addEventListener('change',gateNote);
+$('gateForm').addEventListener('submit',async e=>{
+  e.preventDefault();const vid=$('gVenue').value,pin=$('gPin').value.trim();
+  if(!/^\d{4,}$/.test(pin))return toast('PIN-kood peab olema vähemalt 4 numbrit.','bad');
+  if(CLUB_CLOUD()){
+    if(!sb)return toast('Tagapõhjaga ei saa ühendust. Kontrolli internetti.','bad');
+    try{const {data,error}=await sb.rpc('door_check',{p_venue:vid,p_pin:pin});if(error)throw error;
+      if(data!=='ok')return toast(data==='locked'?'Liiga palju valesid katseid. Oota 15 minutit.':'Vale PIN-kood','bad')}
+    catch(err){return toast('Tagapõhjaga ei saa ühendust. Kontrolli internetti.','bad')}
+  }else{
+    const saved=S.club.pins[vid];
+    if(saved&&saved!==pin)return toast('Vale PIN-kood','bad');
+    if(!saved)S.club.pins[vid]=pin;
+  }
+  if(vid!==S.door.venue){
+    if(S.door.events.length)return toast('Selles seadmes käib teise koha õhtu. Lõpeta see enne.','bad');
+    S.door.venue=vid;const v=venueById(vid);S.door.cap=v.cap||200;S.door.price=null;S.door.queue=0;S.door.pin=null;
+  }
+  if(CLUB_CLOUD())S.door.pin=pin;
+  S.club.on=true;S.club.venue=vid;save();$('gPin').value='';
+  renderGate();show('v-door');toast('Tere, '+venueById(vid).name+'!');
+});
+$('logoutBtn').addEventListener('click',()=>{S.club.on=false;save();renderGate()});
+
+/* ---------- club statistics ---------- */
+const WK=['E','T','K','N','R','L','P'];
+function seeded(str){let x=7;for(const c of str)x=(x*31+c.charCodeAt(0))&0x7fffffff;return()=>{x=(x*1103515245+12345)&0x7fffffff;return x/0x7fffffff}}
+/* example nights so a club can see what the page will look like before its first real night; always labelled as examples */
+function sampleHist(vid){
+  const r=seeded(vid),cap=S.door.cap||500,out=[],today=parseYmd(partyDay());
+  for(let i=0;i<=20;i++){
+    const d=new Date(today);d.setDate(d.getDate()-i);const wd=d.getDay();
+    const base={4:0.3,5:0.72,6:0.88}[wd];if(!base)continue;
+    const inT=Math.round(cap*base*(0.8+0.4*r())),hrs={22:0.08,23:0.24,0:0.3,1:0.22,2:0.11,3:0.05},hours={};
+    for(const h in hrs)hours[h]=Math.round(inT*hrs[h]);
+    const pk=new Date(d);pk.setDate(pk.getDate()+1);pk.setHours(0,0,0,0);
+    out.push({date:ymd(d),venue:vid,in:inT,out:inT,peak:Math.round(inT*(0.55+0.15*r())),peakAt:pk.getTime()+Math.round((r()*120-30)*60000),hours,sample:true});
+  }
+  return out;
+}
+const nightMin=t=>{const d=new Date(t);let m=d.getHours()*60+d.getMinutes();if(m<12*60)m+=1440;return m};   // after midnight counts as late, not early
+function deltaHtml(now,before){
+  if(!before)return `<span class="delta flat">Eelmisest nädalast pole andmeid</span>`;
+  const p=Math.round((now-before)/before*100);
+  return p===0?`<span class="delta flat">Sama kui eelmisel nädalal</span>`:`<span class="delta ${p>0?'up':'down'}">${p>0?'▲ +':'▼ '}${p}% eelmise nädalaga</span>`;
+}
+function renderStats(){
+  const vid=S.door.venue,v=venueById(vid);
+  $('stVenue').textContent=v.name+'. Seda lehte näeb ainult klubi.';
+  let hist=S.hist.filter(h=>h.venue===vid),sample=false;
+  if(!hist.length&&S.statSample){hist=sampleHist(vid);sample=true}
+  const st=dstats();
+  const live=S.door.start?`<div class="card st-${statusOf(st.occ/S.door.cap).key}"><div class="row"><span class="mono mut">Täna õhtul · algas ${hm(S.door.start)}</span><span class="pill mono"><span class="dot pulse"></span>Käib</span></div>
+      <div class="kpis"><div><div class="mono mut">Sees praegu</div><div class="disp tab" style="font-size:44px;color:var(--st)">${st.occ}</div></div><div><div class="mono mut">Sisse kokku</div><div class="disp tab" style="font-size:44px">${st.inT}</div></div></div>
+      <span class="mut" style="font-size:14px">Tipp seni ${st.peak} inimest.</span></div>`:'';
+  if(!hist.length){
+    $('stBody').innerHTML=live+`<div class="card"><div class="disp" style="font-size:30px">Veel pole ühtegi õhtut</div>
+      <p class="mut" style="margin:0;font-size:14.5px">Statistika tekib pärast esimest õhtut. Iga õhtu lõpus (vaates Seaded „Lõpeta õhtu“ või ukseseadmes kell 06:00) jääb siia kirja, mitu inimest tuli, millal oli tipp ja mis kellast tuli kõige rohkem rahvast.</p>
+      <button class="btn btn-line" id="stSample">Vaata näidisandmetega</button></div>`;
+    return;
+  }
+  const today=parseYmd(partyDay()),dow=(today.getDay()+6)%7;
+  const mon=new Date(today);mon.setDate(mon.getDate()-dow);const nmon=new Date(mon);nmon.setDate(nmon.getDate()+7);const lmon=new Date(mon);lmon.setDate(lmon.getDate()-7);
+  const wd=h=>(parseYmd(h.date).getDay()+6)%7,inR=(h,a,b)=>{const d=parseYmd(h.date);return d>=a&&d<b};
+  const tw=hist.filter(h=>inR(h,mon,nmon)),lw=hist.filter(h=>inR(h,lmon,mon));
+  const sum=a=>a.reduce((s,h)=>s+h.in,0),tIn=sum(tw),lIn=sum(lw),lSame=sum(lw.filter(h=>wd(h)<=dow));
+  const best=[...hist].sort((a,b)=>b.peak-a.peak)[0];
+  const recent=hist.slice(-8),avgPk=Math.round(recent.reduce((s,h)=>s+nightMin(h.peakAt),0)/recent.length);
+  const nightName=h=>{const d=parseYmd(h.date);return DAYS_LONG[d.getDay()]+' '+d.getDate()+'.'+pad2(d.getMonth()+1)};
+  // weekday bars: last week (grey) vs this week (purple)
+  const per=(arr,i)=>arr.filter(h=>wd(h)===i).reduce((s,h)=>s+h.in,0);
+  const mx=Math.max(1,...[0,1,2,3,4,5,6].map(i=>Math.max(per(tw,i),per(lw,i))));
+  const bars=[0,1,2,3,4,5,6].map(i=>{const a=per(lw,i),b=per(tw,i),fut=i>dow;
+    return `<div><i class="a" style="height:${Math.round(a/mx*100)}%" title="Eelmine nädal: ${a}"></i><i class="${fut?'none':'b'}" style="height:${fut?0:Math.round(b/mx*100)}%" title="See nädal: ${fut?'–':b}"></i></div>`}).join('');
+  // arrivals per hour, 20:00–05:00, averaged over the nights
+  const HRS=[20,21,22,23,0,1,2,3,4,5],avg=HRS.map(h=>hist.reduce((s,n)=>s+(n.hours[h]||0),0)/hist.length),hmx=Math.max(1,...avg),pkI=avg.indexOf(Math.max(...avg));
+  const nights=[...hist].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
+  $('stBody').innerHTML=(sample?`<div class="sample"><span>Need on <b>näidisandmed</b>. Päris numbrid tekivad pärast esimest õhtut.</span><button class="ghost" id="stSampleOff">Peida</button></div>`:'')+live+`
+    <div class="kpis">
+      <div class="card kpi"><span class="mono mut">Külastajaid sel nädalal</span><span class="disp tab">${tIn}</span>${deltaHtml(tIn,lSame)}</div>
+      <div class="card kpi"><span class="mono mut">Eelmisel nädalal</span><span class="disp tab">${lIn}</span><span class="delta flat">${lw.length} õhtut</span></div>
+      <div class="card kpi"><span class="mono mut">Suurim tipp</span><span class="disp tab">${best.peak}</span><span class="delta flat">${nightName(best)} kell ${hm(best.peakAt)}</span></div>
+      <div class="card kpi"><span class="mono mut">Tavaline tipuaeg</span><span class="disp tab">${mm(avgPk)}</span><span class="delta flat">viimase ${recent.length} õhtu keskmine</span></div>
+    </div>
+    <div class="card"><span class="mono mut">Külastajad päevade kaupa</span>
+      <div class="wk">${bars}</div><div class="wk-ax mono">${WK.map(d=>`<span>${d}</span>`).join('')}</div>
+      <div class="legend"><span><i style="background:rgba(244,240,248,0.22)"></i>Eelmine nädal</span><span><i style="background:var(--ac)"></i>See nädal</span></div></div>
+    <div class="card"><span class="mono mut">Mis kell rahvas tuleb</span>
+      <div class="hrs">${avg.map((x,i)=>`<i class="${i===pkI?'pk':''}" style="height:${Math.round(x/hmx*100)}%" title="${pad2(HRS[i])}:00 · keskmiselt ${Math.round(x)}"></i>`).join('')}</div>
+      <div class="wk-ax mono">${HRS.map(h=>`<span>${pad2(h)}</span>`).join('')}</div>
+      <span class="mut" style="font-size:14px">Kõige rohkem tuleb rahvast kell ${pad2(HRS[pkI])}–${pad2((HRS[pkI]+1)%24)}. Siis võiks uksel olla rohkem inimesi.</span></div>
+    <div class="card"><span class="mono mut">Viimased õhtud</span><div class="kv">
+      ${nights.map(h=>`<div><span>${nightName(h)}</span><span class="tab">${h.in} tuli · tipp ${h.peak} (${hm(h.peakAt)})</span></div>`).join('')}</div></div>`;
+}
+$('stBody').addEventListener('click',e=>{
+  if(e.target.id==='stSample'){S.statSample=true;save();renderStats()}
+  if(e.target.id==='stSampleOff'){S.statSample=false;save();renderStats()}
+});
+
 /* ---------- nav ---------- */
+const GUEST_TABS=['v-list','v-events','v-map','v-info'],CLUB_TABS=['v-door','v-stats','v-info'];
+const TAB_KEY='cc-tab'+(CLUB?'-club':'');
 function show(v){
+  if(!(CLUB?CLUB_TABS:GUEST_TABS).includes(v))v=CLUB?'v-door':'v-list';
   document.querySelectorAll('.view').forEach(s=>s.hidden=s.id!==v);
   document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
   if(v==='v-list')renderList();
-  if(v==='v-events')renderEvents();
+  if(v==='v-events'){renderEvents();markSeen()}
+  if(v==='v-stats')renderStats();
   if(v==='v-map'){initMap();if(map)setTimeout(()=>{map.invalidateSize();renderMarkers()},60)}
   if(v==='v-door'){renderDoor();wakeOn()}
-  if(v==='v-info'){renderSet();renderShare()}
-  try{sessionStorage.setItem('cc-tab',v)}catch(e){}
+  if(v==='v-info'){
+    if(CLUB){renderSet();renderShare();$('clubWho').textContent='Sisse logitud: '+venueById(S.door.venue).name+'. Statistika ja loendus on selles seadmes.'}
+    else renderNotify();
+  }
+  try{sessionStorage.setItem(TAB_KEY,v)}catch(e){}
 }
 document.querySelector('nav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)});
 renderSlogan();
-let first='v-list';try{first=sessionStorage.getItem('cc-tab')||'v-list'}catch(e){}
-show($(first)?first:'v-list');
+// a night left open past 06:00 (app closed overnight) is saved to the statistics and closed
+if(S.door.start&&S.door.start<nightCutoff(Date.now())){archiveNight();S.door.events=[];S.door.start=null;S.door.queue=0;save()}
+let first=CLUB?'v-door':'v-list';try{first=sessionStorage.getItem(TAB_KEY)||first}catch(e){}
+show(first);
+renderGate();
+if(!CLUB){checkNewEvents();openHash();window.addEventListener('hashchange',openHash);if(S.notify)regPeriodic()}
 const clock=()=>$('clock').textContent='Tallinn · '+hm(Date.now());clock();
-setInterval(()=>{clock();renderSlogan();if(document.visibilityState!=='visible')return;cloudFetch();if(!$('v-list').hidden)renderList();if(!$('v-events').hidden)renderEvents();renderMarkers();if(openId)renderSheet()},30000);
+setInterval(()=>{clock();renderSlogan();if(document.visibilityState!=='visible')return;cloudFetch();if(!$('v-list').hidden)renderList();if(!$('v-events').hidden)renderEvents();if(!$('v-stats').hidden)renderStats();renderMarkers();if(openId)renderSheet()},30000);
 cloudInit();
-if(S.kiosk.on)kioskOn();
+if(CLUB&&S.club.on&&S.kiosk.on)kioskOn();
 window.addEventListener('storage',e=>{if(e.key===KEY){S=load();renderList();renderDoor();renderMarkers()}});
 })();
 </script>
