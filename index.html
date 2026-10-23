@@ -294,11 +294,11 @@ nav button[aria-selected=true]{color:var(--ac)}
       <p class="foot-note">Rahvaarvu näed siis, kui koha uksel töötab Clubcounti loendur. Lahtiolekuajad on OpenStreetMapist (© OpenStreetMapi kaastöötajad) ja kohtade lehtedelt, oktoober 2026. Kui midagi on muutunud, anna teada.</p>
     </section>
 
-    <!-- PEOD -->
-    <section class="view gut" id="v-events" role="tabpanel" aria-label="Peod" hidden>
+    <!-- ÜRITUSED -->
+    <section class="view gut" id="v-events" role="tabpanel" aria-label="Üritused" hidden>
       <div class="intro">
-        <h1>Mis pidu<span>täna on?</span></h1>
-        <p>Klubiõhtud ja peod Tallinnas. Info on klubide ja piletilehtede pealt, nii et vaata enne minekut üle.</p>
+        <h1>Mis täna<span>toimub?</span></h1>
+        <p>Klubiõhtud, peod ja kontserdid Tallinnas. Info on klubide Facebooki- ja piletilehtedelt, nii et vaata enne minekut üle.</p>
       </div>
       <div class="chips" id="evDays" role="group" aria-label="Päev"></div>
       <div class="ev-list" id="evList"></div>
@@ -411,7 +411,7 @@ nav button[aria-selected=true]{color:var(--ac)}
 
   <nav class="gut" role="tablist">
     <button role="tab" data-v="v-list" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Kohad</button>
-    <button role="tab" data-v="v-events" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 5v12" stroke-dasharray="2 2.2"/></svg>Peod</button>
+    <button role="tab" data-v="v-events" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 5v12" stroke-dasharray="2 2.2"/></svg>Üritused</button>
     <button role="tab" data-v="v-map" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Kaart</button>
     <button role="tab" data-v="v-door" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><circle cx="15" cy="12" r="1" fill="currentColor"/></svg>Uks</button>
     <button role="tab" data-v="v-info" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Info</button>
@@ -587,6 +587,9 @@ function matches(v,f){
 }
 const AREAS=[['all','Kõik piirkonnad'],['Vanalinn','Vanalinn'],['Telliskivi ja Kalamaja','Telliskivi ja Kalamaja'],['Kesklinn','Kesklinn']];
 const PAGE=25; let shown=PAGE;
+/* featured venues: always first in the place list and the events list (for now Club Studio and D3) */
+const TOP=['club-studio','d3'];
+const topRank=id=>{const i=TOP.indexOf(id);return i<0?TOP.length:i};
 const norm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 function inScope(v){
   if(S.area!=='all'&&v.area!==S.area)return false;
@@ -600,7 +603,7 @@ function renderList(){
   const scoped=VENUES.filter(inScope);
   $('chips').innerHTML=FILTERS.map(([id,l])=>`<button class="chip" data-f="${id}" aria-pressed="${S.filter===id}">${l} · ${scoped.filter(v=>matches(v,id)).length}</button>`).join('');
   const rank=v=>(liveOf(v)?0:2)+(openState(v).open===true?0:1);
-  const all=scoped.filter(v=>matches(v,S.filter)).sort((a,b)=>rank(a)-rank(b)||(a.kind===b.kind?0:a.kind==='Klubi'?-1:1)||a.name.localeCompare(b.name,'et'));
+  const all=scoped.filter(v=>matches(v,S.filter)).sort((a,b)=>topRank(a.id)-topRank(b.id)||rank(a)-rank(b)||(a.kind===b.kind?0:a.kind==='Klubi'?-1:1)||a.name.localeCompare(b.name,'et'));
   const rows=all.slice(0,shown);
   $('more').hidden=all.length<=shown; $('more').textContent='Näita rohkem ('+(all.length-shown)+' veel)';
   if(!rows.length){$('list').innerHTML=`<div class="empty">${S.filter==='fav'?'Lemmikuid veel pole. Ava koht ja vajuta „☆ Lisa lemmikuks“.':S.q?'„'+esc(S.q)+'“ järgi ei leitud ühtegi kohta.':'Praegu ei sobi ükski koht.'}</div>`;return}
@@ -671,7 +674,7 @@ function renderSlogan(){
   $('qDay').textContent='Tänane küsimus · '+DAYS_LONG[d.getDay()].toLowerCase();
 }
 
-/* ---------- events (Peod) from events.js; a night that runs past midnight still counts as "today" until 06:00 ---------- */
+/* ---------- events (Üritused) from events.js; a night that runs past midnight still counts as "today" until 06:00 ---------- */
 const EVENTS=(window.CC_EVENTS||[]).slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
 const MON=['jaan','veebr','märts','apr','mai','juuni','juuli','aug','sept','okt','nov','dets'];
 const ymd=d=>d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
@@ -701,8 +704,8 @@ function renderEvents(){
   if(evDay!=='all'&&!days.includes(evDay))evDay='all';
   $('evDays').innerHTML=[['all','Kõik · '+up.length]].concat(days.map(d=>[d,dayLabel(d)]))
     .map(([id,l])=>`<button class="chip" data-d="${id}" aria-pressed="${evDay===id}">${l}</button>`).join('');
-  const rows=up.filter(e=>evDay==='all'||e.date===evDay);
-  $('evList').innerHTML=rows.length?rows.map(evCard).join(''):`<div class="empty">Praegu pole ühtegi pidu kirjas. Vaata varsti uuesti.</div>`;
+  const rows=up.filter(e=>evDay==='all'||e.date===evDay).sort((a,b)=>topRank(a.venue)-topRank(b.venue));
+  $('evList').innerHTML=rows.length?rows.map(evCard).join(''):`<div class="empty">Praegu pole ühtegi üritust kirjas. Vaata varsti uuesti.</div>`;
 }
 $('evDays').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;evDay=b.dataset.d;renderEvents()});
 $('evList').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(b)openSheet(b.dataset.id)});
@@ -735,7 +738,7 @@ function renderSheet(){
       <div class="disp" style="font-size:34px;color:var(--off)">Pole ühendatud</div>
       <p class="mut" style="margin:0;font-size:14.5px">Selle koha uksel pole veel Clubcounti loendurit. Kui klubi selle käivitab, näed siin rahvaarvu ja järjekorda.</p></div>`;
   const evs=upcoming().filter(e=>e.venue===v.id);
-  const party=evs.length?`<div class="card"><span class="mono mut">Tulevad peod</span><div class="kv">${evs.map(e=>`<div><span>${dayLabel(e.date)} · ${e.time}</span><span><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></span></div>`).join('')}</div></div>`:'';
+  const party=evs.length?`<div class="card"><span class="mono mut">Tulevad üritused</span><div class="kv">${evs.map(e=>`<div><span>${dayLabel(e.date)} · ${e.time}</span><span><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></span></div>`).join('')}</div></div>`:'';
   const links=[`<a class="back" href="https://www.google.com/maps/search/?api=1&query=${v.lat},${v.lon}" target="_blank" rel="noopener">Ava kaardil ↗</a>`];
   if(v.web)links.push(`<a class="back" href="${v.web}" target="_blank" rel="noopener">Koduleht ↗</a>`);
   $('sheetIn').innerHTML=`
