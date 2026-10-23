@@ -1,0 +1,14 @@
+/* Clubcount peod. Kogutud 24.10.2026 klubide, piletisaitide ja ürituste lehtedelt (link iga peo juures).
+   venue = koha id venues.js-is (null, kui koht pole top 30-s). Möödunud peod peidetakse ise. */
+window.CC_EVENTS=[
+{"id":"funktsioon-2410","date":"2026-10-24","time":"23:00","title":"Funktsioon 2.0","venue":"helitehas","place":"Helitehas","lineup":["Lil Till","Prodigyboys","Hayya","3viga"],"price":null,"url":"https://gateme.com/Tallinn/","src":"GateMe"},
+{"id":"kaarija-2910","date":"2026-10-29","time":"19:00","title":"Käärijä: Eurodisko Tour","venue":"helitehas","place":"Helitehas","lineup":["Käärijä","Little Sis Nora"],"price":null,"note":"Kontsert. Algusaeg on eri lehtedel 19:00 või 20:00.","url":"https://helitehas.ee/facebook-event/kaarija-helitehas-29-10-2026/","src":"Helitehas"},
+{"id":"ukf-3010","date":"2026-10-30","time":"22:00","title":"UKF Estonia: Halloween","venue":null,"place":"Kultuurikatel","lineup":["Nero","Luude","Cartoon"],"price":null,"age":"18+","url":"https://kultuurikatel.ee/sundmus/ukf-estonia-2026-halloween/","src":"Kultuurikatel"},
+{"id":"pacho-3010","date":"2026-10-30","time":"23:00","title":"Pacho x Halloween","venue":"helitehas","place":"Helitehas","lineup":[],"price":null,"url":"https://www.bandsintown.com/v/10070706-helitehas","src":"Bandsintown"},
+{"id":"prive-3010","date":"2026-10-30","time":"23:00","title":"Top Secret: Scary Halloween","venue":"club-prive","place":"Club Privé","lineup":[],"price":null,"note":"Üks leht ütleb 30.10, teine 31.10. Vaata kuupäev üle.","url":"https://events.musicofourdesire.com/event/vmis-top-secret-scary-halloween-event-tallinn-estonia","src":"Music of Our Desire"},
+{"id":"noblessner-3110","date":"2026-10-31","time":"23:00","end":"04:00","title":"Halloween @ Noblessner","venue":null,"place":"Uma, Peetri 12","lineup":[],"price":null,"note":"Kostüümipidu kolmes saalis.","url":"https://huvi.tallinn.ee/sundmus/3110-halloween-noblessner-3-saali","src":"Tallinna huviveeb"},
+{"id":"hall-3110","date":"2026-10-31","time":"23:00","title":"HALLoween: Dance 'Till Death!","venue":null,"place":"Peetri 6","lineup":[],"price":null,"url":"https://allevents.in/tallinn/halloween-parties","src":"Allevents"},
+{"id":"hevi-0611","date":"2026-11-06","time":"22:30","title":"HEVI","venue":"helitehas","place":"Helitehas","lineup":["Teddy Killerz","Tantrum Desire"],"price":null,"url":"https://www.bandsintown.com/v/10070706-helitehas","src":"Bandsintown"},
+{"id":"hardnation-1411","date":"2026-11-14","time":"22:00","title":"Hard Nation 16. sünnipäev","venue":"helitehas","place":"Helitehas","lineup":["Ran-D"],"price":null,"url":"https://www.bandsintown.com/v/10070706-helitehas","src":"Bandsintown"},
+{"id":"pulsation-2811","date":"2026-11-28","time":"22:00","title":"Pulsation Estonia 2026","venue":"helitehas","place":"Helitehas","lineup":["Metrik","Siimi"],"price":null,"url":"https://www.bandsintown.com/v/10070706-helitehas","src":"Bandsintown"}
+];

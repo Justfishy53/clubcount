@@ -190,27 +190,7 @@ main{flex:1;min-height:0;position:relative}
 
 /* camera */
 .cam-stage{position:relative;width:100%;aspect-ratio:3/4;max-height:58vh;background:#000;border-radius:18px;overflow:hidden}
-.cam-stage video,.cam-stage canvas,.cam-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-/* camera connection */
-.cs-now{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
-.cs-now .dot{width:10px;height:10px}
-.cs-now.ok .dot{color:var(--ok)} .cs-now.none .dot{color:var(--off)}
-.cs-opt{display:flex;flex-direction:column;gap:10px}
-.cs-opt h3{margin:0;font-family:var(--f-disp);font-weight:800;text-transform:uppercase;font-size:22px;line-height:1}
-.cs-list{display:flex;flex-direction:column;gap:6px}
-.cs-dev{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:11px 12px;color:var(--fg)}
-.cs-dev[aria-pressed=true]{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 16%,transparent)}
-.cs-dev .mut{font-size:12.5px}
-.cs-in{width:100%;background:var(--raise);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-size:14.5px;color:var(--fg)}
-.cs-row{display:flex;gap:8px;flex-wrap:wrap}
-.cs-row>*{flex:1 1 140px}
-.cs-prev{position:relative;width:100%;aspect-ratio:4/3;max-width:100%;background:#000;border-radius:14px;overflow:hidden}
-.cs-prev img,.cs-prev video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.cs-res{font-size:14px;border-radius:12px;padding:10px 12px}
-.cs-res.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);border:1px solid color-mix(in srgb,var(--ok) 50%,transparent)}
-.cs-res.bad{background:color-mix(in srgb,var(--bad) 14%,transparent);border:1px solid color-mix(in srgb,var(--bad) 50%,transparent)}
-.cs-help{margin:0;padding-left:18px;font-size:13.5px;color:var(--mut);line-height:1.55}
-.cs-help code{font-family:var(--f-mono);font-size:12px;color:var(--fg);word-break:break-all}
+.cam-stage video,.cam-stage canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .cam-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;color:var(--fg);background:rgba(14,11,18,.82)}
 .cam-msg[hidden]{display:none}
 .cam-counts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -239,32 +219,29 @@ main{flex:1;min-height:0;position:relative}
 .sw:checked::after{transform:translateX(18px);background:var(--ink)}
 ol.howto{margin:0;padding-left:18px;line-height:1.7;font-size:15px}
 
-/* Klubile (pitch to an owner) */
-.p-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0}
-.p-top select{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:14px;max-width:60%}
-.p-title{margin:6px 0 0;font-family:var(--f-disp);font-weight:900;text-transform:uppercase;font-size:clamp(46px,14vw,72px);line-height:.86;text-wrap:balance}
-.p-title em{font-style:normal;color:var(--ac);display:block}
-.p-lead{margin:12px 0 0;color:var(--mut);font-size:16px;line-height:1.45;max-width:32em}
-.p-demo{margin-top:18px;background:var(--card);border:1px solid color-mix(in srgb,var(--ac) 55%,transparent);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
-.demo-tag{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--mut)}
-.demo-tag b{background:var(--ac);color:var(--ink);padding:3px 9px;border-radius:999px;font-weight:600}
-.p-name{font-family:var(--f-disp);font-weight:900;text-transform:uppercase;font-size:34px;line-height:.9}
-.p-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.p-row>div{background:var(--raise);border-radius:12px;padding:9px 11px}
-.p-row .disp{font-size:24px}
-.p-pts{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
-.p-pts li{display:grid;grid-template-columns:2.2em 1fr;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
-.p-pts .n{font-family:var(--f-disp);font-weight:800;font-size:26px;color:transparent;-webkit-text-stroke:1.2px var(--ac);line-height:.9}
-.p-pts b{display:block;font-family:var(--f-disp);font-weight:800;text-transform:uppercase;font-size:22px;line-height:1}
-.p-pts span{display:block;color:var(--mut);font-size:14.5px;margin-top:5px}
-.p-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
-.p-steps>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
-.p-steps .disp{font-size:40px;color:var(--ac);line-height:.85}
-.p-steps p{margin:8px 0 0;font-size:13.5px;line-height:1.35}
-.p-cta{display:flex;flex-direction:column;gap:8px;margin-top:18px}
-.p-contact{margin-top:20px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:20px;display:flex;flex-direction:column;gap:4px}
-.p-contact .disp{font-size:30px}
-.d-pitch{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;background:color-mix(in srgb,var(--ac) 14%,transparent);border:1px solid var(--ac);border-radius:16px;padding:12px 14px;color:var(--fg)}
+/* daily question on the first screen */
+.intro .q{font-size:clamp(36px,10.5vw,52px);line-height:.92}
+.intro .q-day{display:inline-flex;align-items:center;gap:7px;color:var(--mut);margin-top:2px}
+
+/* events (Peod) */
+.ev-list{display:flex;flex-direction:column;gap:10px}
+.ev{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px}
+.ev-date{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:14px;background:var(--raise);padding:10px 0;align-self:start}
+.ev-date .disp{font-size:34px;font-weight:900;line-height:.85}
+.ev-date .mono{font-size:10.5px;color:var(--mut)}
+.ev-date.soon{background:var(--ac);color:var(--ink)}
+.ev-date.soon .mono{color:var(--ink)}
+.ev-body{min-width:0;display:flex;flex-direction:column;gap:6px}
+.ev-title{font-size:26px;line-height:.95;overflow-wrap:anywhere}
+.ev-where{font-size:14.5px;color:var(--mut)}
+.ev-where button{background:none;border:0;padding:0;color:var(--fg);font-weight:600;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.ev-line{display:flex;flex-wrap:wrap;gap:6px}
+.ev-line span{font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--ac) 16%,transparent);color:var(--ac)}
+.ev-note{margin:0;font-size:13.5px;color:var(--mut)}
+.ev-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:2px}
+.ev-foot .mono{color:var(--mut);font-size:10.5px}
+.tonight{display:inline-flex;align-items:center;gap:6px;color:var(--ac);font-size:13.5px;font-weight:600;grid-column:1/-1}
+
 nav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);background:var(--bg);padding-bottom:max(6px,env(safe-area-inset-bottom,0px));position:relative;z-index:600}
 nav button{background:none;border:0;padding:9px 0 6px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--mut);font-size:11.5px}
 nav button svg{width:22px;height:22px}
@@ -305,47 +282,31 @@ nav button[aria-selected=true]{color:var(--ac)}
     <!-- KOHAD -->
     <section class="view gut" id="v-list" role="tabpanel" aria-label="Kohad">
       <div class="intro">
-        <h1>Kuhu tänane<span>õhtu viib?</span></h1>
-        <p>Tallinna 30 populaarsemat klubi ja baari. Vaata rahvaarvu, sissepääsu ja järjekorda, enne kui jope selga paned.</p>
+        <div class="q-day mono"><span class="dot"></span><span id="qDay">Tänane küsimus</span></div>
+        <h1 class="q" id="slogan">Tea enne,<span>kui lähed.</span></h1>
+        <p>Tallinna parimad klubid ja baarid. Vaata enne minekut, palju rahvast sees on, mis sissepääs maksab ja kui pikk on järjekord.</p>
       </div>
       <div class="search"><input type="search" id="q" placeholder="Otsi nime või tänavat" autocomplete="off" aria-label="Otsi kohta"></div>
       <div class="chips" id="areas" role="group" aria-label="Piirkond"></div>
       <div class="chips" id="chips" role="group" aria-label="Filtreeri" style="margin-top:0"></div>
       <div class="list" id="list"></div>
       <button class="btn btn-line" id="more" hidden style="width:100%;margin-top:10px">Näita rohkem</button>
-      <p class="foot-note">Top 50 on valitud selle järgi, kui paljud tuntud juhendid ja arvustuste lehed (In Your Pocket, Visit Tallinn, Culture Trip, Spotted by Locals, Falstaff jt) kohta soovitavad. Iga koha allikad on koha lehel. Asukohad ja lahtiolekuajad on suuresti OpenStreetMapist (© OpenStreetMapi kaastöötajad, ODbL), kogutud 19.10.2026, ja võivad olla muutunud. Rahvaarv tuleb ainult klubi uksel töötavast Clubcounti loendurist. Kui loendur pole ühendatud, numbrit ei näidata.</p>
+      <p class="foot-note">Rahvaarvu näed siis, kui koha uksel töötab Clubcounti loendur. Lahtiolekuajad on OpenStreetMapist (© OpenStreetMapi kaastöötajad) ja kohtade lehtedelt, oktoober 2026. Kui midagi on muutunud, anna teada.</p>
+    </section>
+
+    <!-- PEOD -->
+    <section class="view gut" id="v-events" role="tabpanel" aria-label="Peod" hidden>
+      <div class="intro">
+        <h1>Mis pidu<span>täna on?</span></h1>
+        <p>Klubiõhtud ja peod Tallinnas. Info on klubide ja piletilehtede pealt, nii et vaata enne minekut üle.</p>
+      </div>
+      <div class="chips" id="evDays" role="group" aria-label="Päev"></div>
+      <div class="ev-list" id="evList"></div>
     </section>
 
     <!-- KAART -->
     <section class="view" id="v-map" role="tabpanel" aria-label="Kaart" hidden>
       <div id="map"></div>
-    </section>
-
-    <!-- KLUBILE: pitch to an owner, on the spot -->
-    <section class="view gut" id="v-pitch" role="tabpanel" aria-label="Klubile" hidden>
-      <div class="p-top">
-        <span class="mono mut">Klubidele ja baaridele</span>
-        <select id="pVenue" aria-label="Vali koht"></select>
-      </div>
-      <h1 class="p-title" id="pTitle"></h1>
-      <p class="p-lead" id="pLead"></p>
-      <div class="p-demo" id="pDemo" aria-live="off"></div>
-      <ol class="p-pts">
-        <li><span class="n">01</span><div><b>Inimesed näevad, et sul on elu sees.</b><span>Enne väljaminekut vaadatakse, kus on rahvast, mis maksab sissepääs ja kui pikk on järjekord. Sinu koht on nimekirjas koos päris numbriga.</span></div></li>
-        <li><span class="n">02</span><div><b>Uks teab alati, mitu on sees.</b><span>Mahutavus on paigas. Äpp hoiatab, kui saal on 85% täis ja kui piir on käes. Range piiriga ei saa üle lugeda.</span></div></li>
-        <li><span class="n">03</span><div><b>Õhtu numbrid jäävad sulle.</b><span>Sisenejad 10 minuti kaupa, õhtu tipp ja kokku sisse tulnud. Näed, millal rahvas tuleb ja millal läheb.</span></div></li>
-      </ol>
-      <div class="p-steps">
-        <div><div class="disp">1</div><p>Kaamera uksele: USB- või võrgukaamera.</p></div>
-        <div><div class="disp">2</div><p>AI loeb, kes ületab joone. Asutuse enda seadmes.</p></div>
-        <div><div class="disp">3</div><p>Number jõuab äppi iga minut.</p></div>
-      </div>
-      <p class="privacy" style="margin-top:12px">Videot ei salvestata ega saadeta kuhugi ja nägusid ei tuvastata. Välja läheb ainult arv. Uksele tuleb panna silt, et ruumi jälgitakse kaameraga.</p>
-      <div class="p-cta">
-        <button class="btn" id="pTry">Proovi kohe: AI kaamera loeb</button>
-        <button class="btn btn-line" id="pDoor">Proovi käsitsi loendurit</button>
-      </div>
-      <div class="p-contact" id="pContact"></div>
     </section>
 
     <!-- UKS -->
@@ -367,14 +328,9 @@ nav button[aria-selected=true]{color:var(--ac)}
           <div class="stat"><div class="mono">Välja</div><div class="disp" id="dOut">0</div></div>
           <div class="stat"><div class="mono">Tipp</div><div class="disp" id="dPeak">0</div></div>
         </div>
-        <button class="cs-now none" id="camConnBtn" style="cursor:pointer;color:var(--fg);text-align:left">
-          <span class="dot"></span>
-          <span style="flex:1;min-width:0"><span class="mono mut" style="display:block;font-size:10.5px">Ukse kaamera</span><b id="camConnTxt">Kaamerat pole ühendatud</b></span>
-          <span class="mono" style="color:var(--ac)">Ühenda ›</span>
-        </button>
         <button class="ai-btn" id="openCam">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a2 2 0 0 1 2-2h1.5l1.2-2h6.6l1.2 2H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.5" r="3.5"/></svg>
-          AI kaamera loeb ust
+          Kaamera loeb ust
         </button>
         <div class="pads">
           <button class="pad pad-out" id="padOut" aria-label="Üks inimene välja"><span class="disp">−</span><span class="mono">Välja</span></button>
@@ -409,12 +365,11 @@ nav button[aria-selected=true]{color:var(--ac)}
       <div class="sec">
         <h2>Ukseseade</h2>
         <div class="card" id="kSetup">
-          <p style="margin:0">Ukse kohale paigaldatud kaamera loeb ise, ilma et keegi seda hoiaks. Kaamera ühendatakse arvuti, tahvli või miniarvutiga, millel see äpp töötab (Uks → Ühenda kaamera). Ukseseadme režiimis avaneb äpp kohe AI kaamera päris loendusega, ekraan jääb põlema ja rikke korral proovib seade iga 30 sekundi järel ise uuesti. Kell 06:00 lõpetab see õhtu ja nullib loenduri.</p>
+          <p style="margin:0">Vana telefon või tahvel võib uksel ise lugeda, ilma et keegi seda hoiaks. Ukseseadme režiimis avaneb äpp kohe AI kaamera päris loendusega, ekraan jääb põlema ja rikke korral proovib seade iga 30 sekundi järel ise uuesti. Kell 06:00 lõpetab see õhtu ja nullib loenduri.</p>
           <ol class="howto">
-            <li><b>Kaamera:</b> ühenda vaates Uks → „Ühenda kaamera“ USB- või võrgukaamera.</li>
             <li><b>Joon paika:</b> ava enne vaates Uks „AI kaamera loeb ust“ ja sea joone suund ning asukoht.</li>
-            <li><b>Toide:</b> hoia seade, millel äpp töötab, kogu aeg vooluvõrgus. AI kulutab palju voolu.</li>
-            <li><b>Kinnitus:</b> kinnita kaamera ukse kohale või kõrvale, kõrgele ja kindlalt, nii et inimesed liiguvad pildil üle joone, mitte otse kaamera poole.</li>
+            <li><b>Laadija:</b> hoia telefon kogu aeg laadijas. Kaamera ja AI kulutavad akut kiiresti.</li>
+            <li><b>Kinnitus:</b> kinnita telefon ukse kohale või kõrvale, kõrgele ja kindlalt, nii et inimesed liiguvad pildil üle joone, mitte otse kaamera poole.</li>
             <li><b>Sein ja taust:</b> kaamera peaks nägema ust ja põrandat, mitte tänavat ega aknaid. Vasta valgusele (otse lampi) suunatud kaamera loeb halvemini.</li>
             <li><b>Silt:</b> pane uksele silt, et ruumi jälgitakse kaameraga. Kaamerapilt on isikuandmed. Clubcount töötleb pilti ainult selles seadmes: videot ei salvestata ega saadeta ning nägusid ei tuvastata. Välja läheb ainult arv.</li>
           </ol>
@@ -430,17 +385,17 @@ nav button[aria-selected=true]{color:var(--ac)}
         </div>
       </div>
       <div class="sec">
-        <h2>Kuidas AI loeb</h2>
+        <h2>Kuidas kaamera loeb</h2>
         <div class="card">
-          <p style="margin:0">Kaamera kinnitatakse ukse kohale nii, et see näeb ust, ja ühendatakse vaates Uks → „Ühenda kaamera“. AI tunneb pildil inimesed ära ja jälgib neid. Kui inimene ületab pildile tõmmatud joone ühes suunas, läheb loendur +1. Kui teises suunas, läheb loendur −1.</p>
+          <p style="margin:0">Pildil on üle ukse tõmmatud lilla joon. Kes läheb üle joone ukse poolt saali poole, see tuli sisse. Kes läheb vastupidi, see läks välja.</p>
           <ol class="howto">
-            <li><b>Tuvastus:</b> AI-mudel (COCO-SSD) vaatab umbes 10 korda sekundis kaamerapilti ja märgib iga inimese kastiga.</li>
-            <li><b>Jälgimine:</b> iga kasti keskpunkt seotakse järgmisel kaadril lähima inimesega. Nii teab AI, et see on sama inimene.</li>
-            <li><b>Loendus:</b> kui inimese keskpunkt liigub lilla joone ühelt poolelt teisele, on see +1 sisse või −1 välja. Joon vilgub roheliselt või punaselt.</li>
+            <li><b>Leiab inimesed:</b> umbes 10 korda sekundis vaatab telefon kaamerapilti ja paneb iga inimese ümber kasti.</li>
+            <li><b>Jälgib neid:</b> igal järgmisel kaadril seob ta kasti sama inimesega, kes oli eelmisel kaadril kõige lähemal. Nii teab ta, kuhu poole inimene liigub.</li>
+            <li><b>Loeb:</b> kui inimene liigub joone ühelt poolt teisele, tuleb +1 sisse või −1 välja. Joon vilgub siis roheliselt või punaselt.</li>
           </ol>
-          <p class="privacy">Parim tulemus: kaamera ukse kohal või kõrval, nii et inimesed liiguvad pildil üle joone, mitte otse kaamera poole. Tihe grupp, mis läheb kõrvuti, võib anda vähem loendusi.</p>
-          <button class="btn" id="tryAi">Katseta AI loendurit</button>
-          <p class="privacy">Kogu pildituvastus toimub asutuses, seadmes, kuhu kaamera on ühendatud. Videot ei salvestata ega saadeta kuhugi ning nägusid ei tuvastata. Eestis tuleb kaamerast uksel siiski teavitada sildiga.</p>
+          <p class="privacy">Kui keegi seisab joonel või astub tagasi, siis seda ei loeta. Joone ümber on väike vahe ja inimene peab olema näha vähemalt kahel kaadril. Kõige paremini töötab, kui telefon on ukse kohal või kõrval ja inimesed liiguvad pildil üle joone, mitte otse kaamera poole. Kui tihe grupp läheb kõrvuti, võib mõni jääda lugemata.</p>
+          <button class="btn" id="tryAi">Proovi kaamerat</button>
+          <p class="privacy">Kogu pildituvastus toimub telefonis endas. Videot ei salvestata ega saadeta kuhugi ning nägusid ei tuvastata. Eestis tuleb kaamerast uksel siiski teavitada sildiga.</p>
         </div>
       </div>
       <div class="sec" id="installSec">
@@ -456,8 +411,8 @@ nav button[aria-selected=true]{color:var(--ac)}
 
   <nav class="gut" role="tablist">
     <button role="tab" data-v="v-list" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Kohad</button>
+    <button role="tab" data-v="v-events" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 5v12" stroke-dasharray="2 2.2"/></svg>Peod</button>
     <button role="tab" data-v="v-map" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Kaart</button>
-    <button role="tab" data-v="v-pitch" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>Klubile</button>
     <button role="tab" data-v="v-door" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><circle cx="15" cy="12" r="1" fill="currentColor"/></svg>Uks</button>
     <button role="tab" data-v="v-info" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Info</button>
   </nav>
@@ -481,10 +436,9 @@ nav button[aria-selected=true]{color:var(--ac)}
     </div>
     <div class="warn" id="testNote" style="font-size:13.5px">Testrežiimis AI loeb, aga päris loendur (vaade Uks) ei muutu. Kõnni kaamera ees joonest üle või vali videofail ukse salvestisega.</div>
     <div class="cam-stage">
-      <video id="camVideo" playsinline muted autoplay crossorigin="anonymous"></video>
-      <img id="camImg" alt="Võrgukaamera pilt" crossorigin="anonymous" hidden>
+      <video id="camVideo" playsinline muted autoplay></video>
       <canvas id="camCanvas"></canvas>
-      <div class="cam-msg" id="camMsg"><div class="disp" style="font-size:26px">Käivita kaamera</div><div class="mut" id="camMsgTxt">Suuna kaamera uksele nii, et sisenejad ja väljujad ületavad pildil joone.</div>
+      <div class="cam-msg" id="camMsg"><div class="disp" style="font-size:26px">Käivita kaamera</div><div class="mut" id="camMsgTxt">Suuna telefon uksele nii, et sisenejad ja väljujad ületavad pildil joone.</div>
         <div class="row" style="justify-content:center"><button class="btn" id="camStart">Käivita kaamera</button><label class="btn btn-line" style="cursor:pointer">Vali videofail<input type="file" accept="video/*" id="camFile" hidden></label></div></div>
     </div>
     <div class="cam-counts">
@@ -498,7 +452,7 @@ nav button[aria-selected=true]{color:var(--ac)}
       <label>Sisse tähendab <span class="seg" role="group"><button data-dir="0" id="dir0">↓ alla</button><button data-dir="1" id="dir1">↑ üles</button></span></label>
       <label for="camConf">Tundlikkus <input type="range" id="camConf" min="30" max="80" step="5"></label>
     </div>
-    <p class="privacy">Pilti töödeldakse ainult selles seadmes. Videot ei salvestata ega saadeta kuhugi. Päris loenduse režiimis muudab iga joone ületus sama loendurit, mida näed vaates Uks.</p>
+    <p class="privacy">Pilti töödeldakse ainult selles telefonis. Videot ei salvestata ega saadeta kuhugi. Päris loenduse režiimis muudab iga joone ületus sama loendurit, mida näed vaates Uks.</p>
   </div>
 </div>
 <div class="kiosk st-calm" id="kiosk" role="dialog" aria-modal="true" aria-label="Ukseseade" hidden>
@@ -516,52 +470,10 @@ nav button[aria-selected=true]{color:var(--ac)}
     </form>
   </div>
 </div>
-<!-- KAAMERA ÜHENDAMINE: pick the camera that watches the door -->
-<div class="sheet gut" id="camSetup" role="dialog" aria-modal="true" aria-label="Ühenda kaamera">
-  <div class="sheet-in">
-    <div class="sheet-top"><button class="back" id="csClose">← Tagasi</button><span class="mono mut" id="csVenue"></span></div>
-    <div>
-      <div class="disp" style="font-size:40px">Ühenda kaamera</div>
-      <p class="mut" style="margin:6px 0 0;font-size:15px">Inimesi loeb ukse kohal olev kaamera. AI töötab seadmes, kuhu kaamera on ühendatud (arvuti, tahvel või väike miniarvuti asutuses). Pilt ei lahku asutusest ja välja läheb ainult arv.</p>
-    </div>
-    <div class="cs-now none" id="csNow"><span class="dot"></span><span style="flex:1;min-width:0"><span class="mono mut" style="display:block;font-size:10.5px">Praegu</span><b id="csNowTxt">Kaamerat pole valitud</b></span></div>
-
-    <div class="card cs-opt">
-      <h3>1 · USB- või seadme kaamera</h3>
-      <p class="mut" style="margin:0;font-size:14px">Veebikaamera, mis on USB-kaabliga arvuti või tahvli küljes, või seadme enda kaamera.</p>
-      <button class="btn" id="csFind">Otsi kaameraid</button>
-      <div class="cs-list" id="csDevs"></div>
-    </div>
-
-    <div class="card cs-opt">
-      <h3>2 · Võrgukaamera (IP-kaamera)</h3>
-      <p class="mut" style="margin:0;font-size:14px">Kaamera, mis on asutuse võrgus ja annab pildi aadressi kaudu.</p>
-      <label class="mono mut" for="csUrl">Kaamera pildi aadress</label>
-      <input class="cs-in" id="csUrl" type="url" inputmode="url" placeholder="https://192.168.1.50/video.mjpg" autocomplete="off" spellcheck="false">
-      <label class="mono mut" for="csKind">Pildi tüüp</label>
-      <select class="cs-in" id="csKind">
-        <option value="auto">Automaatne (aadressi järgi)</option>
-        <option value="mjpeg">MJPEG-voog</option>
-        <option value="snapshot">JPEG-pilt (snapshot, uuendan 3 korda sekundis)</option>
-        <option value="hls">HLS-voog (.m3u8)</option>
-        <option value="video">Video (MP4 / WebM)</option>
-      </select>
-      <div class="cs-row"><button class="btn btn-line" id="csTest">Testi ühendust</button><button class="btn" id="csSave">Kasuta seda kaamerat</button></div>
-      <div class="cs-prev" id="csPrev" hidden><img id="csPrevImg" alt="Kaamera eelvaade" crossorigin="anonymous" hidden><video id="csPrevVid" playsinline muted autoplay crossorigin="anonymous" hidden></video></div>
-      <div class="cs-res" id="csRes" hidden></div>
-      <ol class="cs-help">
-        <li>Kaamera aadressi leiad kaamera seadetest või juhendist (otsi sõnu „MJPEG“, „Snapshot“ või „HLS“).</li>
-        <li>Kui kaamera annab ainult <code>rtsp://</code> aadressi, on vaja väikest vahendajaprogrammi (näiteks go2rtc), mis teeb sellest MJPEG- või HLS-voo.</li>
-        <li>Äpp on avatud turvalise <code>https</code> aadressi kaudu, nii et brauser lubab ainult <code>https</code> kaamera-aadresse. Tavaline <code>http://</code> kohtvõrgu kaamera vajab vahendajat, mis pakub https-i.</li>
-        <li>Kaamera peab lubama oma pilti teistel lehtedel lugeda (CORS). Kui ei luba, ütleb test seda.</li>
-      </ol>
-    </div>
-    <button class="btn btn-line" id="csReset">Kasuta seadme vaikimisi kaamerat</button>
-  </div>
-</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="venues.js"></script>
+<script src="events.js"></script>
 <script>
 (function(){
 const KEY='clubcount.app.v2';
@@ -629,7 +541,6 @@ function load(){
   if(OLD_IDS[d.door.venue])d.door.venue=OLD_IDS[d.door.venue];
   if(!VENUES.some(v=>v.id===d.door.venue))d.door.venue='d3';
   d.cam=Object.assign({},DEF_CAM,d.cam||{});
-  d.camSrc=d.camSrc&&typeof d.camSrc==='object'&&d.camSrc.type?d.camSrc:{type:'auto'};
   d.favs=(Array.isArray(d.favs)?d.favs:[]).map(id=>OLD_IDS[id]||id); d.filter=d.filter||'all';
   d.area=d.area||'all'; d.q='';
   d.kiosk=Object.assign({on:false,pin:null},d.kiosk||{});
@@ -708,6 +619,7 @@ function renderList(){
         ${L?`<span><span class="mut">Järjekord</span> <b class="tab">${L.queue?L.queue+' min':'Pole'}</b></span>`:''}
       </div>
       ${v.about?`<p class="v-about">${esc(v.about)}</p>`:''}
+      ${(ev=>ev?`<div class="tonight"><span class="dot pulse"></span>Täna: ${esc(ev.title)} · ${ev.time}</div>`:'')(EVENTS.find(e=>e.venue===v.id&&e.date>=partyDay()&&e.date<=ymd(new Date())))}
       ${v.drink?`<div class="v-drink"><span class="mono">Tuntud jook</span> ${esc(v.drink)}</div>`:''}
     </div>`}).join('');
 }
@@ -717,6 +629,83 @@ $('q').addEventListener('input',e=>{S.q=e.target.value.trim();shown=PAGE;renderL
 $('more').addEventListener('click',()=>{shown+=PAGE;renderList()});
 $('list').addEventListener('click',e=>{const v=e.target.closest('[data-id]');if(v)openSheet(v.dataset.id)});
 $('list').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.dataset.id){e.preventDefault();openSheet(e.target.dataset.id)}});
+
+/* ---------- daily question: one per day, same for everyone, changes at midnight ---------- */
+const QUESTIONS=[
+  ['Kas täna on see õhtu,','kus lähed „ainult üheks“?'],
+  ['Kas tantsupõrand','igatseb sind juba?'],
+  ['Kas homne sina','andestab tänasele sulle?'],
+  ['Kas sõbrad ütlevad jälle,','et „tuleme kohe“?'],
+  ['Kas järjekord on pikem','kui sinu kannatus?'],
+  ['Kas DJ mängib täna','sinu lugu?'],
+  ['Kas jope jääb','jälle garderoobi?'],
+  ['Kas täna jõuad koju','enne päikest?'],
+  ['Kas riided on valitud','või valid veel tunnikese?'],
+  ['Kas täna tantsid','või hoiad seina püsti?'],
+  ['Kas taskus on telefon,','võtmed ja hea tuju?'],
+  ['Kas viimane buss','on juba läinud?'],
+  ['Kas eelpidu venib','jälle keskööni?'],
+  ['Kas sellest õhtust','räägitakse veel esmaspäeval?'],
+  ['Kas kebab tuleb täna','enne või pärast pidu?'],
+  ['Kas tead, kuhu minna,','või küsid jälle grupichatis?'],
+  ['Kas su sõber on jälle','„viis minutit“ hiljaks?'],
+  ['Kas täna on õige õhtu','uute tantsuliigutuste jaoks?'],
+  ['Kas takso hind','on juba kosmoses?'],
+  ['Kas sa tõesti','jääd täna koju?'],
+  ['Kas homme on loeng','või see ei loe?'],
+  ['Kas karaokelugu','on juba valitud?'],
+  ['Kas ID-kaart','on ikka kaasas?'],
+  ['Kas täna on rahulik õhtu','või ainult nime poolest?'],
+  ['Kas kõik teised','teavad juba, kuhu minna?'],
+  ['Kas lubasid emale,','et tuled varakult?'],
+  ['Kas tantsukingad','on valmis?'],
+  ['Kas tantsupõrand loeb','ka trenniks?'],
+  ['Kas täna leiad','oma inimesed üles?'],
+  ['Kas sul on plaan','või lihtsalt hea tuju?'],
+  ['Kas täna jääb','mõni lugu pähe?']
+];
+function dayOfYear(d){return Math.floor((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(d.getFullYear(),0,0))/864e5)}
+function renderSlogan(){
+  const d=new Date(),q=QUESTIONS[dayOfYear(d)%QUESTIONS.length];
+  $('slogan').innerHTML=esc(q[0])+'<span>'+esc(q[1])+'</span>';
+  $('qDay').textContent='Tänane küsimus · '+DAYS_LONG[d.getDay()].toLowerCase();
+}
+
+/* ---------- events (Peod) from events.js; a night that runs past midnight still counts as "today" until 06:00 ---------- */
+const EVENTS=(window.CC_EVENTS||[]).slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+const MON=['jaan','veebr','märts','apr','mai','juuni','juuli','aug','sept','okt','nov','dets'];
+const ymd=d=>d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
+const parseYmd=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+function partyDay(){const d=new Date();if(d.getHours()<6)d.setDate(d.getDate()-1);return ymd(d)}
+function upcoming(){const t=partyDay();return EVENTS.filter(e=>e.date>=t)}
+function dayLabel(s){
+  const t=ymd(new Date()),tm=parseYmd(t);tm.setDate(tm.getDate()+1);
+  if(s<t)return 'Käib praegu';if(s===t)return 'Täna';if(s===ymd(tm))return 'Homme';
+  const d=parseYmd(s);return DAYS_LONG[d.getDay()]+' '+d.getDate()+'.'+pad2(d.getMonth()+1);
+}
+let evDay='all';
+function evCard(e){
+  const d=parseYmd(e.date),v=e.venue?venueById(e.venue):null,now=ymd(new Date()),today=e.date<=now;
+  return `<article class="ev">
+    <div class="ev-date${today?' soon':''}"><span class="mono">${e.date<now?'Praegu':today?'Täna':DAYS_LONG[d.getDay()].slice(0,3)}</span><span class="disp tab">${d.getDate()}</span><span class="mono">${MON[d.getMonth()]}</span></div>
+    <div class="ev-body">
+      <div class="disp ev-title">${esc(e.title)}</div>
+      <div class="ev-where">${v?`<button data-id="${v.id}">${esc(v.name)}</button>`:esc(e.place)} · <span class="tab">${e.time}${e.end?'–'+e.end:''}</span>${e.age?' · '+esc(e.age):''}</div>
+      ${e.lineup&&e.lineup.length?`<div class="ev-line">${e.lineup.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
+      ${e.note?`<p class="ev-note">${esc(e.note)}</p>`:''}
+      <div class="ev-foot"><span class="mono">${esc(e.src)}</span><a class="back" href="${esc(e.url)}" target="_blank" rel="noopener">Info ja piletid ↗</a></div>
+    </div></article>`;
+}
+function renderEvents(){
+  const up=upcoming(),days=[...new Set(up.map(e=>e.date))];
+  if(evDay!=='all'&&!days.includes(evDay))evDay='all';
+  $('evDays').innerHTML=[['all','Kõik · '+up.length]].concat(days.map(d=>[d,dayLabel(d)]))
+    .map(([id,l])=>`<button class="chip" data-d="${id}" aria-pressed="${evDay===id}">${l}</button>`).join('');
+  const rows=up.filter(e=>evDay==='all'||e.date===evDay);
+  $('evList').innerHTML=rows.length?rows.map(evCard).join(''):`<div class="empty">Praegu pole ühtegi pidu kirjas. Vaata varsti uuesti.</div>`;
+}
+$('evDays').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;evDay=b.dataset.d;renderEvents()});
+$('evList').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(b)openSheet(b.dataset.id)});
 
 /* ---------- detail sheet ---------- */
 let openId=null;
@@ -744,7 +733,9 @@ function renderSheet(){
       <div class="axis mono tab"><span>${hm(now-2*3600e3)}</span><span>Viimased 2 h</span><span>${hm(now)}</span></div></div>`
   :`<div class="card st-none"><span class="mono mut">Rahvaarv</span>
       <div class="disp" style="font-size:34px;color:var(--off)">Pole ühendatud</div>
-      <p class="mut" style="margin:0;font-size:14.5px">Selle koha uksel ei tööta veel Clubcounti loendur, seega rahvaarvu ja järjekorda ei näidata. Klubi saab loenduri käivitada vaates Uks, käsitsi või AI kaameraga.</p></div>`;
+      <p class="mut" style="margin:0;font-size:14.5px">Selle koha uksel pole veel Clubcounti loendurit. Kui klubi selle käivitab, näed siin rahvaarvu ja järjekorda.</p></div>`;
+  const evs=upcoming().filter(e=>e.venue===v.id);
+  const party=evs.length?`<div class="card"><span class="mono mut">Tulevad peod</span><div class="kv">${evs.map(e=>`<div><span>${dayLabel(e.date)} · ${e.time}</span><span><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></span></div>`).join('')}</div></div>`:'';
   const links=[`<a class="back" href="https://www.google.com/maps/search/?api=1&query=${v.lat},${v.lon}" target="_blank" rel="noopener">Ava kaardil ↗</a>`];
   if(v.web)links.push(`<a class="back" href="${v.web}" target="_blank" rel="noopener">Koduleht ↗</a>`);
   $('sheetIn').innerHTML=`
@@ -760,14 +751,14 @@ function renderSheet(){
     ${photo}
     ${v.warn?`<div class="warn">${esc(v.warn)}</div>`:''}
     ${live}
+    ${party}
     <div class="two">
       <div class="card"><span class="mono mut">Sissepääs</span>${price===null?`<span class="na">Pole teada</span>`:`<span class="disp tab">${euro(price)}</span>`}${v.priceNote&&!(L&&L.price!==null)?`<span class="mut" style="font-size:13px">${esc(v.priceNote)}</span>`:''}</div>
       <div class="card"><span class="mono mut">Järjekord</span>${L?`<span class="disp tab">${L.queue?L.queue+'<span style="font-size:22px"> min</span>':'Pole'}</span>`:`<span class="na">Pole teada</span>`}</div>
     </div>
     <div class="card drink-card"><span class="mono mut">Tuntud jook</span>
       ${v.drink?`<div class="disp" style="font-size:30px;line-height:1;color:var(--ac)">${esc(v.drink)}</div>${v.drinkNote?`<span class="mut" style="font-size:14px">${esc(v.drinkNote)}</span>`:''}`
-        :`<span class="na">Pole teada</span>`}
-      <span class="mut" style="font-size:12.5px">Selle joogi poolest on koht tuntud arvustustes, menüüdes ja juhendites (vt allikaid). Kõige rohkem tellitud jooki teab ainult baar ise.</span></div>
+        :`<span class="na">Pole teada</span>`}</div>
     <div class="card"><span class="mono mut">Kohast</span>${v.about?`<p style="margin:0">${esc(v.about)}</p>`:''}
       <div class="kv"><div><span>Aadress</span><span>${esc(v.addr||'Pole teada')}</span></div><div><span>Piirkond</span><span>${esc(v.area)}</span></div></div>
       <div class="kv">
@@ -777,16 +768,14 @@ function renderSheet(){
         ${v.email?`<div><span>E-post</span><span style="user-select:all">${esc(v.email)}</span></div>`:''}
       </div>
       <div class="linkrow">${links.join('')}</div>
-      <button class="d-pitch" data-pitch="${v.id}"><span style="display:flex;flex-direction:column;gap:2px"><span class="mono mut" style="font-size:10.5px">Räägid omanikuga?</span><b>Näita, kuidas ${esc(v.name)} Clubcountis välja näeb</b></span><span aria-hidden="true">→</span></button>
     </div>
     <div class="card"><span class="mono mut">Lahtiolekuajad</span><div class="kv">${hoursRows}</div>${v.hoursNote?`<span class="mut" style="font-size:13.5px">${esc(v.hoursNote)}</span>`:''}</div>
-    <div class="card"><span class="mono mut">Allikad (kontrollitud 19.10.2026)</span>
+    <div class="card"><span class="mono mut">Allikad</span>
       <ul class="src">${v.src.map(([n,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('')}</ul></div>`;
 }
 $('sheet').addEventListener('click',e=>{
   if(e.target.closest('[data-close]')){closeSheet();return}
   const s=e.target.closest('[data-star]');if(s){const id=s.dataset.star,i=S.favs.indexOf(id);if(i>=0)S.favs.splice(i,1);else S.favs.push(id);save();renderSheet();renderList()}
-  const pt=e.target.closest('[data-pitch]');if(pt){S.pitch=pt.dataset.pitch;save();closeSheet();show('v-pitch');return}
   const dp=e.target.closest('[data-delphoto]');if(dp){e.preventDefault();try{localStorage.removeItem('cc-photo-'+dp.dataset.delphoto)}catch(err){}renderSheet();renderList()}
 });
 /* own photo: resized to 900 px JPEG and kept on this device only */
@@ -803,8 +792,8 @@ $('sheet').addEventListener('change',e=>{
   img.onerror=()=>toast('Seda pilti ei saanud avada','bad');
   img.src=url;
 });
-window.addEventListener('popstate',e=>{const st=e.state||{};if(!st.sheet)closeSheet(true);if(!st.cs)closeSetup(true);if(!st.cam&&!S.kiosk.on)closeCam(true)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(csOpen){closeSetup();return}closeSheet();closeCam()}});
+window.addEventListener('popstate',e=>{const st=e.state||{};if(!st.sheet)closeSheet(true);if(!st.cam&&!S.kiosk.on)closeCam(true)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSheet();closeCam()}});
 
 /* ---------- map ---------- */
 let map=null,markers={};
@@ -832,58 +821,6 @@ function renderMarkers(){
     else{markers[v.id]=L.marker([v.lat,v.lon],{icon,title:v.name,keyboard:true,zIndexOffset:Lv?1000:v.kind==='Klubi'?500:0}).addTo(map).on('click',()=>openSheet(v.id))}
   });
 }
-
-/* ---------- pitch (Klubile): show an owner what their venue looks like in Clubcount, right there.
-   The demo numbers are made up and always labelled NÄIDIS; they never reach the list, map or backend. ---------- */
-const PITCH={name:'',company:'',email:'',phone:''};   // contact block on the pitch; stays hidden while all fields are empty
-let demo=null,demoT=null;
-function demoReset(v){
-  const cap=v.cap||(v.kind==='Klubi'?400:120);
-  const inflow=Array.from({length:12},(_,i)=>Math.round((v.kind==='Klubi'?6:3)+i*(v.kind==='Klubi'?3.2:1.2)+Math.random()*5));
-  demo={id:v.id,cap,occ:Math.round(cap*0.62),queue:v.kind==='Klubi'?10:0,inflow};demo.peak=Math.min(cap,Math.round(demo.occ*1.12));
-}
-function demoStep(){
-  if(!demo)return;
-  const d=Math.round((Math.random()-0.4)*demo.cap*0.03);
-  demo.occ=Math.max(Math.round(demo.cap*0.3),Math.min(demo.cap,demo.occ+d));
-  demo.peak=Math.max(demo.peak,demo.occ);
-  if(d>0)demo.inflow[11]+=d;
-  if(venueById(demo.id).kind==='Klubi')demo.queue=Math.max(0,Math.min(30,demo.queue+(Math.random()<0.5?-5:5)*(Math.random()<0.3?1:0)));
-}
-function renderPitch(){
-  const sel=$('pVenue');
-  if(!sel.options.length)sel.innerHTML=VENUES.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
-  if(!venueById(S.pitch))S.pitch=S.door.venue;
-  sel.value=S.pitch;
-  const v=venueById(S.pitch);
-  if(!demo||demo.id!==v.id)demoReset(v);
-  const p=demo.occ/demo.cap,st=statusOf(p),mx=Math.max(1,...demo.inflow),now=Date.now();
-  $('pTitle').innerHTML=`${esc(v.name)},<em>reaalajas.</em>`;
-  $('pLead').textContent=`Nii näeb ${v.name} välja Clubcountis, kui uksel töötab loendur. Inimesed näevad enne väljaminekut, kui palju rahvast on sees, mis maksab sissepääs ja kui pikk on järjekord.`;
-  $('pDemo').innerHTML=`
-    <div class="demo-tag mono"><b>Näidis</b><span>Numbrid on väljamõeldud</span></div>
-    <div class="st-${st.key}"><div class="mono mut">${esc(v.kind)} · ${esc(v.area)}</div>
-      <div class="row" style="margin-top:6px"><div class="p-name">${esc(v.name)}</div><span class="pill mono"><span class="dot pulse"></span>${st.label}</span></div></div>
-    <div class="st-${st.key}">
-      <div class="big"><span class="disp tab">${demo.occ}</span><span class="mut">inimest sees, piir ${demo.cap}</span></div>
-      <div class="segs">${Array.from({length:40},(_,i)=>`<span style="${i<Math.round(Math.min(1,p)*40)?'background:var(--st)':''}"></span>`).join('')}</div>
-    </div>
-    <div class="p-row">
-      <div><div class="mono mut">Sissepääs</div><div class="disp tab">${v.price===0?'Tasuta':'10 €'}</div></div>
-      <div><div class="mono mut">Järjekord</div><div class="disp tab">${demo.queue?demo.queue+' min':'Pole'}</div></div>
-      <div><div class="mono mut">Tipp</div><div class="disp tab">${demo.peak}</div></div>
-    </div>
-    <div><span class="mono mut">Sisenejaid 10 minuti kohta</span>
-      <div class="inflow" style="height:72px;margin-top:8px">${demo.inflow.map(x=>`<i style="height:${Math.round(x/mx*100)}%"></i>`).join('')}</div>
-      <div class="axis mono tab"><span>${hm(now-2*3600e3)}</span><span>${hm(now)}</span></div></div>`;
-  $('pContact').hidden=!(PITCH.name||PITCH.company||PITCH.email||PITCH.phone);
-  $('pContact').innerHTML=`<span class="mono mut">Räägime</span>${PITCH.name?`<div class="disp">${esc(PITCH.name)}</div>`:''}${PITCH.company?`<span class="mut">${esc(PITCH.company)}</span>`:''}
-    ${PITCH.email?`<a href="mailto:${esc(PITCH.email)}">${esc(PITCH.email)}</a>`:''}${PITCH.phone?`<a href="tel:${esc(PITCH.phone.replace(/\s/g,''))}">${esc(PITCH.phone)}</a>`:''}`;
-}
-function pitchDoor(){if(!S.door.events.length&&S.door.venue!==S.pitch){S.door.venue=S.pitch;const v=venueById(S.pitch);S.door.cap=v.cap||200;S.door.price=null;S.door.queue=0;S.door.pin=null;save()}}
-$('pVenue').addEventListener('change',e=>{S.pitch=e.target.value;save();renderPitch();$('v-pitch').scrollTop=0});
-$('pTry').addEventListener('click',()=>{pitchDoor();openCam(true)});
-$('pDoor').addEventListener('click',()=>{pitchDoor();show('v-door')});
 
 /* ---------- door counter ---------- */
 let toastT;
@@ -1011,124 +948,9 @@ async function cloudInit(){
 }
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){cloudFetch();if(S.door.start)doorPush()}});
 
-/* ---------- camera source: device/USB camera or a network (IP) camera. S.camSrc = {type:'auto'|'device'|'ip', deviceId,label, url,kind} ---------- */
-function ipKind(cfg){
-  if(cfg.kind&&cfg.kind!=='auto')return cfg.kind;
-  const u=String(cfg.url||'').toLowerCase().split('?')[0];
-  if(u.endsWith('.m3u8'))return 'hls';
-  if(/\.(mp4|webm|mov)$/.test(u))return 'video';
-  if(/\.(jpe?g|png)$/.test(u)||/snapshot|snap|still|picture|image\.cgi/.test(u))return 'snapshot';
-  return 'mjpeg';
-}
-const mixedBlocked=url=>location.protocol==='https:'&&/^http:\/\//i.test(url)&&!/^http:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/i.test(url);
-const bust=url=>url+(url.includes('?')?'&':'?')+'_t='+Date.now();
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-function canRead(el){try{const c=document.createElement('canvas');c.width=c.height=8;const g=c.getContext('2d');g.drawImage(el,0,0,8,8);g.getImageData(0,0,1,1);return true}catch(e){return false}}
-async function waitFor(test,ms){const end=Date.now()+ms;while(Date.now()<end){if(test())return true;await sleep(120)}return false}
-/* one player per <video>/<img> pair: the counter uses one, the setup preview another */
-function ipPlayer(vid,img){
-  let snapT=null,hls=null;
-  const p={el:null,lastFrame:0,
-    close(){clearInterval(snapT);snapT=null;if(hls){hls.destroy();hls=null}img.onload=null;img.removeAttribute('src');img.hidden=true;
-      if(vid.getAttribute('src')||vid.src){vid.pause();vid.removeAttribute('src');vid.load()}vid.hidden=false;p.el=null},
-    async open(cfg){
-      p.close();
-      if(!cfg.url)return{ok:false,msg:'Sisesta kaamera pildi aadress.'};
-      if(!/^https?:\/\//i.test(cfg.url))return{ok:false,msg:'Aadress peab algama https:// (või http://). Kui kaameral on ainult rtsp://, on vaja vahendajat (nt go2rtc).'};
-      if(mixedBlocked(cfg.url))return{ok:false,msg:'Brauser ei luba https-lehel avada http-kaamerat. Kasuta kaamera https-aadressi või vahendajat (nt go2rtc), mis pakub https-i.'};
-      const kind=ipKind(cfg);
-      if(kind==='mjpeg'||kind==='snapshot'){
-        vid.hidden=true;img.hidden=false;
-        let failed=false;img.onerror=()=>{failed=true};
-        img.onload=()=>{p.lastFrame=Date.now()};
-        img.src=kind==='snapshot'?bust(cfg.url):cfg.url;
-        const ok=await waitFor(()=>failed||img.naturalWidth>0,9000);
-        if(failed||!ok||!img.naturalWidth){p.close();return{ok:false,msg:'Kaamera pilti ei saanud. Kontrolli aadressi, pildi tüüpi ja et see seade on kaameraga samas võrgus.'}}
-        if(!canRead(img)){p.close();return{ok:false,msg:'Kaamera näitab pilti, aga ei luba seda lugeda (CORS). Luba kaamera seadetes CORS või kasuta vahendajat (nt go2rtc).'}}
-        p.lastFrame=Date.now();
-        if(kind==='snapshot')snapT=setInterval(()=>{img.src=bust(cfg.url)},333);
-        p.el=img;return{ok:true,kind,w:img.naturalWidth,h:img.naturalHeight};
-      }
-      img.hidden=true;vid.hidden=false;vid.loop=kind==='video';
-      try{
-        if(kind==='hls'&&!vid.canPlayType('application/vnd.apple.mpegurl')){
-          if(!window.Hls)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js');
-          hls=new Hls();hls.loadSource(cfg.url);hls.attachMedia(vid);
-        }else vid.src=cfg.url;
-        await Promise.race([vid.play(),sleep(9000).then(()=>{throw new Error('timeout')})]);
-      }catch(e){p.close();return{ok:false,msg:'Voogu ei saanud esitada. Kontrolli aadressi ja voo tüüpi.'}}
-      if(!(await waitFor(()=>vid.videoWidth>0,9000))){p.close();return{ok:false,msg:'Voog ei saatnud ühtegi kaadrit.'}}
-      if(!canRead(vid)){p.close();return{ok:false,msg:'Kaamera ei luba pilti lugeda (CORS). Luba kaamera seadetes CORS või kasuta vahendajat.'}}
-      p.el=vid;return{ok:true,kind,w:vid.videoWidth,h:vid.videoHeight};
-    }};
-  return p;
-}
-function camSrcLabel(){
-  const c=S.camSrc;
-  if(c.type==='device')return 'USB- või seadme kaamera: '+(c.label||'valitud kaamera');
-  if(c.type==='ip'){let h=c.url;try{h=new URL(c.url).host}catch(e){}return 'Võrgukaamera: '+h}
-  return null;
-}
-function renderCamConn(){
-  const l=camSrcLabel();
-  ['camConnBtn','csNow'].forEach(id=>{const el=$(id);if(el)el.className='cs-now '+(l?'ok':'none')});
-  $('camConnTxt').textContent=l||'Kaamerat pole ühendatud';
-  $('csNowTxt').textContent=l||'Kaamerat pole valitud (kasutan seadme vaikimisi kaamerat)';
-}
-let prev=null,csOpen=false;
-function openSetup(){
-  csOpen=true;$('camSetup').classList.add('open');history.pushState({cs:1},'');
-  $('csVenue').textContent=venueById(S.door.venue).name+' · uks';
-  if(S.camSrc.type==='ip'){$('csUrl').value=S.camSrc.url||'';$('csKind').value=S.camSrc.kind||'auto'}
-  $('csRes').hidden=true;$('csPrev').hidden=true;renderCamConn();renderDevs([]);
-}
-function closeSetup(fromPop){
-  if(!csOpen)return;csOpen=false;if(prev)prev.close();$('camSetup').classList.remove('open');
-  if(!fromPop&&history.state&&history.state.cs)history.back();
-  renderCamConn();
-}
-function renderDevs(list){
-  $('csDevs').innerHTML=list.map((d,i)=>`<button class="cs-dev" data-dev="${esc(d.deviceId)}" data-label="${esc(d.label||'Kaamera '+(i+1))}" aria-pressed="${S.camSrc.type==='device'&&S.camSrc.deviceId===d.deviceId}">
-    <span style="flex:1;min-width:0"><b>${esc(d.label||'Kaamera '+(i+1))}</b><br><span class="mut">${/usb|webcam|logi|hd pro|uvc/i.test(d.label||'')?'USB-kaamera':'Kaamera'}</span></span><span aria-hidden="true">${S.camSrc.type==='device'&&S.camSrc.deviceId===d.deviceId?'✓':''}</span></button>`).join('');
-}
-$('csFind').addEventListener('click',async()=>{
-  if(!navigator.mediaDevices||!navigator.mediaDevices.enumerateDevices){toast('See brauser ei näita kaameraid','bad');return}
-  try{const s=await navigator.mediaDevices.getUserMedia({video:true,audio:false});s.getTracks().forEach(t=>t.stop())}
-  catch(e){toast(e&&e.name==='NotAllowedError'?'Luba kaamera kasutamine brauseri seadetes':'Ühtegi kaamerat ei leitud','bad');return}
-  const devs=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='videoinput');
-  if(!devs.length){toast('Ühtegi kaamerat ei leitud. Kontrolli USB-kaablit.','bad');return}
-  renderDevs(devs);
-});
-$('csDevs').addEventListener('click',e=>{
-  const b=e.target.closest('[data-dev]');if(!b)return;
-  S.camSrc={type:'device',deviceId:b.dataset.dev,label:b.dataset.label};save();
-  [...$('csDevs').children].forEach(x=>{const on=x===b;x.setAttribute('aria-pressed',on);x.lastElementChild.textContent=on?'✓':''});
-  renderCamConn();toast('Kaamera valitud: '+b.dataset.label);
-});
-async function csTest(){
-  const cfg={url:$('csUrl').value.trim(),kind:$('csKind').value};
-  if(!prev)prev=ipPlayer($('csPrevVid'),$('csPrevImg'));
-  const r=$('csRes');r.hidden=false;r.className='cs-res';r.textContent='Ühendan kaameraga…';$('csPrev').hidden=false;
-  const res=await prev.open(cfg);
-  r.className='cs-res '+(res.ok?'ok':'bad');
-  r.textContent=res.ok?`Ühendus töötab: ${({mjpeg:'MJPEG-voog',snapshot:'JPEG-pilt',hls:'HLS-voog',video:'video'})[res.kind]}, ${res.w}×${res.h}. AI saab seda pilti lugeda.`:res.msg;
-  if(!res.ok)$('csPrev').hidden=true;
-  return res.ok?cfg:null;
-}
-$('csTest').addEventListener('click',csTest);
-$('csSave').addEventListener('click',async()=>{
-  const cfg=await csTest();if(!cfg)return;
-  S.camSrc={type:'ip',url:cfg.url,kind:cfg.kind};save();renderCamConn();toast('Võrgukaamera ühendatud');
-});
-$('csReset').addEventListener('click',()=>{S.camSrc={type:'auto'};save();renderCamConn();renderDevs([]);toast('Kasutan seadme vaikimisi kaamerat')});
-$('csClose').addEventListener('click',()=>closeSetup());
-$('camConnBtn').addEventListener('click',openSetup);
-
-/* ---------- AI camera counter (TensorFlow.js COCO-SSD, runs on the device the camera is connected to) ---------- */
+/* ---------- AI camera counter (TensorFlow.js COCO-SSD, runs on the phone) ---------- */
 let camErr=null,lastVT=-1,lastVTAt=0,camOpen=false,stream=null,model=null,running=false,tracks=[],nextId=1,flashT=0,flashD=0,lastFps=0;
-const video=$('camVideo'),camImg=$('camImg'),canvas=$('camCanvas'),ctx=canvas.getContext('2d');
-const camPlayer=ipPlayer(video,camImg);
-let srcEl=video;   // what the AI reads: the <video> (device camera, file, HLS/MP4) or the <img> (MJPEG / snapshot)
+const video=$('camVideo'),canvas=$('camCanvas'),ctx=canvas.getContext('2d');
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('Ei saanud laadida: '+src));document.head.appendChild(s)})}
 function camMsg(title,txt,btn){$('camMsg').hidden=!title;if(!title)return;$('camMsg').querySelector('.disp').textContent=title;$('camMsgTxt').textContent=txt||'';$('camStart').hidden=!btn;if(btn)$('camStart').textContent=btn}
 /* test mode: AI counts into its own counters and never touches the real door counter */
@@ -1148,11 +970,10 @@ function openCam(test){
   camOpen=true;$('cam').classList.add('open');history.pushState({cam:1},'');
   $('camVenue').textContent=venueById(S.door.venue).name+' · uks';
   setMode(!!test);syncCamCtrl();
-  if(!running)camMsg('Käivita kaamera','Suuna kaamera uksele nii, et sisenejad ja väljujad ületavad pildil joone. Arvutis saad proovida ka veebikaamera või ukse videosalvestisega. Esimesel korral laaditakse AI mudel (umbes 6 MB).','Käivita kaamera');
+  if(!running)camMsg('Käivita kaamera','Suuna telefon uksele nii, et sisenejad ja väljujad ületavad pildil joone. Arvutis saad proovida ka veebikaamera või ukse videosalvestisega. Esimesel korral laaditakse AI mudel (umbes 6 MB).','Käivita kaamera');
 }
 function stopSource(){
   running=false;
-  camPlayer.close();srcEl=video;
   if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
   video.pause();video.srcObject=null;
   if(fileUrl){video.removeAttribute('src');video.load();URL.revokeObjectURL(fileUrl);fileUrl=null}
@@ -1167,28 +988,18 @@ async function startCam(file){
   if(file instanceof File){
     fileUrl=URL.createObjectURL(file);video.loop=true;video.src=fileUrl;
     try{await video.play()}catch(e){camErr='file';camMsg('Videot ei saa esitada','Proovi teist videofaili (MP4 töötab kõige paremini).','Käivita kaamera');return}
-  }else if(S.camSrc.type==='ip'&&S.camSrc.url){
-    camMsg('Ühendan võrgukaameraga','Võtan pilti kaamerast '+(camSrcLabel()||'')+'.');
-    const r=await camPlayer.open(S.camSrc);
-    if(!r.ok){camErr='ip';camMsg('Võrgukaamera ei vasta',r.msg+' Kaamerat saab muuta vaates Uks → Ühenda kaamera.','Proovi uuesti');return}
-    srcEl=camPlayer.el;
   }else{
-    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){camErr='nocam';camMsg('Kaamerat ei saa kasutada','See brauser või vaade ei luba kaamerat. Ava äpp https-aadressilt või vali videofail.','Proovi uuesti');return}
-    const dev=S.camSrc.type==='device'&&S.camSrc.deviceId;
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){camErr='nocam';camMsg('Kaamerat ei saa kasutada','See brauser või vaade ei luba kaamerat. Ava äpp oma Netlify lingilt (https) või vali videofail.','Proovi uuesti');return}
     try{
-      camMsg('Kaamera käivitub',dev?'Ühendan kaameraga: '+S.camSrc.label:'Luba kaamera kasutamine, kui seade küsib.');
+      camMsg('Kaamera käivitub','Luba kaamera kasutamine, kui telefon küsib.');
       video.loop=false;
-      stream=await navigator.mediaDevices.getUserMedia({video:dev?{deviceId:{exact:dev},width:{ideal:640},height:{ideal:480}}:{facingMode:{ideal:'environment'},width:{ideal:640},height:{ideal:480}},audio:false});
+      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:640},height:{ideal:480}},audio:false});
       video.srcObject=stream;await video.play();
-    }catch(e){
-      camErr=e&&e.name==='NotAllowedError'?'perm':'cam';
-      if(dev&&e&&(e.name==='OverconstrainedError'||e.name==='NotFoundError'))camMsg('Valitud kaamerat ei leitud','Kaamera „'+S.camSrc.label+'“ pole ühendatud. Kontrolli USB-kaablit või vali teine kaamera (Uks → Ühenda kaamera).','Proovi uuesti');
-      else camMsg('Kaamera luba puudub','Luba kaamera kasutamine seadme seadetes selle äpi või brauseri jaoks ja proovi uuesti. Võid proovida ka videofailiga.','Proovi uuesti');
-      return}
+    }catch(e){camErr=e&&e.name==='NotAllowedError'?'perm':'cam';camMsg('Kaamera luba puudub','Luba kaamera telefoni seadetes selle äpi või brauseri jaoks ja proovi uuesti. Võid proovida ka videofailiga.','Proovi uuesti');return}
   }
   try{
     if(!model){
-      camMsg('AI mudel laeb','Esimesel korral võtab see mõne sekundi. Edaspidi on mudel seadmes olemas.');
+      camMsg('AI mudel laeb','Esimesel korral võtab see mõne sekundi. Edaspidi on mudel telefonis olemas.');
       if(!window.tf)await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js');
       if(!window.cocoSsd)await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js');
       model=await cocoSsd.load({base:'lite_mobilenet_v2'});
@@ -1252,13 +1063,11 @@ function draw(){
 async function loop(){
   if(!running||!camOpen)return;
   const t0=performance.now();
-  const isImg=srcEl===camImg;
-  if(isImg){if(camPlayer.lastFrame>lastVTAt)lastVTAt=camPlayer.lastFrame;if(ipKind(S.camSrc)==='mjpeg'&&camImg.naturalWidth)lastVTAt=Date.now()}
-  else if(video.currentTime!==lastVT){lastVT=video.currentTime;lastVTAt=Date.now()}
-  const W=isImg?camImg.naturalWidth:video.videoWidth,H=isImg?camImg.naturalHeight:video.videoHeight;
-  if(W&&(isImg||video.readyState>=2)){
-    if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H}
-    let preds=[];try{preds=await model.detect(srcEl,20,S.cam.conf/100)}catch(e){}
+  if(video.currentTime!==lastVT){lastVT=video.currentTime;lastVTAt=Date.now()}
+  if(video.readyState>=2&&video.videoWidth){
+    if(canvas.width!==video.videoWidth){canvas.width=video.videoWidth;canvas.height=video.videoHeight}
+    let preds=[];try{preds=await model.detect(video,20,S.cam.conf/100)}catch(e){}
+    const W=video.videoWidth,H=video.videoHeight;
     const dets=preds.filter(p=>p.class==='person').map(p=>{const [x,y,w,h]=p.bbox;return{x:x/W,y:y/H,w:w/W,h:h/H,cx:(x+w/2)/W,cy:(y+h/2)/H}});
     updateTracks(dets);draw();
     const dt=performance.now()-t0;lastFps=lastFps?lastFps*0.8+(1000/Math.max(dt,1))*0.2:1000/Math.max(dt,1);
@@ -1386,18 +1195,18 @@ function show(v){
   document.querySelectorAll('.view').forEach(s=>s.hidden=s.id!==v);
   document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
   if(v==='v-list')renderList();
+  if(v==='v-events')renderEvents();
   if(v==='v-map'){initMap();if(map)setTimeout(()=>{map.invalidateSize();renderMarkers()},60)}
-  if(v==='v-door'){renderDoor();renderCamConn();wakeOn()}
+  if(v==='v-door'){renderDoor();wakeOn()}
   if(v==='v-info'){renderSet();renderShare()}
-  clearInterval(demoT);demoT=null;
-  if(v==='v-pitch'){renderPitch();demoT=setInterval(()=>{if(document.visibilityState==='visible'){demoStep();renderPitch()}},2800)}
   try{sessionStorage.setItem('cc-tab',v)}catch(e){}
 }
 document.querySelector('nav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)});
+renderSlogan();
 let first='v-list';try{first=sessionStorage.getItem('cc-tab')||'v-list'}catch(e){}
 show($(first)?first:'v-list');
 const clock=()=>$('clock').textContent='Tallinn · '+hm(Date.now());clock();
-setInterval(()=>{clock();if(document.visibilityState!=='visible')return;cloudFetch();if(!$('v-list').hidden)renderList();renderMarkers();if(openId)renderSheet()},30000);
+setInterval(()=>{clock();renderSlogan();if(document.visibilityState!=='visible')return;cloudFetch();if(!$('v-list').hidden)renderList();if(!$('v-events').hidden)renderEvents();renderMarkers();if(openId)renderSheet()},30000);
 cloudInit();
 if(S.kiosk.on)kioskOn();
 window.addEventListener('storage',e=>{if(e.key===KEY){S=load();renderList();renderDoor();renderMarkers()}});
