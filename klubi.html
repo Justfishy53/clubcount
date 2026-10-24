@@ -240,6 +240,30 @@ ol.howto{margin:0;padding-left:18px;line-height:1.7;font-size:15px}
 .ev-note{margin:0;font-size:13.5px;color:var(--mut)}
 .ev-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:2px}
 .ev-foot .mono{color:var(--mut);font-size:10.5px}
+/* launch animation (guest app): the tally bars count in 1–5, the name glitches in,
+   the live total of people out tonight decodes, then the logo flies into the header */
+#spl{position:fixed;inset:0;z-index:3000;background:var(--bg);overflow:hidden}
+#spl .s-glow{position:absolute;left:50%;top:44%;width:620px;height:620px;margin:-310px 0 0 -310px;border-radius:50%;background:radial-gradient(closest-side,rgba(124,92,255,.5),rgba(124,92,255,.12) 55%,transparent);filter:blur(10px)}
+#spl .s-ring{position:absolute;left:50%;top:41%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:3px solid var(--ac);box-shadow:0 0 24px var(--ac),inset 0 0 24px var(--ac);opacity:0}
+#spl .s-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#spl .s-scan{position:absolute;inset:0;pointer-events:none;opacity:.14;background:repeating-linear-gradient(transparent 0 2px,rgba(0,0,0,.6) 2px 3px)}
+#spl .s-logo{position:absolute;left:50%;top:41%;width:150px;height:126px;margin:-63px 0 0 -75px;z-index:3}
+#spl .s-logo i{position:absolute;bottom:0;width:15px;height:126px;border-radius:4px;background:var(--ac);transform-origin:50% 100%;box-shadow:0 0 18px rgba(183,156,255,.85),0 0 44px rgba(124,92,255,.6)}
+#spl .s-logo i:nth-child(1){left:12px} #spl .s-logo i:nth-child(2){left:46px} #spl .s-logo i:nth-child(3){left:80px} #spl .s-logo i:nth-child(4){left:114px}
+#spl .s-logo b{position:absolute;left:-8px;top:54px;width:170px;height:15px;border-radius:4px;background:var(--fg);transform:rotate(-24deg);transform-origin:0 50%;box-shadow:0 0 22px rgba(255,255,255,.8)}
+#spl .s-count{position:absolute;left:0;right:0;top:calc(41% + 84px);text-align:center;font-family:var(--f-mono);font-size:12px;letter-spacing:.3em;color:var(--mut)}
+#spl .s-count b{font-weight:500;color:var(--fg)}
+#spl .s-wm{position:absolute;left:0;right:0;top:calc(41% + 92px);text-align:center;font-family:var(--f-disp);font-weight:900;font-size:62px;line-height:.9;text-transform:uppercase;letter-spacing:.01em;
+  --ca:0;text-shadow:calc(var(--ca) * 1px) 0 rgba(255,60,138,.9),calc(var(--ca) * -1px) 0 rgba(92,242,255,.9)}
+#spl .s-wm span{display:inline-block}
+#spl .s-live{position:absolute;left:0;right:0;top:calc(41% + 162px);display:flex;justify-content:center;align-items:center;gap:8px;padding:0 16px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;white-space:nowrap;color:var(--mut);text-transform:uppercase;text-align:center}
+#spl .s-live i{width:7px;height:7px;flex:none;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+#spl .s-live b{font-weight:500;color:var(--fg)}
+/* scanner line that builds the app at the end of the launch animation */
+.s-scanline{position:fixed;left:0;right:0;top:0;height:4px;z-index:3001;pointer-events:none;background:#5CF2FF;
+  box-shadow:0 0 18px 4px #5CF2FF,0 0 60px 14px rgba(92,242,255,.45)}
+.s-scanline::before{content:"";position:absolute;left:0;right:0;bottom:4px;height:140px;background:linear-gradient(transparent,rgba(92,242,255,.18))}
+
 .tonight{display:inline-flex;align-items:center;gap:6px;color:var(--ac);font-size:13.5px;font-weight:600;grid-column:1/-1}
 
 .ev.hl{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}
@@ -554,6 +578,7 @@ nav button[aria-selected=true]{color:var(--ac)}
 
 <script src="venues.js"></script>
 <script src="events.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 (function(){
 const KEY='clubcount.app.v2';
@@ -1519,6 +1544,65 @@ let first=CLUB?'v-door':'v-list';try{first=sessionStorage.getItem(TAB_KEY)||firs
 show(first);
 renderGate();
 if(!CLUB){checkNewEvents();openHash();window.addEventListener('hashchange',openHash);if(S.notify)regPeriodic()}
+
+/* ---------- launch animation: once per app opening, guest app only ---------- */
+/* people out right now = everyone inside every connected venue (door counters on the backend or on this device) */
+function peopleOut(){let n=0,live=0;for(const v of VENUES){const L=liveOf(v);if(L){n+=L.count;live++}}return {n,live}}
+function runSplash(){
+  let seen=false;try{seen=sessionStorage.getItem('cc-splash')==='1';sessionStorage.setItem('cc-splash','1')}catch(e){}
+  if(CLUB||seen||!window.gsap||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const el=document.createElement('div');el.id='spl';el.setAttribute('aria-hidden','true');
+  el.innerHTML='<div class="s-glow"></div><div class="s-ring"></div><div class="s-logo"><i></i><i></i><i></i><i></i><b></b></div>'+
+    '<div class="s-count"><b>0</b> / 5</div><div class="s-wm">'+'CLUBCOUNT'.split('').map(c=>'<span>'+c+'</span>').join('')+'</div>'+
+    '<div class="s-live"><i></i><span></span></div><div class="s-flash"></div><div class="s-scan"></div>';
+  document.body.appendChild(el);
+  const q=s=>el.querySelector(s),fmtN=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  const {n,live}=peopleOut();
+  // with no counter connected yet there is no honest number to show, so name the venues instead
+  // the number decodes as 0 and then counts up to the real total
+  const text=live?'Tallinn · 0 inimest väljas praegu':'Tallinn · '+VENUES.length+' klubi ja baari';
+  const html=live?'Tallinn · <b>0</b> inimest väljas praegu':'Tallinn · <b>'+VENUES.length+'</b> klubi ja baari';
+  const GL='ABCDEFGHJKLMNOPRSTUV0123456789#%&*<>';
+  const tl=gsap.timeline({defaults:{ease:'expo.out'},onComplete:()=>el.remove()});
+  tl.fromTo(q('.s-glow'),{scale:.4,opacity:0},{scale:1,opacity:1,duration:1.2,ease:'power2.out'},0);
+  // four people walk in: one bar each, the counter ticks with them
+  tl.from(el.querySelectorAll('.s-logo i'),{scaleY:0,duration:.34,stagger:.15,ease:'back.out(2.4)'},.1);
+  tl.from(q('.s-count'),{opacity:0,y:6,duration:.3},.1);
+  [1,2,3,4].forEach((k,i)=>{tl.call(()=>{q('.s-count b').textContent=k},null,.12+i*.15);tl.to(q('.s-logo'),{keyframes:{y:[0,3,-1,0]},duration:.14,ease:'none'},.14+i*.15)});
+  // the fifth strike closes the group of five
+  tl.from(q('.s-logo b'),{scaleX:0,duration:.18,ease:'power4.out'},.8);
+  tl.call(()=>{q('.s-count b').textContent=5},null,.8);
+  tl.fromTo(q('.s-flash'),{opacity:.55},{opacity:0,duration:.3,ease:'power2.out',immediateRender:false},.82);
+  tl.fromTo(q('.s-ring'),{scale:0,opacity:1},{scale:6,opacity:0,duration:.8,ease:'power2.out',immediateRender:false},.8);
+  tl.to(q('.s-logo'),{keyframes:{x:[0,-6,5,-3,2,0]},duration:.25,ease:'none'},.82);
+  tl.to(q('.s-count'),{opacity:0,y:-6,duration:.2,ease:'power2.in'},.95);
+  // the name rises and glitches into place
+  tl.from(el.querySelectorAll('.s-wm span'),{yPercent:110,opacity:0,duration:.42,stagger:.03},1.0);
+  tl.fromTo(q('.s-wm'),{'--ca':9},{'--ca':0,duration:.45,ease:'power2.out',immediateRender:false},1.05);
+  tl.to(q('.s-wm'),{keyframes:{x:[0,4,-3,2,0],skewX:[0,-8,6,-3,0]},duration:.22,ease:'none'},1.35);
+  // live total decodes, then the number counts up to the real sum
+  tl.from(q('.s-live'),{opacity:0,duration:.2},1.45);
+  const o={p:0},span=q('.s-live span');
+  tl.to(o,{p:1,duration:.55,ease:'none',onUpdate:()=>{
+    const k=Math.floor(o.p*text.length),f=Math.floor(o.p*24);
+    span.textContent=text.split('').map((c,i)=>i<k||c===' '||c==='·'?c:(i<k+5?GL[(i*7+f*11)%GL.length]:'')).join('');
+  },onComplete:()=>{span.innerHTML=html}},1.45);
+  if(live){const c={v:0};tl.to(c,{v:n,duration:.5,ease:'power2.out',onUpdate:()=>{const b=span.querySelector('b');if(b)b.textContent=fmtN(Math.round(c.v))}},2.0)}
+  // the scanner: a bright line sweeps down the screen and the app is built behind it, flickering in like a hologram
+  const hold=live?2.7:2.35;
+  const line=document.createElement('div');line.className='s-scanline';line.setAttribute('aria-hidden','true');document.body.appendChild(line);
+  const appEl=document.querySelector('.app'),sc={p:0};
+  tl.fromTo(line,{opacity:0},{opacity:1,duration:.12,ease:'none'},hold-.05);
+  tl.to(sc,{p:1,duration:.8,ease:'power2.inOut',onUpdate:()=>{
+    el.style.clipPath='inset('+(sc.p*100)+'% 0 0 0)';
+    line.style.transform='translateY('+(sc.p*innerHeight)+'px)';
+  }},hold);
+  if(appEl)tl.fromTo(appEl,{opacity:.35},{keyframes:{opacity:[.35,1,.55,1,.8,1]},duration:.8,ease:'none',clearProps:'opacity'},hold);
+  tl.to(line,{opacity:0,duration:.15,ease:'none'},hold+.78);
+  tl.eventCallback('onComplete',()=>{el.remove();line.remove()});
+  tl.to({}, {duration:.01},hold+.95);
+}
+runSplash();
 const clock=()=>$('clock').textContent='Tallinn · '+hm(Date.now());clock();
 setInterval(()=>{clock();renderSlogan();if(document.visibilityState!=='visible')return;cloudFetch();if(!$('v-list').hidden)renderList();if(!$('v-events').hidden)renderEvents();if(!$('v-stats').hidden)renderStats();renderMarkers();if(openId)renderSheet()},30000);
 cloudInit();
