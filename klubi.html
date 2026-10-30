@@ -819,7 +819,7 @@ function renderEvents(){
   if(evDay!=='all'&&!days.includes(evDay))evDay='all';
   $('evDays').innerHTML=[['all','Kõik · '+up.length]].concat(days.map(d=>[d,dayLabel(d)]))
     .map(([id,l])=>`<button class="chip" data-d="${id}" aria-pressed="${evDay===id}">${l}</button>`).join('');
-  const rows=up.filter(e=>evDay==='all'||e.date===evDay).sort((a,b)=>topRank(a.venue)-topRank(b.venue));
+  const rows=up.filter(e=>evDay==='all'||e.date===evDay).sort((a,b)=>a.date.localeCompare(b.date)||topRank(a.venue)-topRank(b.venue));
   $('evList').innerHTML=rows.length?rows.map(evCard).join(''):`<div class="empty">Praegu pole ühtegi üritust kirjas. Vaata varsti uuesti.</div>`;
 }
 $('evDays').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;evDay=b.dataset.d;renderEvents()});
