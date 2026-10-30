@@ -14,7 +14,7 @@
       "club": "D3",
       "url": "https://gateme.com/et/D3Tallinn/",
       "title_strip": "\\s+[|I]\\s+(\\d{2}\\.\\d{2}|D3)\\b",
-      "enabled": true
+      "enabled": false
     },
     {
       "name": "d-3.ee",
