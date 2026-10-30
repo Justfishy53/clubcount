@@ -167,7 +167,7 @@ def parse_tiers(page):
     tiers = []
     for line in text.splitlines():
         line = line.strip().replace("–", "-")
-        if line.startswith(("ENG:", "Doors:")):  # edasi sama tekst inglise keeles
+        if tiers and line.startswith(("ENG:", "Doors:")):  # edasi samad hinnad inglise keeles
             break
         out = False
         m = re.fullmatch(r"(\d+)\s*€\s*\|\s*(.{2,40})", line)
