@@ -2,7 +2,7 @@ name: Uuenda üritused
 
 on:
   schedule:
-    - cron: "0 4 * * *"   # iga päev 04:00 UTC (Eestis 06:00 või 07:00)
+    - cron: "0 4,10,15 * * *"   # kolm korda päevas, et piletihinnad oleksid värsked (UTC; viimane Eestis 17:00 või 18:00)
   workflow_dispatch:       # lubab käivitada ka käsitsi (Actions -> Run workflow)
 
 permissions:

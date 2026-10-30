@@ -6,7 +6,7 @@ Iga päev uuendatav klubiürituste nimekiri. GitHub Actions käivitab skripti, s
 
 | Fail | Mis see on |
 |---|---|
-| `.github/workflows/update-events.yml` | Igapäevane ajastatud töövoog (04:00 UTC) |
+| `.github/workflows/update-events.yml` | Ajastatud töövoog kolm korda päevas (04:00, 10:00 ja 15:00 UTC) |
 | `scripts/fetch_events.py` | Kogub üritused, sorteerib, kirjutab `events.json` |
 | `sources.json` | Automaatsed allikad (iCal või JSON) |
 | `events_manual.json` | Käsitsi lisatud üritused |
@@ -33,6 +33,10 @@ Iga päev uuendatav klubiürituste nimekiri. GitHub Actions käivitab skripti, s
 - `json`: JSON-voog. `items_path` näitab, kus nimekiri asub, `map` seob väljad (`title`, `start`, `url`, `location`).
 
 Kasuta ainult allikaid, mille kasutustingimused kogumist lubavad (nt klubi enda avalik kalender või API). Facebooki ja Instagrami automaatne kogumine ei ole lubatud.
+
+## Piletihinnad
+
+`wp`-allikate puhul loeb skript ürituse lehelt piletiread (nt `Early - 7€ (SOLD OUT)` või `15€ | Tavapilet`). Hetkehind on esimene veel müügil olev tavapilet. Hind on nii täpne, kui klubi oma lehte uuendab.
 
 ## Käitumine
 

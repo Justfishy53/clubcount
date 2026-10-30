@@ -156,6 +156,44 @@ def parse_json(text, src):
 
 
 # ---------- klubi oma leht ----------
+SPECIAL_TIER = r"isic|going|fast|priority|kostüüm"  # kehtib vaid osale inimestest
+
+
+def parse_tiers(page):
+    """Ürituse lehe piletiread: "7€ | ISIC", "Early - 7€ (SOLD OUT)" või "Pilet 15"."""
+    text = re.sub(r"<(script|style)\b.*?</\1>", " ", page, flags=re.S | re.I)
+    text = re.sub(r"<br[^>]*>|</p>|</div>|</li>", "\n", text, flags=re.I)
+    text = html.unescape(re.sub(r"<[^>]+>", "", text))
+    tiers = []
+    for line in text.splitlines():
+        line = line.strip().replace("–", "-")
+        if line.startswith(("ENG:", "Doors:")):  # edasi sama tekst inglise keeles
+            break
+        out = False
+        m = re.fullmatch(r"(\d+)\s*€\s*\|\s*(.{2,40})", line)
+        if m:
+            price, label = m[1], m[2]
+        else:
+            m = re.fullmatch(r"(.{2,40}?)\s*-\s*(\d+)\s*€\s*(\(SOLD OUT\))?", line, re.I)
+            if m:
+                label, price, out = m[1], m[2], bool(m[3])
+            else:
+                m = re.fullmatch(r"Pilet\s+(\d+)\s*€?", line, re.I)
+                if not m:
+                    continue
+                label, price = "Pilet", m[1]
+        if not re.search(r"vip|laud|inimest", label, re.I):
+            tiers.append({"l": label.strip(), "p": int(price), "out": out})
+    return tiers
+
+
+def current_price(tiers):
+    """Esimene veel müügil olev tavapilet; muidu esimene müügil olev erihind."""
+    on_sale = [t for t in tiers if not t["out"]]
+    normal = [t for t in on_sale if not re.search(SPECIAL_TIER, t["l"], re.I)]
+    return (normal or on_sale)[0]["p"] if on_sale else None
+
+
 def parse_wp(src):
     """WordPressi ürituste loend; kuupäev tuleb ürituse lehelt või pealkirja lõpust (30.10)."""
     items = json.loads(http_get(f"{src['url']}?per_page={src.get('count', 30)}"))
@@ -184,6 +222,7 @@ def parse_wp(src):
         if src.get("title_strip"):
             title = re.sub(src["title_strip"], "", title, flags=re.I).strip()
         t = re.search(r">\s*(\d{2}:\d{2})\s*<", page)
+        tiers = parse_tiers(page)
         events.append({
             "club": src["club"],
             "title": title,
@@ -191,6 +230,8 @@ def parse_wp(src):
             "location": "",
             "url": it["link"],
             "source": src["name"],
+            "price": current_price(tiers),
+            "tiers": tiers,
         })
     return events
 
@@ -313,19 +354,22 @@ def write_app_events(events):
         text = APP_VENUES.read_text(encoding="utf-8")
         for vid, name in re.findall(r'"id":"([^"]+)","name":"([^"]+)"', text):
             names[name.casefold()] = vid
-    listed = set()
+    listed = {}
     if APP_EVENTS.exists():
         text = APP_EVENTS.read_text(encoding="utf-8")
-        for d, tm, t, v in re.findall(r'"date":"([^"]+)","time":"([^"]*)",(?:"end":"[^"]*",)?"title":"((?:[^"\\]|\\.)*)","venue":(?:"([^"]+)"|null)', text):
-            listed.add(title_key(d, t))
+        for i, d, tm, t, v in re.findall(r'"id":"([^"]+)","date":"([^"]+)","time":"([^"]*)",(?:"end":"[^"]*",)?"title":"((?:[^"\\]|\\.)*)","venue":(?:"([^"]+)"|null)', text):
+            listed[title_key(d, t)] = i
             if v:  # sama üritus samas kohas võib olla eri nimega kirjas
-                listed.add((d, v, tm))
+                listed[(d, v, tm)] = i
 
-    rows = []
+    rows, prices = [], {}
     for e in events:
         day = e["start"][:10]
         venue = names.get(e["club"].casefold())
-        if title_key(day, e["title"]) in listed or (day, venue, e["start"][11:16]) in listed:
+        known = listed.get(title_key(day, e["title"])) or listed.get((day, venue, e["start"][11:16]))
+        if known:  # üritus on events.js-is, siit tuleb ainult hind
+            if e.get("tiers"):
+                prices[known] = {"price": e["price"], "tiers": e["tiers"]}
             continue
         url = e.get("url", "")
         rows.append(json.dumps({
@@ -336,12 +380,14 @@ def write_app_events(events):
             "venue": venue,
             "place": e["club"],
             "lineup": [],
-            "price": None,
+            "price": e.get("price"),
+            "tiers": e.get("tiers", []),
             "url": url if re.match(r"https?://", url, re.I) else "",
             "src": e["source"],
         }, ensure_ascii=False, separators=(",", ":")))
     new_text = ("/* Automaatne fail: selle kirjutab scripts/fetch_events.py. Ära muuda käsitsi. */\n"
-                "window.CC_EVENTS_AUTO=[\n" + ",\n".join(rows) + "\n];\n")
+                "window.CC_EVENTS_AUTO=[\n" + ",\n".join(rows) + "\n];\n"
+                "window.CC_EVENT_PRICES=" + json.dumps(prices, ensure_ascii=False, separators=(",", ":")) + ";\n")
     if not APP_OUT.exists() or APP_OUT.read_text(encoding="utf-8") != new_text:
         APP_OUT.write_text(new_text, encoding="utf-8")
         print(f"Kirjutasin {len(rows)} üritust faili events-auto.js")

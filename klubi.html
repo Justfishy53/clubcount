@@ -790,7 +790,7 @@ function renderSlogan(){
 }
 
 /* ---------- events (Üritused) from events.js and events-auto.js (daily, scripts/fetch_events.py; time and url may be empty there); a night that runs past midnight still counts as "today" until 06:00 ---------- */
-const EVENTS=(window.CC_EVENTS||[]).concat(window.CC_EVENTS_AUTO||[]).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+const EVENTS=(window.CC_EVENTS||[]).concat(window.CC_EVENTS_AUTO||[]).map(e=>Object.assign({},e,(window.CC_EVENT_PRICES||{})[e.id])).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
 const MON=['jaan','veebr','märts','apr','mai','juuni','juuli','aug','sept','okt','nov','dets'];
 const ymd=d=>d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
 const parseYmd=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
@@ -810,6 +810,7 @@ function evCard(e){
       <div class="disp ev-title">${esc(e.title)}</div>
       <div class="ev-where">${v?`<button data-id="${v.id}">${esc(v.name)}</button>`:esc(e.place)}${e.time?` · <span class="tab">${e.time}${e.end?'–'+e.end:''}</span>`:''}${e.age?' · '+esc(e.age):''}</div>
       ${e.lineup&&e.lineup.length?`<div class="ev-line">${e.lineup.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
+      ${e.tiers&&e.tiers.length?`<p class="ev-note">${e.price===null?'Piletid on välja müüdud':`Pilet praegu <b class="tab">${euro(e.price)}</b>`} · klubi lehe järgi</p><div class="ev-line">${e.tiers.map(t=>`<span${t.out?' style="text-decoration:line-through;opacity:.6"':''}>${esc(t.l)} ${t.p}€</span>`).join('')}</div>`:''}
       ${e.note?`<p class="ev-note">${esc(e.note)}</p>`:''}
       <div class="ev-foot"><span class="mono">${esc(e.src)}</span><span class="ev-btns"><button class="back" data-share="${e.id}" aria-label="Jaga sõbraga">Jaga</button>${e.url?`<a class="back" href="${esc(e.url)}" target="_blank" rel="noopener">Info ja piletid ↗</a>`:''}</span></div>
     </div></article>`;
