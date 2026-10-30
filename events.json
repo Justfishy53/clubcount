@@ -1,5 +1,186 @@
 {
-  "updated": "2026-10-30T12:00+02:00",
-  "count": 0,
-  "events": []
+  "updated": "2026-10-30T11:00+02:00",
+  "count": 20,
+  "events": [
+    {
+      "club": "Club Studio",
+      "title": "All In: HALLOWEEN",
+      "start": "2026-10-30T23:00+02:00",
+      "location": "",
+      "url": "https://clubstudio.ee/event/all-in-halloween-at-studio-30-10-2/",
+      "source": "clubstudio.ee",
+      "id": "d801ab1c1b6e"
+    },
+    {
+      "club": "D3",
+      "title": "halloweeni rämmar",
+      "start": "2026-10-30T23:00+02:00",
+      "location": "",
+      "url": "https://www.d-3.ee/events/halloweeni-rammar/",
+      "source": "d-3.ee",
+      "id": "5b3cebbd408b"
+    },
+    {
+      "club": "D3",
+      "title": "FRAT HALLOWEEN",
+      "start": "2026-10-31T23:00+02:00",
+      "location": "",
+      "url": "https://www.d-3.ee/events/frat-halloween-2/",
+      "source": "d-3.ee",
+      "id": "b32678f88a9e"
+    },
+    {
+      "club": "Club Studio",
+      "title": "LOCURA: HALLOWEEN X DIA DE MUERTOS",
+      "start": "2026-10-31T23:00+02:00",
+      "location": "",
+      "url": "https://clubstudio.ee/event/locura-halloween-x-dia-de-muertos-en-el-club-studio-31-10/",
+      "source": "clubstudio.ee",
+      "id": "a9af3199c2f1"
+    },
+    {
+      "club": "Helitehas",
+      "title": "HEVI: Teddy Killerz & Tantrum Desire",
+      "start": "2026-11-06T22:30+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1747303469805613",
+      "source": "helitehas.ee",
+      "id": "d148698b1d33"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Dagö",
+      "start": "2026-11-07T20:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1100748175741992",
+      "source": "helitehas.ee",
+      "id": "3093271ddffe"
+    },
+    {
+      "club": "Club Studio",
+      "title": "Blaze",
+      "start": "2026-11-07T23:00+02:00",
+      "location": "",
+      "url": "https://clubstudio.ee/event/blaze-at-studio-07-11/",
+      "source": "clubstudio.ee",
+      "id": "26a6b25d9adf"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Hard Nation 16 · Ran-D",
+      "start": "2026-11-14T22:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1874981196975937",
+      "source": "helitehas.ee",
+      "id": "f5b2a207d2d1"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Mustasch",
+      "start": "2026-11-20T19:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1413551483860652",
+      "source": "helitehas.ee",
+      "id": "e859fdf8f1d6"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Tuberkuloited × Vennaskond × Sõpruse Puiestee",
+      "start": "2026-11-21T19:00+02:00",
+      "location": "",
+      "url": "https://www.piletitasku.ee/et/event/10479",
+      "source": "helitehas.ee",
+      "id": "8de2786c7c3f"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Pulsation Estonia 2026",
+      "start": "2026-11-28T22:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1818048599199392",
+      "source": "helitehas.ee",
+      "id": "bc9b6323a253"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Chelsea Wolfe + A.A. Williams",
+      "start": "2026-11-30T19:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1417151690272218",
+      "source": "helitehas.ee",
+      "id": "f65114c90596"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Kosmikud + Viikate",
+      "start": "2026-12-04T21:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1020850620321068",
+      "source": "helitehas.ee",
+      "id": "aeae197292fe"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Strangelove",
+      "start": "2026-12-05T19:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1099839239045442",
+      "source": "helitehas.ee",
+      "id": "18c848648242"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Týr · Twilight Force · Dragonland",
+      "start": "2026-12-19T18:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/2075150636748018",
+      "source": "helitehas.ee",
+      "id": "6001f028bc7a"
+    },
+    {
+      "club": "Helitehas",
+      "title": "The Rasmus",
+      "start": "2027-01-28T19:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/974924465336121",
+      "source": "helitehas.ee",
+      "id": "4232349c400e"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Catch Your Breath",
+      "start": "2027-02-14T18:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/3465968150219801",
+      "source": "helitehas.ee",
+      "id": "5621b928ec12"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Whitechapel · Sylosis · 200 Stab Wounds",
+      "start": "2027-02-28T19:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1876921630365046",
+      "source": "helitehas.ee",
+      "id": "dfca7039ba96"
+    },
+    {
+      "club": "Helitehas",
+      "title": "H-Blockx",
+      "start": "2027-03-11T19:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/2233303960781263",
+      "source": "helitehas.ee",
+      "id": "cc9dbf53bbcb"
+    },
+    {
+      "club": "Helitehas",
+      "title": "Roxette UK",
+      "start": "2027-03-12T20:00+02:00",
+      "location": "",
+      "url": "https://www.facebook.com/events/1571142424643250",
+      "source": "helitehas.ee",
+      "id": "2db2b68ceb37"
+    }
+  ]
 }
