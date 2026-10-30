@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-30T11:00+02:00",
-  "count": 20,
+  "updated": "2026-10-30T11:07+02:00",
+  "count": 25,
   "events": [
     {
       "club": "Club Studio",
@@ -48,6 +48,15 @@
       "id": "d148698b1d33"
     },
     {
+      "club": "D3",
+      "title": "Miinusprojekt",
+      "start": "2026-11-06T23:00+02:00",
+      "location": "",
+      "url": "https://gateme.com/et/D3Tallinn/104468-miinusprojekt-0611-d3/",
+      "source": "käsitsi",
+      "id": "cf908f5f75f8"
+    },
+    {
       "club": "Helitehas",
       "title": "Dagö",
       "start": "2026-11-07T20:00+02:00",
@@ -66,6 +75,15 @@
       "id": "26a6b25d9adf"
     },
     {
+      "club": "D3",
+      "title": "FOMO",
+      "start": "2026-11-07T23:00+02:00",
+      "location": "",
+      "url": "https://gateme.com/et/D3Tallinn/104473-fomo-i-0711-i-d3/",
+      "source": "käsitsi",
+      "id": "9245e31741f3"
+    },
+    {
       "club": "Helitehas",
       "title": "Hard Nation 16 · Ran-D",
       "start": "2026-11-14T22:00+02:00",
@@ -73,6 +91,15 @@
       "url": "https://www.facebook.com/events/1874981196975937",
       "source": "helitehas.ee",
       "id": "f5b2a207d2d1"
+    },
+    {
+      "club": "D3",
+      "title": "PÖFF 30",
+      "start": "2026-11-14T23:00+02:00",
+      "location": "",
+      "url": "https://gateme.com/et/D3Tallinn/104453-poff-30-i-1411-i-d3/",
+      "source": "käsitsi",
+      "id": "44b4fb895ffb"
     },
     {
       "club": "Helitehas",
@@ -129,6 +156,15 @@
       "id": "18c848648242"
     },
     {
+      "club": "D3",
+      "title": "Planeet: uue albumi esitlus",
+      "start": "2026-12-11T22:00+02:00",
+      "location": "",
+      "url": "https://gateme.com/et/D3Tallinn/104415-planeet-uue-albumi-esitlus-i-d3-i-1112/",
+      "source": "käsitsi",
+      "id": "abb2dfce6b36"
+    },
+    {
       "club": "Helitehas",
       "title": "Týr · Twilight Force · Dragonland",
       "start": "2026-12-19T18:00+02:00",
@@ -136,6 +172,15 @@
       "url": "https://www.facebook.com/events/2075150636748018",
       "source": "helitehas.ee",
       "id": "6001f028bc7a"
+    },
+    {
+      "club": "D3",
+      "title": "Selecta: Mozey (UK)",
+      "start": "2026-12-19T23:00+02:00",
+      "location": "",
+      "url": "https://gateme.com/et/D3Tallinn/104427-selecta-mozey-uk-tallinn/",
+      "source": "käsitsi",
+      "id": "65b4085973db"
     },
     {
       "club": "Helitehas",
