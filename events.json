@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T11:07+02:00",
+  "updated": "2026-10-30T11:12+02:00",
   "count": 25,
   "events": [
     {
@@ -9,6 +9,8 @@
       "location": "",
       "url": "https://clubstudio.ee/event/all-in-halloween-at-studio-30-10-2/",
       "source": "clubstudio.ee",
+      "price": null,
+      "tiers": [],
       "id": "d801ab1c1b6e"
     },
     {
@@ -18,6 +20,24 @@
       "location": "",
       "url": "https://www.d-3.ee/events/halloweeni-rammar/",
       "source": "d-3.ee",
+      "price": 15,
+      "tiers": [
+        {
+          "l": "Pilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Kostüümiga",
+          "p": 12,
+          "out": false
+        }
+      ],
       "id": "5b3cebbd408b"
     },
     {
@@ -27,6 +47,34 @@
       "location": "",
       "url": "https://www.d-3.ee/events/frat-halloween-2/",
       "source": "d-3.ee",
+      "price": null,
+      "tiers": [
+        {
+          "l": "Super Early Bird",
+          "p": 10,
+          "out": true
+        },
+        {
+          "l": "Early Bird",
+          "p": 15,
+          "out": true
+        },
+        {
+          "l": "Regular Bird",
+          "p": 20,
+          "out": true
+        },
+        {
+          "l": "Late Bird",
+          "p": 25,
+          "out": true
+        },
+        {
+          "l": "Priority",
+          "p": 35,
+          "out": true
+        }
+      ],
       "id": "b32678f88a9e"
     },
     {
@@ -36,6 +84,8 @@
       "location": "",
       "url": "https://clubstudio.ee/event/locura-halloween-x-dia-de-muertos-en-el-club-studio-31-10/",
       "source": "clubstudio.ee",
+      "price": null,
+      "tiers": [],
       "id": "a9af3199c2f1"
     },
     {
@@ -72,6 +122,29 @@
       "location": "",
       "url": "https://clubstudio.ee/event/blaze-at-studio-07-11/",
       "source": "clubstudio.ee",
+      "price": 15,
+      "tiers": [
+        {
+          "l": "ISIC kaardiga kogu öö",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "FB Going kuni 00.00",
+          "p": 9,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Fasttrack",
+          "p": 20,
+          "out": false
+        }
+      ],
       "id": "26a6b25d9adf"
     },
     {
