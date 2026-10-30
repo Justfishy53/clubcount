@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T11:12+02:00",
+  "updated": "2026-10-30T11:14+02:00",
   "count": 25,
   "events": [
     {
@@ -9,8 +9,29 @@
       "location": "",
       "url": "https://clubstudio.ee/event/all-in-halloween-at-studio-30-10-2/",
       "source": "clubstudio.ee",
-      "price": null,
-      "tiers": [],
+      "price": 15,
+      "tiers": [
+        {
+          "l": "ISIC kaardiga kogu öö",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "FB Going kuni 00.00",
+          "p": 9,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Fasttrack",
+          "p": 20,
+          "out": false
+        }
+      ],
       "id": "d801ab1c1b6e"
     },
     {
@@ -84,8 +105,29 @@
       "location": "",
       "url": "https://clubstudio.ee/event/locura-halloween-x-dia-de-muertos-en-el-club-studio-31-10/",
       "source": "clubstudio.ee",
-      "price": null,
-      "tiers": [],
+      "price": 15,
+      "tiers": [
+        {
+          "l": "ISIC kaardiga kogu öö",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "FB Going kuni 00.00",
+          "p": 9,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Fasttrack",
+          "p": 20,
+          "out": false
+        }
+      ],
       "id": "a9af3199c2f1"
     },
     {
