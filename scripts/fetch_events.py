@@ -7,9 +7,11 @@ failis events_manual.json. events-auto.js on sama nimekiri rakenduse kujul;
 Ainult Pythoni standardteek, lisapakette pole vaja.
 """
 import hashlib
+import html
 import json
 import re
 import sys
+import time
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -153,6 +155,68 @@ def parse_json(text, src):
     return events
 
 
+# ---------- klubi oma leht ----------
+def parse_wp(src):
+    """WordPressi ürituste loend; kuupäev tuleb ürituse lehelt või pealkirja lõpust (30.10)."""
+    items = json.loads(http_get(f"{src['url']}?per_page={src.get('count', 30)}"))
+    events = []
+    for it in items:
+        title = html.unescape(it["title"]["rendered"]).strip()
+        day = None
+        m = re.search(r"\b(\d{1,2})\.(\d{1,2})\s*$", title)
+        try:
+            if m:
+                posted = date.fromisoformat(it["date"][:10])
+                day = date(posted.year, int(m[2]), int(m[1]))
+                if day < posted - timedelta(days=30):  # aastavahetuse üle avaldatud üritus
+                    day = day.replace(year=posted.year + 1)
+                if day < today():
+                    continue
+            time.sleep(0.5)
+            page = http_get(it["link"])
+            m = re.search(r">\s*(\d{2})/(\d{2})/(\d{4})\s*<", page)
+            if m:
+                day = date(int(m[3]), int(m[2]), int(m[1]))
+        except ValueError:
+            continue
+        if not day:
+            continue
+        if src.get("title_strip"):
+            title = re.sub(src["title_strip"], "", title, flags=re.I).strip()
+        t = re.search(r">\s*(\d{2}:\d{2})\s*<", page)
+        events.append({
+            "club": src["club"],
+            "title": title,
+            "start": norm_start(f"{day}T{t[1]}" if t else str(day)),
+            "location": "",
+            "url": it["link"],
+            "source": src["name"],
+        })
+    return events
+
+
+def parse_helitehas(text, src):
+    """Helitehase avalehe kava; st:"ara" on ära jäänud üritus."""
+    events = []
+    for line in text.splitlines():
+        m = re.search(r'\{d:"[^"]*",iso:"([^"]+)".*?,t:"((?:[^"\\]|\\.)*)"', line)
+        if not m or 'st:"ara"' in line:
+            continue
+        start = norm_start(m[1])
+        if not start:
+            continue
+        u = re.search(r',u:"([^"]*)"', line)
+        events.append({
+            "club": src["club"],
+            "title": html.unescape(m[2]).strip(),
+            "start": start,
+            "location": "",
+            "url": u[1] if u else "",
+            "source": src["name"],
+        })
+    return events
+
+
 def load_sources():
     if not SOURCES.exists():
         return [], 0
@@ -162,11 +226,14 @@ def load_sources():
         if not src.get("enabled", True):
             continue
         try:
-            text = http_get(src["url"])
-            if src["type"] == "ics":
-                got = parse_ics(text, src["club"], src["name"])
+            if src["type"] == "wp":
+                got = parse_wp(src)
+            elif src["type"] == "ics":
+                got = parse_ics(http_get(src["url"]), src["club"], src["name"])
             elif src["type"] == "json":
-                got = parse_json(text, src)
+                got = parse_json(http_get(src["url"]), src)
+            elif src["type"] == "helitehas":
+                got = parse_helitehas(http_get(src["url"]), src)
             else:
                 raise ValueError(f"tundmatu tüüp: {src['type']}")
             print(f"[ok] {src['name']}: {len(got)} üritust")
@@ -212,13 +279,16 @@ def write_app_events(events):
     listed = set()
     if APP_EVENTS.exists():
         text = APP_EVENTS.read_text(encoding="utf-8")
-        for d, t in re.findall(r'"date":"([^"]+)","time":"[^"]*",(?:"end":"[^"]*",)?"title":"((?:[^"\\]|\\.)*)"', text):
+        for d, t, v in re.findall(r'"date":"([^"]+)","time":"[^"]*",(?:"end":"[^"]*",)?"title":"((?:[^"\\]|\\.)*)","venue":(?:"([^"]+)"|null)', text):
             listed.add(title_key(d, t))
+            if v:  # sama õhtu samas kohas võib olla eri nimega kirjas
+                listed.add((d, v))
 
     rows = []
     for e in events:
         day = e["start"][:10]
-        if title_key(day, e["title"]) in listed:
+        venue = names.get(e["club"].casefold())
+        if title_key(day, e["title"]) in listed or (day, venue) in listed:
             continue
         url = e.get("url", "")
         rows.append(json.dumps({
@@ -226,7 +296,7 @@ def write_app_events(events):
             "date": day,
             "time": e["start"][11:16],
             "title": e["title"],
-            "venue": names.get(e["club"].casefold()),
+            "venue": venue,
             "place": e["club"],
             "lineup": [],
             "price": None,

@@ -1,20 +1,26 @@
 {
   "sources": [
     {
-      "name": "Näide: klubi iCal-kalender",
-      "type": "ics",
-      "club": "Klubi nimi",
-      "url": "https://example.com/events.ics",
-      "enabled": false
+      "name": "clubstudio.ee",
+      "type": "wp",
+      "club": "Club Studio",
+      "url": "https://clubstudio.ee/wp-json/wp/v2/event",
+      "title_strip": "\\s+(at|en el)\\s+(the\\s+)?(club\\s+)?studio\\b.*$",
+      "enabled": true
     },
     {
-      "name": "Näide: klubi JSON-voog",
-      "type": "json",
-      "club": "Klubi nimi",
-      "url": "https://example.com/api/events",
-      "items_path": "data",
-      "map": { "title": "name", "start": "startDate", "url": "link", "location": "venue.name" },
-      "enabled": false
+      "name": "d-3.ee",
+      "type": "wp",
+      "club": "D3",
+      "url": "https://www.d-3.ee/wp-json/wp/v2/event",
+      "enabled": true
+    },
+    {
+      "name": "helitehas.ee",
+      "type": "helitehas",
+      "club": "Helitehas",
+      "url": "https://helitehas.ee/",
+      "enabled": true
     }
   ]
 }

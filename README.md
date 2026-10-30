@@ -26,6 +26,8 @@ Iga päev uuendatav klubiürituste nimekiri. GitHub Actions käivitab skripti, s
 **Käsitsi:** lisa rida faili `events_manual.json` (`club`, `title`, `start`, soovi korral `location`, `url`). `start` on `2026-11-06T22:00` või ainult kuupäev `2026-11-06`. Eesti aeg. Kui `club` on täpselt sama mis koha nimi failis `venues.js` (nt `D3`), seotakse üritus rakenduses selle kohaga.
 
 **Automaatselt:** lisa allikas faili `sources.json` ja sea `"enabled": true`.
+- `wp`: klubi WordPressi ürituste loend (praegu Club Studio ja D3). Kuupäev ja kellaaeg tulevad ürituse lehelt.
+- `helitehas`: Helitehase avalehe kava. Kui nad lehte muudavad, tuleb see osa skriptis üle vaadata.
 - `ics`: klubi või piletisüsteemi iCal-link.
 - `json`: JSON-voog. `items_path` näitab, kus nimekiri asub, `map` seob väljad (`title`, `start`, `url`, `location`).
 
