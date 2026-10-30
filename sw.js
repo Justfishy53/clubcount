@@ -1,6 +1,6 @@
-const C='clubcount-20261024-v5';
+const C='clubcount-20261030-v6';
 const META='cc-meta';   // seen/notified events, written by the page; survives app updates
-const CORE=['./','index.html','klubi.html','venues.js','events.js','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
+const CORE=['./','index.html','klubi.html','venues.js','events.js','events-auto.js','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x!==META).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
@@ -19,7 +19,7 @@ const TOP_NAMES={'club-studio':'Club Studio','d3':'D3'};
 async function checkEvents(){
   const meta=await caches.open(META),r=await meta.match('cc-seen');if(!r)return;
   const seen=await r.json();if(!seen.notify)return;
-  const txt=await fetch('events.js',{cache:'no-store'}).then(x=>x.text());
+  const txt=(await Promise.all(['events.js','events-auto.js'].map(f=>fetch(f,{cache:'no-store'}).then(x=>x.text())))).join('\n');
   const evs=[...txt.matchAll(/"id":"([^"]+)","date":"([^"]+)","time":"[^"]*","title":"((?:[^"\\]|\\.)*)","venue":"(club-studio|d3)"/g)].map(m=>({id:m[1],date:m[2],title:m[3],venue:m[4]}));
   const d=new Date(),today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   const done=new Set((seen.ids||[]).concat(seen.notified||[]));

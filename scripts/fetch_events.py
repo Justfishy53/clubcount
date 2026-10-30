@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Kogub klubide üritused ja kirjutab need faili events.json.
+"""Kogub klubide üritused ja kirjutab need failidesse events.json ja events-auto.js.
 
 Allikad on failis sources.json (ics / json) ning käsitsi lisatud üritused
-failis events_manual.json. Ainult Pythoni standardteek, lisapakette pole vaja.
+failis events_manual.json. events-auto.js on sama nimekiri rakenduse kujul;
+üritused, mis on juba failis events.js, jäävad sealt välja.
+Ainult Pythoni standardteek, lisapakette pole vaja.
 """
 import hashlib
 import json
@@ -16,6 +18,9 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parent.parent
 TZ = ZoneInfo("Europe/Tallinn")
 OUT = ROOT / "events.json"
+APP_OUT = ROOT / "events-auto.js"
+APP_EVENTS = ROOT / "events.js"
+APP_VENUES = ROOT / "venues.js"
 SOURCES = ROOT / "sources.json"
 MANUAL = ROOT / "events_manual.json"
 UA = {"User-Agent": "clubcount-events-bot/1.0"}
@@ -193,6 +198,48 @@ def load_manual():
     return out
 
 
+def title_key(date_str, title):
+    return date_str, re.sub(r"\W+", "", title.casefold())
+
+
+def write_app_events(events):
+    """Kirjutab events-auto.js kujul, mida index.html ja sw.js loevad."""
+    names = {}
+    if APP_VENUES.exists():
+        text = APP_VENUES.read_text(encoding="utf-8")
+        for vid, name in re.findall(r'"id":"([^"]+)","name":"([^"]+)"', text):
+            names[name.casefold()] = vid
+    listed = set()
+    if APP_EVENTS.exists():
+        text = APP_EVENTS.read_text(encoding="utf-8")
+        for d, t in re.findall(r'"date":"([^"]+)","time":"[^"]*",(?:"end":"[^"]*",)?"title":"((?:[^"\\]|\\.)*)"', text):
+            listed.add(title_key(d, t))
+
+    rows = []
+    for e in events:
+        day = e["start"][:10]
+        if title_key(day, e["title"]) in listed:
+            continue
+        url = e.get("url", "")
+        rows.append(json.dumps({
+            "id": "a-" + e["id"],
+            "date": day,
+            "time": e["start"][11:16],
+            "title": e["title"],
+            "venue": names.get(e["club"].casefold()),
+            "place": e["club"],
+            "lineup": [],
+            "price": None,
+            "url": url if re.match(r"https?://", url, re.I) else "",
+            "src": e["source"],
+        }, ensure_ascii=False, separators=(",", ":")))
+    new_text = ("/* Automaatne fail: selle kirjutab scripts/fetch_events.py. Ära muuda käsitsi. */\n"
+                "window.CC_EVENTS_AUTO=[\n" + ",\n".join(rows) + "\n];\n")
+    if not APP_OUT.exists() or APP_OUT.read_text(encoding="utf-8") != new_text:
+        APP_OUT.write_text(new_text, encoding="utf-8")
+        print(f"Kirjutasin {len(rows)} üritust faili events-auto.js")
+
+
 def main():
     fetched, failures = load_sources()
     manual = load_manual()
@@ -221,6 +268,7 @@ def main():
 
     # Tänased ja tulevased kuupäeva ja kellaaja järgi
     result.sort(key=lambda e: (e["start"][:10], e["start"][11:16] or "00:00", e["title"].lower()))
+    write_app_events(result)
 
     payload = {
         "updated": datetime.now(TZ).isoformat(timespec="minutes"),

@@ -1,33 +1,5 @@
 {
-  "updated": "2026-10-30T10:41+02:00",
-  "count": 3,
-  "events": [
-    {
-      "club": "Näide Klubi",
-      "title": "Näidisüritus (kustuta see rida)",
-      "start": "2026-10-30T23:00+02:00",
-      "location": "Tallinn",
-      "url": "https://example.com",
-      "source": "käsitsi",
-      "id": "5d02d11617d1"
-    },
-    {
-      "club": "Näide Klubi",
-      "title": "Teine näidisüritus",
-      "start": "2026-11-06T22:00+02:00",
-      "location": "Tallinn",
-      "url": "",
-      "source": "käsitsi",
-      "id": "4946d7cbbb8b"
-    },
-    {
-      "club": "Näide Baar",
-      "title": "Kolmas näidisüritus (ainult kuupäev)",
-      "start": "2026-11-13",
-      "location": "",
-      "url": "",
-      "source": "käsitsi",
-      "id": "81ed8a8d7e73"
-    }
-  ]
+  "updated": "2026-10-30T12:00+02:00",
+  "count": 0,
+  "events": []
 }

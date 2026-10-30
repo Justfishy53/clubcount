@@ -578,6 +578,7 @@ nav button[aria-selected=true]{color:var(--ac)}
 
 <script src="venues.js"></script>
 <script src="events.js"></script>
+<script src="events-auto.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 (function(){
@@ -736,7 +737,7 @@ function renderList(){
         ${L?`<span><span class="mut">Järjekord</span> <b class="tab">${L.queue?L.queue+' min':'Pole'}</b></span>`:''}
       </div>
       ${v.about?`<p class="v-about">${esc(v.about)}</p>`:''}
-      ${(ev=>ev?`<div class="tonight"><span class="dot pulse"></span>Täna: ${esc(ev.title)} · ${ev.time}</div>`:'')(EVENTS.find(e=>e.venue===v.id&&e.date>=partyDay()&&e.date<=ymd(new Date())))}
+      ${(ev=>ev?`<div class="tonight"><span class="dot pulse"></span>Täna: ${esc(ev.title)}${ev.time?' · '+ev.time:''}</div>`:'')(EVENTS.find(e=>e.venue===v.id&&e.date>=partyDay()&&e.date<=ymd(new Date())))}
       ${v.drink?`<div class="v-drink"><span class="mono">Tuntud jook</span> ${esc(v.drink)}</div>`:''}
     </div>`}).join('');
 }
@@ -788,8 +789,8 @@ function renderSlogan(){
   $('qDay').textContent='Tänane küsimus · '+DAYS_LONG[d.getDay()].toLowerCase();
 }
 
-/* ---------- events (Üritused) from events.js; a night that runs past midnight still counts as "today" until 06:00 ---------- */
-const EVENTS=(window.CC_EVENTS||[]).slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+/* ---------- events (Üritused) from events.js and events-auto.js (daily, scripts/fetch_events.py; time and url may be empty there); a night that runs past midnight still counts as "today" until 06:00 ---------- */
+const EVENTS=(window.CC_EVENTS||[]).concat(window.CC_EVENTS_AUTO||[]).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
 const MON=['jaan','veebr','märts','apr','mai','juuni','juuli','aug','sept','okt','nov','dets'];
 const ymd=d=>d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
 const parseYmd=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
@@ -807,10 +808,10 @@ function evCard(e){
     <div class="ev-date${today?' soon':''}"><span class="mono">${e.date<now?'Praegu':today?'Täna':DAYS_LONG[d.getDay()].slice(0,3)}</span><span class="disp tab">${d.getDate()}</span><span class="mono">${MON[d.getMonth()]}</span></div>
     <div class="ev-body">
       <div class="disp ev-title">${esc(e.title)}</div>
-      <div class="ev-where">${v?`<button data-id="${v.id}">${esc(v.name)}</button>`:esc(e.place)} · <span class="tab">${e.time}${e.end?'–'+e.end:''}</span>${e.age?' · '+esc(e.age):''}</div>
+      <div class="ev-where">${v?`<button data-id="${v.id}">${esc(v.name)}</button>`:esc(e.place)}${e.time?` · <span class="tab">${e.time}${e.end?'–'+e.end:''}</span>`:''}${e.age?' · '+esc(e.age):''}</div>
       ${e.lineup&&e.lineup.length?`<div class="ev-line">${e.lineup.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
       ${e.note?`<p class="ev-note">${esc(e.note)}</p>`:''}
-      <div class="ev-foot"><span class="mono">${esc(e.src)}</span><span class="ev-btns"><button class="back" data-share="${e.id}" aria-label="Jaga sõbraga">Jaga</button><a class="back" href="${esc(e.url)}" target="_blank" rel="noopener">Info ja piletid ↗</a></span></div>
+      <div class="ev-foot"><span class="mono">${esc(e.src)}</span><span class="ev-btns"><button class="back" data-share="${e.id}" aria-label="Jaga sõbraga">Jaga</button>${e.url?`<a class="back" href="${esc(e.url)}" target="_blank" rel="noopener">Info ja piletid ↗</a>`:''}</span></div>
     </div></article>`;
 }
 function renderEvents(){
@@ -837,7 +838,7 @@ async function shareIt(title,text,url){
 function shareEvent(id){
   const e=EVENTS.find(x=>x.id===id);if(!e)return;
   const v=e.venue?venueById(e.venue):null;
-  const lbl=dayLabel(e.date),when=lbl==='Käib praegu'?'käib praegu':lbl.toLowerCase()+' kell '+e.time;
+  const lbl=dayLabel(e.date),when=lbl==='Käib praegu'?'käib praegu':lbl.toLowerCase()+(e.time?' kell '+e.time:'');
   shareIt(e.title,`${e.title} · ${v?v.name:e.place}, ${when}. Tuled ka?`,appUrl()+'#e-'+e.id);
 }
 function shareVenue(id){
@@ -932,7 +933,7 @@ function renderSheet(){
       <div class="disp" style="font-size:34px;color:var(--off)">Pole ühendatud</div>
       <p class="mut" style="margin:0;font-size:14.5px">Selle koha uksel pole veel Clubcounti loendurit. Kui klubi selle käivitab, näed siin rahvaarvu ja järjekorda.</p></div>`;
   const evs=upcoming().filter(e=>e.venue===v.id);
-  const party=evs.length?`<div class="card"><span class="mono mut">Tulevad üritused</span><div class="kv">${evs.map(e=>`<div><span>${dayLabel(e.date)} · ${e.time}</span><span><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a> · <a href="#" data-shareev="${e.id}">jaga</a></span></div>`).join('')}</div></div>`:'';
+  const party=evs.length?`<div class="card"><span class="mono mut">Tulevad üritused</span><div class="kv">${evs.map(e=>`<div><span>${dayLabel(e.date)}${e.time?' · '+e.time:''}</span><span>${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>`:esc(e.title)} · <a href="#" data-shareev="${e.id}">jaga</a></span></div>`).join('')}</div></div>`:'';
   const links=[`<a class="back" href="https://www.google.com/maps/search/?api=1&query=${v.lat},${v.lon}" target="_blank" rel="noopener">Ava kaardil ↗</a>`];
   if(v.web)links.push(`<a class="back" href="${v.web}" target="_blank" rel="noopener">Koduleht ↗</a>`);
   $('sheetIn').innerHTML=`
