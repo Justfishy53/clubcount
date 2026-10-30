@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "name": "Näide: klubi iCal-kalender",
+      "type": "ics",
+      "club": "Klubi nimi",
+      "url": "https://example.com/events.ics",
+      "enabled": false
+    },
+    {
+      "name": "Näide: klubi JSON-voog",
+      "type": "json",
+      "club": "Klubi nimi",
+      "url": "https://example.com/api/events",
+      "items_path": "data",
+      "map": { "title": "name", "start": "startDate", "url": "link", "location": "venue.name" },
+      "enabled": false
+    }
+  ]
+}

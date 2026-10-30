@@ -1,0 +1,38 @@
+# Clubcount üritused
+
+Iga päev uuendatav klubiürituste nimekiri. GitHub Actions käivitab skripti, see kirjutab `events.json`, leht `uritused.html` näitab tänased üritused esimesena ja siis kuupäeva järgi edasi.
+
+## Failid
+
+| Fail | Mis see on |
+|---|---|
+| `.github/workflows/update-events.yml` | Igapäevane ajastatud töövoog (04:00 UTC) |
+| `scripts/fetch_events.py` | Kogub üritused, sorteerib, kirjutab `events.json` |
+| `sources.json` | Automaatsed allikad (iCal või JSON) |
+| `events_manual.json` | Käsitsi lisatud üritused |
+| `events.json` | Skripti väljund, mida leht loeb (ära muuda käsitsi) |
+| `uritused.html` | Eraldi leht, mis näitab üritusi (põhirakendus `index.html` kasutab endiselt `events.js`-i) |
+
+## Paigaldus
+
+1. Loo GitHubis repo ja lae kõik need failid sinna.
+2. Repo **Settings → Actions → General → Workflow permissions**: vali **Read and write permissions**.
+3. (Valikuline) **Settings → Pages**: vali haru `main` ja juurkaust, siis leht on avalik aadressil `https://<kasutaja>.github.io/<repo>/`.
+4. Proovi: **Actions → Uuenda üritused → Run workflow**.
+
+## Üritusi lisamine
+
+**Käsitsi:** lisa rida faili `events_manual.json` (`club`, `title`, `start`, soovi korral `location`, `url`). `start` on `2026-11-06T22:00` või ainult kuupäev `2026-11-06`. Eesti aeg.
+
+**Automaatselt:** lisa allikas faili `sources.json` ja sea `"enabled": true`.
+- `ics`: klubi või piletisüsteemi iCal-link.
+- `json`: JSON-voog. `items_path` näitab, kus nimekiri asub, `map` seob väljad (`title`, `start`, `url`, `location`).
+
+Kasuta ainult allikaid, mille kasutustingimused kogumist lubavad (nt klubi enda avalik kalender või API). Facebooki ja Instagrami automaatne kogumine ei ole lubatud.
+
+## Käitumine
+
+- Täna ja tulevikus toimuvad üritused jäävad alles, möödunud kustutatakse. Vaatepiirang on 180 päeva.
+- Kui kõik allikad ebaõnnestuvad, jääb eelmine `events.json` alles.
+- Kui midagi ei muutu, commitit ei tehta.
+- Avalikus repos lülitab GitHub ajastatud töövood 60 päeva tegevusetuse järel välja. Siis käivita töövoog käsitsi uuesti.

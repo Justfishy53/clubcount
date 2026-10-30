@@ -1,0 +1,21 @@
+[
+  {
+    "club": "Näide Klubi",
+    "title": "Näidisüritus (kustuta see rida)",
+    "start": "2026-10-30T23:00",
+    "location": "Tallinn",
+    "url": "https://example.com"
+  },
+  {
+    "club": "Näide Klubi",
+    "title": "Teine näidisüritus",
+    "start": "2026-11-06T22:00",
+    "location": "Tallinn",
+    "url": ""
+  },
+  {
+    "club": "Näide Baar",
+    "title": "Kolmas näidisüritus (ainult kuupäev)",
+    "start": "2026-11-13"
+  }
+]

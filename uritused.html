@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clubcount üritused</title>
+<style>
+  :root { --bg:#0e0e12; --card:#181820; --text:#f2f2f5; --muted:#9a9aab; --accent:#ff4d8d; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f6f6f9; --card:#fff; --text:#16161d; --muted:#6b6b7b; --accent:#d9246b; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.45 system-ui, sans-serif; }
+  main { max-width:640px; margin:0 auto; padding:20px 16px 48px; }
+  h1 { font-size:1.4rem; margin:0 0 4px; }
+  .updated { color:var(--muted); font-size:.85rem; margin-bottom:20px; }
+  h2 { font-size:.95rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:28px 0 10px; }
+  h2.today { color:var(--accent); }
+  .card { background:var(--card); border-radius:12px; padding:12px 14px; margin-bottom:8px; display:flex; gap:12px; align-items:baseline; }
+  .time { font-variant-numeric:tabular-nums; font-weight:600; min-width:3.2em; color:var(--accent); }
+  .title { font-weight:600; }
+  .meta { color:var(--muted); font-size:.88rem; }
+  a { color:inherit; text-decoration:none; }
+  a:hover .title { text-decoration:underline; }
+  .empty { color:var(--muted); padding:24px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Üritused</h1>
+  <div class="updated" id="updated"></div>
+  <div id="list"></div>
+</main>
+<script>
+const TZ = "Europe/Tallinn";
+const fmtDay = new Intl.DateTimeFormat("sv-SE", { timeZone: TZ }); // YYYY-MM-DD
+const fmtLong = new Intl.DateTimeFormat("et-EE", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long" });
+
+function todayStr() { return fmtDay.format(new Date()); }
+function addDays(ymd, n) {
+  const d = new Date(ymd + "T00:00:00Z"); d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : ""; }
+
+function heading(day, today) {
+  if (day === today) return ["Täna", true];
+  if (day === addDays(today, 1)) return ["Homme", false];
+  const t = fmtLong.format(new Date(day + "T00:00:00Z"));
+  return [t.charAt(0).toUpperCase() + t.slice(1), false];
+}
+
+fetch("events.json", { cache: "no-store" })
+  .then(r => r.json())
+  .then(data => {
+    const today = todayStr();
+    const events = (data.events || [])
+      .filter(e => e.start.slice(0, 10) >= today)
+      .sort((a, b) => a.start.slice(0, 10).localeCompare(b.start.slice(0, 10))
+        || (a.start.slice(11, 16) || "").localeCompare(b.start.slice(11, 16) || ""));
+
+    document.getElementById("updated").textContent =
+      data.updated ? "Uuendatud: " + data.updated.replace("T", " ").slice(0, 16) : "";
+
+    const list = document.getElementById("list");
+    if (!events.length) { list.innerHTML = '<div class="empty">Tulevasi üritusi pole.</div>'; return; }
+
+    const groups = {};
+    events.forEach(e => (groups[e.start.slice(0, 10)] ||= []).push(e));
+
+    list.innerHTML = Object.keys(groups).sort().map(day => {
+      const [label, isToday] = heading(day, today);
+      const cards = groups[day].map(e => {
+        const time = e.start.length > 10 ? e.start.slice(11, 16) : "";
+        const url = safeUrl(e.url);
+        const inner = `<div class="card"><span class="time">${esc(time) || "&nbsp;"}</span>
+          <div><div class="title">${esc(e.title)}</div>
+          <div class="meta">${esc(e.club)}${e.location ? " · " + esc(e.location) : ""}</div></div></div>`;
+        return url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${inner}</a>` : inner;
+      }).join("");
+      return `<h2 class="${isToday ? "today" : ""}">${esc(label)}</h2>${cards}`;
+    }).join("");
+  })
+  .catch(() => { document.getElementById("list").innerHTML = '<div class="empty">Üritusi ei õnnestunud laadida.</div>'; });
+</script>
+</body>
+</html>
