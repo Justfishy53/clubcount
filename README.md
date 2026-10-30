@@ -27,6 +27,7 @@ Iga päev uuendatav klubiürituste nimekiri. GitHub Actions käivitab skripti, s
 
 **Automaatselt:** lisa allikas faili `sources.json` ja sea `"enabled": true`.
 - `wp`: klubi WordPressi ürituste loend (praegu Club Studio ja D3). Kuupäev ja kellaaeg tulevad ürituse lehelt.
+- `gateme`: korraldaja GateMe leht eesti keeles (praegu D3).
 - `helitehas`: Helitehase avalehe kava. Kui nad lehte muudavad, tuleb see osa skriptis üle vaadata.
 - `ics`: klubi või piletisüsteemi iCal-link.
 - `json`: JSON-voog. `items_path` näitab, kus nimekiri asub, `map` seob väljad (`title`, `start`, `url`, `location`).

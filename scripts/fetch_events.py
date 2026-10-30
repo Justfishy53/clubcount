@@ -195,6 +195,41 @@ def parse_wp(src):
     return events
 
 
+MONTHS = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli",
+          "august", "september", "oktoober", "november", "detsember"]
+
+
+def parse_gateme(text, src):
+    """GateMe korraldaja leht (eesti keeles), kaardil on kirjas nt "Reede, 6 november 23:00"."""
+    events = []
+    cards = re.findall(
+        r'<a href="(/et/[^"?]+)[^"]*" class="event[^"]*">.*?class="event-link">([^<]+)<.*?'
+        r'class="event-time">[^,<]*,\s*(\d{1,2})\s+(\w+)(?:\s+(\d{4}))?\s+(\d{2}:\d{2})',
+        text, re.S)
+    for path, title, d, month, year, clock in cards:
+        if month.lower() not in MONTHS:
+            continue
+        m = MONTHS.index(month.lower()) + 1
+        try:
+            day = date(int(year or today().year), m, int(d))
+            if not year and day < today() - timedelta(days=30):
+                day = day.replace(year=day.year + 1)
+        except ValueError:
+            continue
+        title = html.unescape(title).strip()
+        if src.get("title_strip"):
+            title = re.sub(src["title_strip"], "", title).strip()
+        events.append({
+            "club": src["club"],
+            "title": title,
+            "start": norm_start(f"{day}T{clock}"),
+            "location": "",
+            "url": "https://gateme.com" + path,
+            "source": src["name"],
+        })
+    return events
+
+
 def parse_helitehas(text, src):
     """Helitehase avalehe kava; st:"ara" on ära jäänud üritus."""
     events = []
@@ -232,6 +267,8 @@ def load_sources():
                 got = parse_ics(http_get(src["url"]), src["club"], src["name"])
             elif src["type"] == "json":
                 got = parse_json(http_get(src["url"]), src)
+            elif src["type"] == "gateme":
+                got = parse_gateme(http_get(src["url"]), src)
             elif src["type"] == "helitehas":
                 got = parse_helitehas(http_get(src["url"]), src)
             else:
@@ -279,16 +316,16 @@ def write_app_events(events):
     listed = set()
     if APP_EVENTS.exists():
         text = APP_EVENTS.read_text(encoding="utf-8")
-        for d, t, v in re.findall(r'"date":"([^"]+)","time":"[^"]*",(?:"end":"[^"]*",)?"title":"((?:[^"\\]|\\.)*)","venue":(?:"([^"]+)"|null)', text):
+        for d, tm, t, v in re.findall(r'"date":"([^"]+)","time":"([^"]*)",(?:"end":"[^"]*",)?"title":"((?:[^"\\]|\\.)*)","venue":(?:"([^"]+)"|null)', text):
             listed.add(title_key(d, t))
-            if v:  # sama õhtu samas kohas võib olla eri nimega kirjas
-                listed.add((d, v))
+            if v:  # sama üritus samas kohas võib olla eri nimega kirjas
+                listed.add((d, v, tm))
 
     rows = []
     for e in events:
         day = e["start"][:10]
         venue = names.get(e["club"].casefold())
-        if title_key(day, e["title"]) in listed or (day, venue) in listed:
+        if title_key(day, e["title"]) in listed or (day, venue, e["start"][11:16]) in listed:
             continue
         url = e.get("url", "")
         rows.append(json.dumps({
@@ -331,9 +368,11 @@ def main():
         if d < t or d > horizon:
             continue
         e["id"] = make_id(e["club"], e["title"], e["start"])
-        if e["id"] in seen:
+        # sama koht ja algusaeg kahest allikast on sama üritus; esimene allikas jääb
+        key = (e["club"].casefold(), e["start"][:16])
+        if e["id"] in seen or key in seen:
             continue
-        seen.add(e["id"])
+        seen.update((e["id"], key))
         result.append(e)
 
     # Tänased ja tulevased kuupäeva ja kellaaja järgi
