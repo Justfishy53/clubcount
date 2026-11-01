@@ -1,76 +1,7 @@
 {
-  "updated": "2026-10-31T06:31+02:00",
-  "count": 24,
+  "updated": "2026-11-01T06:40+02:00",
+  "count": 22,
   "events": [
-    {
-      "club": "D3",
-      "title": "FRAT HALLOWEEN",
-      "start": "2026-10-31T23:00+02:00",
-      "location": "",
-      "url": "https://www.d-3.ee/events/frat-halloween-2/",
-      "source": "d-3.ee",
-      "price": null,
-      "tiers": [
-        {
-          "l": "Super Early Bird",
-          "p": 10,
-          "out": true
-        },
-        {
-          "l": "Early Bird",
-          "p": 15,
-          "out": true
-        },
-        {
-          "l": "Regular Bird",
-          "p": 20,
-          "out": true
-        },
-        {
-          "l": "Late Bird",
-          "p": 25,
-          "out": true
-        },
-        {
-          "l": "Priority",
-          "p": 35,
-          "out": true
-        }
-      ],
-      "id": "b32678f88a9e"
-    },
-    {
-      "club": "Club Studio",
-      "title": "LOCURA: HALLOWEEN X DIA DE MUERTOS",
-      "start": "2026-10-31T23:00+02:00",
-      "location": "",
-      "url": "https://clubstudio.ee/event/locura-halloween-x-dia-de-muertos-en-el-club-studio-31-10/",
-      "source": "clubstudio.ee",
-      "price": 15,
-      "tiers": [
-        {
-          "l": "ISIC kaardiga kogu öö",
-          "p": 7,
-          "out": false
-        },
-        {
-          "l": "FB Going kuni 00.00",
-          "p": 9,
-          "out": false
-        },
-        {
-          "l": "Tavapilet",
-          "p": 15,
-          "out": false
-        },
-        {
-          "l": "Fasttrack",
-          "p": 20,
-          "out": false
-        }
-      ],
-      "id": "a9af3199c2f1"
-    },
     {
       "club": "Helitehas",
       "title": "HEVI: Teddy Killerz & Tantrum Desire",
