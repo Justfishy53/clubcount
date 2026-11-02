@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-01T06:40+02:00",
-  "count": 22,
+  "updated": "2026-11-02T12:48+02:00",
+  "count": 25,
   "events": [
     {
       "club": "Helitehas",
@@ -13,11 +13,13 @@
     },
     {
       "club": "D3",
-      "title": "Miinusprojekt",
+      "title": "MIINUSPROJEKT",
       "start": "2026-11-06T23:00+02:00",
       "location": "",
-      "url": "https://gateme.com/et/D3Tallinn/104468-miinusprojekt-0611-d3/",
-      "source": "käsitsi",
+      "url": "https://www.d-3.ee/events/miinusprojekt-2/",
+      "source": "d-3.ee",
+      "price": null,
+      "tiers": [],
       "id": "cf908f5f75f8"
     },
     {
@@ -51,6 +53,17 @@
         }
       ],
       "id": "1b9800dc7263"
+    },
+    {
+      "club": "D3",
+      "title": "OLLIE “IF DEMONS ARE REAL, SO ARE ANGELS” albumi esitluskontsert",
+      "start": "2026-11-07T18:00+02:00",
+      "location": "",
+      "url": "https://www.d-3.ee/events/ollie-if-demons-are-real-so-are-angels-albumi-esitluskontsert/",
+      "source": "d-3.ee",
+      "price": null,
+      "tiers": [],
+      "id": "6ba162b86faf"
     },
     {
       "club": "Helitehas",
@@ -98,9 +111,70 @@
       "title": "FOMO",
       "start": "2026-11-07T23:00+02:00",
       "location": "",
-      "url": "https://gateme.com/et/D3Tallinn/104473-fomo-i-0711-i-d3/",
-      "source": "käsitsi",
+      "url": "https://www.d-3.ee/events/fomo/",
+      "source": "d-3.ee",
+      "price": 11,
+      "tiers": [
+        {
+          "l": "Tavapilet",
+          "p": 11,
+          "out": false
+        },
+        {
+          "l": "Priority",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "FB Going kuni 00.00",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 11,
+          "out": false
+        }
+      ],
       "id": "9245e31741f3"
+    },
+    {
+      "club": "D3",
+      "title": "D3 5th BDAY",
+      "start": "2026-11-13T23:00+02:00",
+      "location": "",
+      "url": "https://www.d-3.ee/events/d3-5th-bday/",
+      "source": "d-3.ee",
+      "price": 15,
+      "tiers": [
+        {
+          "l": "FB attend (going/interested) kuni 00:00",
+          "p": 10,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Priority",
+          "p": 25,
+          "out": false
+        }
+      ],
+      "id": "c5133ac7f6b7"
+    },
+    {
+      "club": "D3",
+      "title": "AZMA suur juubelikontsert",
+      "start": "2026-11-14T18:00+02:00",
+      "location": "",
+      "url": "https://www.d-3.ee/events/azma-suur-juubelikontsert/",
+      "source": "d-3.ee",
+      "price": null,
+      "tiers": [],
+      "id": "e2232e5cb4e8"
     },
     {
       "club": "Helitehas",

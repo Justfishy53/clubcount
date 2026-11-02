@@ -1,10 +1,10 @@
 /* Automaatne fail: selle kirjutab scripts/fetch_events.py. Ära muuda käsitsi. */
 window.CC_EVENTS_AUTO=[
-{"id":"a-cf908f5f75f8","date":"2026-11-06","time":"23:00","title":"Miinusprojekt","venue":"d3","place":"D3","lineup":[],"price":null,"tiers":[],"url":"https://gateme.com/et/D3Tallinn/104468-miinusprojekt-0611-d3/","src":"käsitsi"},
+{"id":"a-cf908f5f75f8","date":"2026-11-06","time":"23:00","title":"MIINUSPROJEKT","venue":"d3","place":"D3","lineup":[],"price":null,"tiers":[],"url":"https://www.d-3.ee/events/miinusprojekt-2/","src":"d-3.ee"},
 {"id":"a-1b9800dc7263","date":"2026-11-06","time":"23:00","title":"NIGHTVISION","venue":"club-studio","place":"Club Studio","lineup":[],"price":15,"tiers":[{"l":"ISIC kaardiga kogu öö","p":7,"out":false},{"l":"FB Going kuni 00.00","p":9,"out":false},{"l":"Tavapilet","p":15,"out":false},{"l":"Fasttrack","p":20,"out":false}],"url":"https://clubstudio.ee/event/nightvision-at-studio-06-11/","src":"clubstudio.ee"},
 {"id":"a-3093271ddffe","date":"2026-11-07","time":"20:00","title":"Dagö","venue":"helitehas","place":"Helitehas","lineup":[],"price":null,"tiers":[],"url":"https://www.facebook.com/events/1100748175741992","src":"helitehas.ee"},
 {"id":"a-26a6b25d9adf","date":"2026-11-07","time":"23:00","title":"Blaze","venue":"club-studio","place":"Club Studio","lineup":[],"price":15,"tiers":[{"l":"ISIC kaardiga kogu öö","p":7,"out":false},{"l":"FB Going kuni 00.00","p":9,"out":false},{"l":"Tavapilet","p":15,"out":false},{"l":"Fasttrack","p":20,"out":false}],"url":"https://clubstudio.ee/event/blaze-at-studio-07-11/","src":"clubstudio.ee"},
-{"id":"a-9245e31741f3","date":"2026-11-07","time":"23:00","title":"FOMO","venue":"d3","place":"D3","lineup":[],"price":null,"tiers":[],"url":"https://gateme.com/et/D3Tallinn/104473-fomo-i-0711-i-d3/","src":"käsitsi"},
+{"id":"a-9245e31741f3","date":"2026-11-07","time":"23:00","title":"FOMO","venue":"d3","place":"D3","lineup":[],"price":11,"tiers":[{"l":"Tavapilet","p":11,"out":false},{"l":"Priority","p":15,"out":false},{"l":"FB Going kuni 00.00","p":7,"out":false},{"l":"Tavapilet","p":11,"out":false}],"url":"https://www.d-3.ee/events/fomo/","src":"d-3.ee"},
 {"id":"a-44b4fb895ffb","date":"2026-11-14","time":"23:00","title":"PÖFF 30","venue":"d3","place":"D3","lineup":[],"price":null,"tiers":[],"url":"https://gateme.com/et/D3Tallinn/104453-poff-30-i-1411-i-d3/","src":"käsitsi"},
 {"id":"a-e859fdf8f1d6","date":"2026-11-20","time":"19:00","title":"Mustasch","venue":"helitehas","place":"Helitehas","lineup":[],"price":null,"tiers":[],"url":"https://www.facebook.com/events/1413551483860652","src":"helitehas.ee"},
 {"id":"a-8de2786c7c3f","date":"2026-11-21","time":"19:00","title":"Tuberkuloited × Vennaskond × Sõpruse Puiestee","venue":"helitehas","place":"Helitehas","lineup":[],"price":null,"tiers":[],"url":"https://www.piletitasku.ee/et/event/10479","src":"helitehas.ee"},
@@ -20,4 +20,4 @@ window.CC_EVENTS_AUTO=[
 {"id":"a-cc9dbf53bbcb","date":"2027-03-11","time":"19:00","title":"H-Blockx","venue":"helitehas","place":"Helitehas","lineup":[],"price":null,"tiers":[],"url":"https://www.facebook.com/events/2233303960781263","src":"helitehas.ee"},
 {"id":"a-2db2b68ceb37","date":"2027-03-12","time":"20:00","title":"Roxette UK","venue":"helitehas","place":"Helitehas","lineup":[],"price":null,"tiers":[],"url":"https://www.facebook.com/events/1571142424643250","src":"helitehas.ee"}
 ];
-window.CC_EVENT_PRICES={};
+window.CC_EVENT_PRICES={"d3-bday-1311":{"price":15,"tiers":[{"l":"FB attend (going/interested) kuni 00:00","p":10,"out":false},{"l":"Tavapilet","p":15,"out":false},{"l":"Priority","p":25,"out":false}]}};
