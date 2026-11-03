@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-02T12:48+02:00",
-  "count": 25,
+  "updated": "2026-11-03T17:37+02:00",
+  "count": 26,
   "events": [
     {
       "club": "Helitehas",
@@ -137,6 +137,38 @@
         }
       ],
       "id": "9245e31741f3"
+    },
+    {
+      "club": "Club Studio",
+      "title": "anna tervist",
+      "start": "2026-11-13T23:00+02:00",
+      "location": "",
+      "url": "https://clubstudio.ee/event/anna-tervist-at-studio-13-11/",
+      "source": "clubstudio.ee",
+      "price": 15,
+      "tiers": [
+        {
+          "l": "ISIC kaardiga kogu öö",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "FB Going kuni 00.00",
+          "p": 9,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Fasttrack",
+          "p": 20,
+          "out": false
+        }
+      ],
+      "id": "b65c29c0a5a4"
     },
     {
       "club": "D3",
