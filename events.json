@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-03T17:37+02:00",
-  "count": 26,
+  "updated": "2026-11-05T17:48+02:00",
+  "count": 27,
   "events": [
     {
       "club": "Helitehas",
@@ -216,6 +216,38 @@
       "url": "https://www.facebook.com/events/1874981196975937",
       "source": "helitehas.ee",
       "id": "f5b2a207d2d1"
+    },
+    {
+      "club": "Club Studio",
+      "title": "NOORED JA NÄLJASED",
+      "start": "2026-11-14T23:00+02:00",
+      "location": "",
+      "url": "https://clubstudio.ee/event/noored-ja-naljased-at-studio-14-11/",
+      "source": "clubstudio.ee",
+      "price": 15,
+      "tiers": [
+        {
+          "l": "ISIC kaardiga kogu öö",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "FB Going kuni 00.00",
+          "p": 9,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Fasttrack",
+          "p": 20,
+          "out": false
+        }
+      ],
+      "id": "1a12140fa3cf"
     },
     {
       "club": "D3",
