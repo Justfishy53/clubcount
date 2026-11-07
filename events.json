@@ -1,59 +1,7 @@
 {
-  "updated": "2026-11-05T17:48+02:00",
-  "count": 27,
+  "updated": "2026-11-07T06:40+02:00",
+  "count": 24,
   "events": [
-    {
-      "club": "Helitehas",
-      "title": "HEVI: Teddy Killerz & Tantrum Desire",
-      "start": "2026-11-06T22:30+02:00",
-      "location": "",
-      "url": "https://www.facebook.com/events/1747303469805613",
-      "source": "helitehas.ee",
-      "id": "d148698b1d33"
-    },
-    {
-      "club": "D3",
-      "title": "MIINUSPROJEKT",
-      "start": "2026-11-06T23:00+02:00",
-      "location": "",
-      "url": "https://www.d-3.ee/events/miinusprojekt-2/",
-      "source": "d-3.ee",
-      "price": null,
-      "tiers": [],
-      "id": "cf908f5f75f8"
-    },
-    {
-      "club": "Club Studio",
-      "title": "NIGHTVISION",
-      "start": "2026-11-06T23:00+02:00",
-      "location": "",
-      "url": "https://clubstudio.ee/event/nightvision-at-studio-06-11/",
-      "source": "clubstudio.ee",
-      "price": 15,
-      "tiers": [
-        {
-          "l": "ISIC kaardiga kogu öö",
-          "p": 7,
-          "out": false
-        },
-        {
-          "l": "FB Going kuni 00.00",
-          "p": 9,
-          "out": false
-        },
-        {
-          "l": "Tavapilet",
-          "p": 15,
-          "out": false
-        },
-        {
-          "l": "Fasttrack",
-          "p": 20,
-          "out": false
-        }
-      ],
-      "id": "1b9800dc7263"
-    },
     {
       "club": "D3",
       "title": "OLLIE “IF DEMONS ARE REAL, SO ARE ANGELS” albumi esitluskontsert",
