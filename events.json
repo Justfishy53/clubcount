@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-08T06:42+02:00",
-  "count": 20,
+  "updated": "2026-11-10T12:46+02:00",
+  "count": 22,
   "events": [
     {
       "club": "Club Studio",
@@ -115,12 +115,30 @@
     },
     {
       "club": "D3",
-      "title": "PÖFF 30",
+      "title": "PÖFF 30 JUUBELIPIDU",
       "start": "2026-11-14T23:00+02:00",
       "location": "",
-      "url": "https://gateme.com/et/D3Tallinn/104453-poff-30-i-1411-i-d3/",
-      "source": "käsitsi",
-      "id": "44b4fb895ffb"
+      "url": "https://www.d-3.ee/events/poff-30-juubelipidu/",
+      "source": "d-3.ee",
+      "price": 15,
+      "tiers": [
+        {
+          "l": "FB attend (going/interested) kuni 00:00",
+          "p": 10,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 15,
+          "out": false
+        },
+        {
+          "l": "Priority",
+          "p": 25,
+          "out": false
+        }
+      ],
+      "id": "2089cebfaba2"
     },
     {
       "club": "Helitehas",
@@ -132,6 +150,28 @@
       "id": "e859fdf8f1d6"
     },
     {
+      "club": "D3",
+      "title": "I LOVED THE 00’s",
+      "start": "2026-11-20T23:00+02:00",
+      "location": "",
+      "url": "https://www.d-3.ee/events/i-loved-the-00s-13/",
+      "source": "d-3.ee",
+      "price": 12,
+      "tiers": [
+        {
+          "l": "FB going kuni 00:00",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 12,
+          "out": false
+        }
+      ],
+      "id": "9f0c86610bdd"
+    },
+    {
       "club": "Helitehas",
       "title": "Tuberkuloited × Vennaskond × Sõpruse Puiestee",
       "start": "2026-11-21T19:00+02:00",
@@ -139,6 +179,28 @@
       "url": "https://www.piletitasku.ee/et/event/10479",
       "source": "helitehas.ee",
       "id": "8de2786c7c3f"
+    },
+    {
+      "club": "D3",
+      "title": "BEST OF 2010’s",
+      "start": "2026-11-27T23:00+02:00",
+      "location": "",
+      "url": "https://www.d-3.ee/events/best-of-2010s-17/",
+      "source": "d-3.ee",
+      "price": 12,
+      "tiers": [
+        {
+          "l": "FB Going kuni 00:00",
+          "p": 7,
+          "out": false
+        },
+        {
+          "l": "Tavapilet",
+          "p": 12,
+          "out": false
+        }
+      ],
+      "id": "d5d69d271554"
     },
     {
       "club": "Helitehas",
@@ -178,12 +240,14 @@
     },
     {
       "club": "D3",
-      "title": "Planeet: uue albumi esitlus",
+      "title": "PLANEET “Kosmosesse kaasa” albumi esitlus",
       "start": "2026-12-11T22:00+02:00",
       "location": "",
-      "url": "https://gateme.com/et/D3Tallinn/104415-planeet-uue-albumi-esitlus-i-d3-i-1112/",
-      "source": "käsitsi",
-      "id": "abb2dfce6b36"
+      "url": "https://www.d-3.ee/events/planeet-kosmosesse-kaasa-albumi-esitlus/",
+      "source": "d-3.ee",
+      "price": null,
+      "tiers": [],
+      "id": "097be59bce3f"
     },
     {
       "club": "Helitehas",
