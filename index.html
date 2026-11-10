@@ -308,6 +308,7 @@ nav button[aria-selected=true]{color:var(--ac)}
         <h1>Kuhu tänane<span>õhtu viib?</span></h1>
         <p>Tallinna 30 populaarsemat klubi ja baari. Vaata rahvaarvu, sissepääsu ja järjekorda, enne kui jope selga paned.</p>
       </div>
+      <div id="pilot" style="margin-bottom:16px"></div>
       <div class="search"><input type="search" id="q" placeholder="Otsi nime või tänavat" autocomplete="off" aria-label="Otsi kohta"></div>
       <div class="chips" id="areas" role="group" aria-label="Piirkond"></div>
       <div class="chips" id="chips" role="group" aria-label="Filtreeri" style="margin-top:0"></div>
@@ -493,6 +494,7 @@ nav button[aria-selected=true]{color:var(--ac)}
       <div class="stat"><div class="mono" id="cOutL">AI välja</div><div class="disp" id="cOut">0</div></div>
     </div>
     <div class="card cam-ctrl">
+      <label>Pööra pilti <span class="seg" role="group"><button id="camRot" aria-pressed="false">0°</button></span></label>
       <label>Joone suund <span class="seg" role="group"><button data-or="h">Rõhtne</button><button data-or="v">Püstine</button></span></label>
       <label for="camLine">Joone asukoht <input type="range" id="camLine" min="10" max="90" step="1"></label>
       <label>Sisse tähendab <span class="seg" role="group"><button data-dir="0" id="dir0">↓ alla</button><button data-dir="1" id="dir1">↑ üles</button></span></label>
@@ -556,6 +558,12 @@ nav button[aria-selected=true]{color:var(--ac)}
         <li>Kaamera peab lubama oma pilti teistel lehtedel lugeda (CORS). Kui ei luba, ütleb test seda.</li>
       </ol>
     </div>
+
+    <div class="card cs-opt">
+      <h3>3 · Ekraan või aken</h3>
+      <p class="mut" style="margin:0;font-size:14px">Kui kaamera näitab pilti ainult oma programmis või veebilehel (näiteks EZVIZ), ava seal otsepilt ja lase äpil lugeda inimesi sellest aknast. Töötab arvutis. Akna valid iga kord, kui kaamera käivitad, ja aken peab jääma lahti.</p>
+      <button class="btn" id="csScreen">Kasuta ekraani või akent</button>
+    </div>
     <button class="btn btn-line" id="csReset">Kasuta seadme vaikimisi kaamerat</button>
   </div>
 </div>
@@ -599,6 +607,10 @@ function parseOH(s){
 }
 const OLD_IDS={studio:'club-studio',nimeta:'nimeta-baar'};
 const VENUES=(window.CC_VENUES||[]).map(v=>Object.assign({about:null,hoursNote:null,cap:null,capNote:null,age:null,email:null,photo:null,warn:null},v,{hours:parseOH(v.oh)}));
+/* pilot project: a real test place counted by the door camera. Shown as its own card above the list, never in the TOP 30, on the map or in the pitch. */
+const PILOT_ID='piloot';
+const PLACES=VENUES.slice();
+VENUES.push({id:PILOT_ID,name:'Pilootprojekt',kind:'Piloot',area:'Katsekoht',pilot:true,addr:null,lat:null,lon:null,oh:null,hours:null,price:null,cap:null});
 const DAYS=['P','E','T','K','N','R','L'];
 const DAYS_LONG=['Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede','Laupäev'];
 function openState(v,now){
@@ -621,7 +633,7 @@ function statusOf(p){if(p<0.45)return{key:'calm',label:'Rahulik'};if(p<0.85)retu
 
 /* ---------- persisted state ---------- */
 const DEF_DOOR={venue:'d3',cap:1500,hard:false,vib:true,price:null,queue:0,start:null,events:[],pin:null};
-const DEF_CAM={orient:'h',line:50,flip:false,conf:50};
+const DEF_CAM={orient:'h',line:50,flip:false,conf:50,rot:0};
 function load(){
   let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){}
   d=d&&typeof d==='object'?d:{};
@@ -639,7 +651,7 @@ let S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* ---------- shared backend (Supabase, see supabase.sql). Empty url = counter stays on this device only. ---------- */
-const CLOUD={url:'',key:''};
+const CLOUD={url:'https://ulwaucpgajoevczamgmi.supabase.co',key:'sb_publishable_YQ6Yyn2uiPG275Gt3dJzvQ_zHy0g5xT'};
 const LIVE_MAX_AGE=5*60000; // door device sends a heartbeat every minute; older data is shown as "Pole ühendatud"
 let REMOTE={},sb=null;
 
@@ -684,9 +696,33 @@ function inScope(v){
 }
 /* photo: one the owner added on this device > hand-checked free photo (Wikimedia Commons / img folder) */
 function photoOf(v){let u=null;try{u=localStorage.getItem('cc-photo-'+v.id)}catch(e){}return u?{url:u,own:true}:v.photo}
+function renderPilot(){
+  const on=S.door.venue===PILOT_ID&&S.door.start,st=dstats();
+  $('pilot').innerHTML=`<div class="card" style="border-color:var(--ac)">
+    <div class="demo-tag mono"><b>Pilootprojekt</b><span>${on?'Päris loendus · kaamera':'Kaamera loendus'}</span></div>
+    ${on?`<div class="big"><span class="disp tab" style="color:var(--ac)">${st.occ}</span><span class="mut">inimest sees</span></div>
+      <div class="mono mut tab">Sisse ${st.inT} · Välja ${st.outT} · Tipp ${st.peak} · algas ${hm(S.door.start)}</div>`
+    :`<div class="disp" style="font-size:34px;color:var(--off)">Pole ühendatud</div>
+      <p class="mut" style="margin:0;font-size:14.5px">Käivita kaamera. See loeb, kes ületab pildil joone, ja näitab siin, mitu inimest on sees.</p>`}
+    <div class="row" style="justify-content:flex-start;gap:10px;flex-wrap:wrap">
+      <button class="btn" data-pilot="cam">${on?'Ava kaamera':'Käivita kaamera loendus'}</button>
+      ${on?'<button class="btn btn-line" data-pilot="door">Ukse loendur</button>':''}</div>
+  </div>`;
+}
+function pilotDoor(){
+  if(S.door.venue===PILOT_ID)return true;
+  if(S.door.events.length){toast('Loendur loeb praegu kohta '+venueById(S.door.venue).name+'. Lõpeta enne õhtu (Info).','bad');return false}
+  S.door.venue=PILOT_ID;S.door.cap=200;S.door.price=null;S.door.queue=0;S.door.pin=null;save();renderDoor();renderShare();
+  return true;
+}
+$('pilot').addEventListener('click',e=>{
+  const b=e.target.closest('[data-pilot]');if(!b||!pilotDoor())return;
+  if(b.dataset.pilot==='door')show('v-door');else openCam(false);
+});
 function renderList(){
+  renderPilot();
   $('areas').innerHTML=AREAS.map(([id,l])=>`<button class="chip" data-a="${id}" aria-pressed="${S.area===id}">${l}</button>`).join('');
-  const scoped=VENUES.filter(inScope);
+  const scoped=PLACES.filter(inScope);
   $('chips').innerHTML=FILTERS.map(([id,l])=>`<button class="chip" data-f="${id}" aria-pressed="${S.filter===id}">${l} · ${scoped.filter(v=>matches(v,id)).length}</button>`).join('');
   const rank=v=>(liveOf(v)?0:2)+(openState(v).open===true?0:1);
   const all=scoped.filter(v=>matches(v,S.filter)).sort((a,b)=>rank(a)-rank(b)||(a.kind===b.kind?0:a.kind==='Klubi'?-1:1)||a.name.localeCompare(b.name,'et'));
@@ -813,7 +849,7 @@ function initMap(){
   map=L.map('map',{zoomControl:true,attributionControl:true}).setView([59.4385,24.735],14);
   const tiles=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'}).addTo(map);
   let tileErr=0;tiles.on('tileerror',()=>{if(++tileErr===3){const n=document.createElement('div');n.className='map-note';n.textContent='Kaardi taust ei laadi siin vaates. Ava äpp oma Netlify lingilt, siis on kaart nähtav.';$('map').appendChild(n)}});
-  const b=L.latLngBounds(VENUES.map(v=>[v.lat,v.lon]));map.fitBounds(b,{padding:[30,30]});
+  const b=L.latLngBounds(PLACES.map(v=>[v.lat,v.lon]));map.fitBounds(b,{padding:[30,30]});
   map.on('zoomend',renderMarkers);
   renderMarkers();
 }
@@ -821,7 +857,7 @@ const markerKey={};
 function renderMarkers(){
   if(!map)return;
   const labels=map.getZoom()>=17;
-  VENUES.forEach(v=>{
+  PLACES.forEach(v=>{
     const Lv=liveOf(v),big=Lv||labels||v.kind==='Klubi'&&map.getZoom()>=15;
     const key=(Lv?Lv.st.key+Lv.count:'none')+(big?'b':'s');
     if(markerKey[v.id]===key)return; markerKey[v.id]=key;
@@ -852,8 +888,8 @@ function demoStep(){
 }
 function renderPitch(){
   const sel=$('pVenue');
-  if(!sel.options.length)sel.innerHTML=VENUES.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
-  if(!venueById(S.pitch))S.pitch=S.door.venue;
+  if(!sel.options.length)sel.innerHTML=PLACES.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
+  if(!PLACES.some(x=>x.id===S.pitch))S.pitch=PLACES.some(x=>x.id===S.door.venue)?S.door.venue:PLACES[0].id;
   sel.value=S.pitch;
   const v=venueById(S.pitch);
   if(!demo||demo.id!==v.id)demoReset(v);
@@ -906,7 +942,7 @@ function addEvent(d,src){
 }
 function renderDoor(){
   const st=dstats(),cap=S.door.cap,p=st.occ/cap,s=statusOf(p),v=venueById(S.door.venue);
-  $('door').className='door st-'+s.key;
+  $('door').className='door st-'+s.key;renderPilot();
   const sel=$('dVenue');
   if(!sel.options.length)sel.innerHTML=VENUES.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');
   sel.value=S.door.venue; sel.disabled=S.door.events.length>0;
@@ -1066,6 +1102,7 @@ function ipPlayer(vid,img){
 function camSrcLabel(){
   const c=S.camSrc;
   if(c.type==='device')return 'USB- või seadme kaamera: '+(c.label||'valitud kaamera');
+  if(c.type==='screen')return 'Ekraan või aken (kaamera otsepilt)';
   if(c.type==='ip'){let h=c.url;try{h=new URL(c.url).host}catch(e){}return 'Võrgukaamera: '+h}
   return null;
 }
@@ -1121,6 +1158,10 @@ $('csSave').addEventListener('click',async()=>{
   S.camSrc={type:'ip',url:cfg.url,kind:cfg.kind};save();renderCamConn();toast('Võrgukaamera ühendatud');
 });
 $('csReset').addEventListener('click',()=>{S.camSrc={type:'auto'};save();renderCamConn();renderDevs([]);toast('Kasutan seadme vaikimisi kaamerat')});
+$('csScreen').addEventListener('click',()=>{
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getDisplayMedia){toast('See brauser ei luba akent jagada. Kasuta arvutis Chrome’i või Edge’i.','bad');return}
+  S.camSrc={type:'screen'};save();renderCamConn();renderDevs([]);toast('Valitud: ekraan või aken. Akna valid kaamerat käivitades.');
+});
 $('csClose').addEventListener('click',()=>closeSetup());
 $('camConnBtn').addEventListener('click',openSetup);
 
@@ -1128,6 +1169,7 @@ $('camConnBtn').addEventListener('click',openSetup);
 let camErr=null,lastVT=-1,lastVTAt=0,camOpen=false,stream=null,model=null,running=false,tracks=[],nextId=1,flashT=0,flashD=0,lastFps=0;
 const video=$('camVideo'),camImg=$('camImg'),canvas=$('camCanvas'),ctx=canvas.getContext('2d');
 const camPlayer=ipPlayer(video,camImg);
+const work=document.createElement('canvas'),wctx=work.getContext('2d');
 let srcEl=video;   // what the AI reads: the <video> (device camera, file, HLS/MP4) or the <img> (MJPEG / snapshot)
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('Ei saanud laadida: '+src));document.head.appendChild(s)})}
 function camMsg(title,txt,btn){$('camMsg').hidden=!title;if(!title)return;$('camMsg').querySelector('.disp').textContent=title;$('camMsgTxt').textContent=txt||'';$('camStart').hidden=!btn;if(btn)$('camStart').textContent=btn}
@@ -1172,6 +1214,16 @@ async function startCam(file){
     const r=await camPlayer.open(S.camSrc);
     if(!r.ok){camErr='ip';camMsg('Võrgukaamera ei vasta',r.msg+' Kaamerat saab muuta vaates Uks → Ühenda kaamera.','Proovi uuesti');return}
     srcEl=camPlayer.el;
+  }else if(S.camSrc.type==='screen'){
+    // the picture comes from a window or tab that shows the camera's live view (e.g. EZVIZ); the browser asks which one every time
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getDisplayMedia){camErr='nocam';camMsg('Akent ei saa jagada','See brauser ei luba ekraani või akent jagada. Kasuta arvutis Chrome’i või Edge’i.','Proovi uuesti');return}
+    try{
+      camMsg('Vali aken','Vali aken või vaheleht, kus on kaamera otsepilt, ja vajuta „Jaga“.');
+      video.loop=false;
+      stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:{ideal:15}},audio:false});
+      stream.getVideoTracks()[0].addEventListener('ended',()=>{if(!running)return;stopSource();camErr='cam';camMsg('Akna jagamine lõppes','Vali aken uuesti, et loendus jätkuks.','Vali aken')});
+      video.srcObject=stream;await video.play();
+    }catch(e){camErr='perm';camMsg('Akent ei valitud','Vajuta nuppu ja vali aken, kus on kaamera otsepilt.','Vali aken');return}
   }else{
     if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){camErr='nocam';camMsg('Kaamerat ei saa kasutada','See brauser või vaade ei luba kaamerat. Ava äpp https-aadressilt või vali videofail.','Proovi uuesti');return}
     const dev=S.camSrc.type==='device'&&S.camSrc.deviceId;
@@ -1231,6 +1283,7 @@ function updateTracks(dets){
 function draw(){
   const W=canvas.width,H=canvas.height,now=performance.now();
   ctx.clearRect(0,0,W,H);
+  if(S.cam.rot&&work.width===W&&work.height===H)ctx.drawImage(work,0,0);   // show the turned picture over the original one
   const L=S.cam.line/100,flash=now-flashT<500;
   ctx.lineWidth=Math.max(3,W/160);
   ctx.strokeStyle=flash?(flashD>0?'#3DDC97':'#FF5C72'):'#B79CFF';
@@ -1257,9 +1310,16 @@ async function loop(){
   else if(video.currentTime!==lastVT){lastVT=video.currentTime;lastVTAt=Date.now()}
   const W=isImg?camImg.naturalWidth:video.videoWidth,H=isImg?camImg.naturalHeight:video.videoHeight;
   if(W&&(isImg||video.readyState>=2)){
-    if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H}
-    let preds=[];try{preds=await model.detect(srcEl,20,S.cam.conf/100)}catch(e){}
-    const dets=preds.filter(p=>p.class==='person').map(p=>{const [x,y,w,h]=p.bbox;return{x:x/W,y:y/H,w:w/W,h:h/H,cx:(x+w/2)/W,cy:(y+h/2)/H}});
+    // a camera mounted sideways: turn the frame upright first, the AI only recognises people who stand upright in the picture
+    const rot=S.cam.rot||0,sw=rot%180?H:W,sh=rot%180?W:H;
+    if(canvas.width!==sw||canvas.height!==sh){canvas.width=sw;canvas.height=sh}
+    let src=srcEl;
+    if(rot){
+      if(work.width!==sw||work.height!==sh){work.width=sw;work.height=sh}
+      wctx.save();wctx.translate(sw/2,sh/2);wctx.rotate(rot*Math.PI/180);try{wctx.drawImage(srcEl,-W/2,-H/2,W,H)}catch(e){}wctx.restore();src=work;
+    }
+    let preds=[];try{preds=await model.detect(src,20,S.cam.conf/100)}catch(e){}
+    const dets=preds.filter(p=>p.class==='person').map(p=>{const [x,y,w,h]=p.bbox;return{x:x/sw,y:y/sh,w:w/sw,h:h/sh,cx:(x+w/2)/sw,cy:(y+h/2)/sh}});
     updateTracks(dets);draw();
     const dt=performance.now()-t0;lastFps=lastFps?lastFps*0.8+(1000/Math.max(dt,1))*0.2:1000/Math.max(dt,1);
     $('camFps').textContent=Math.round(lastFps)+' kaadrit/s · '+dets.length+' inimest pildil';
@@ -1276,7 +1336,9 @@ function syncCamCtrl(){
   $('dir0').textContent=S.cam.orient==='h'?'↓ alla':'→ paremale';$('dir1').textContent=S.cam.orient==='h'?'↑ üles':'← vasakule';
   $('dir0').setAttribute('aria-pressed',!S.cam.flip);$('dir1').setAttribute('aria-pressed',S.cam.flip);
   $('camLine').value=S.cam.line;$('camConf').value=S.cam.conf;
+  $('camRot').textContent=(S.cam.rot||0)+'° ↻';$('camRot').setAttribute('aria-pressed',!!S.cam.rot);
 }
+$('camRot').addEventListener('click',()=>{S.cam.rot=((S.cam.rot||0)+90)%360;tracks=[];save();syncCamCtrl()});
 document.querySelectorAll('[data-or]').forEach(b=>b.addEventListener('click',()=>{S.cam.orient=b.dataset.or;tracks=[];save();syncCamCtrl()}));
 document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('click',()=>{S.cam.flip=b.dataset.dir==='1';save();syncCamCtrl()}));
 $('camLine').addEventListener('input',e=>{S.cam.line=+e.target.value;tracks.forEach(t=>t.side=null);save()});
@@ -1400,6 +1462,12 @@ const clock=()=>$('clock').textContent='Tallinn · '+hm(Date.now());clock();
 setInterval(()=>{clock();if(document.visibilityState!=='visible')return;cloudFetch();if(!$('v-list').hidden)renderList();renderMarkers();if(openId)renderSheet()},30000);
 cloudInit();
 if(S.kiosk.on)kioskOn();
+/* shortcut link #piloot-aken: pilot project + picture from a shared window (e.g. EZVIZ live view), camera sheet opened in real counting mode */
+else if(location.hash==='#piloot-aken'){
+  history.replaceState(null,'',location.pathname);
+  if(navigator.mediaDevices&&navigator.mediaDevices.getDisplayMedia){S.camSrc={type:'screen'};save();renderCamConn()}
+  show('v-list');if(pilotDoor())openCam(false);
+}
 window.addEventListener('storage',e=>{if(e.key===KEY){S=load();renderList();renderDoor();renderMarkers()}});
 })();
 </script>
