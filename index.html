@@ -696,12 +696,20 @@ function inScope(v){
 }
 /* photo: one the owner added on this device > hand-checked free photo (Wikimedia Commons / img folder) */
 function photoOf(v){let u=null;try{u=localStorage.getItem('cc-photo-'+v.id)}catch(e){}return u?{url:u,own:true}:v.photo}
+/* piloot, mida loeb mõni TEINE seade (pilvest): ainult värske ja aktiivne seis */
+function pilotRemote(){
+  const r=REMOTE[PILOT_ID];
+  if(!r||!r.active||!(Date.now()-Date.parse(r.updated_at)<LIVE_MAX_AGE))return null;
+  return r;
+}
 function renderPilot(){
-  const on=S.door.venue===PILOT_ID&&S.door.start,st=dstats();
+  const on=S.door.venue===PILOT_ID&&S.door.start,st=dstats(),rm=on?null:pilotRemote();
   $('pilot').innerHTML=`<div class="card" style="border-color:var(--ac)">
-    <div class="demo-tag mono"><b>Pilootprojekt</b><span>${on?'Päris loendus · kaamera':'Kaamera loendus'}</span></div>
+    <div class="demo-tag mono"><b>Pilootprojekt</b><span>${on||rm?'Päris loendus · kaamera':'Kaamera loendus'}</span></div>
     ${on?`<div class="big"><span class="disp tab" style="color:var(--ac)">${st.occ}</span><span class="mut">inimest sees</span></div>
       <div class="mono mut tab">Sisse ${st.inT} · Välja ${st.outT} · Tipp ${st.peak} · algas ${hm(S.door.start)}</div>`
+    :rm?`<div class="big"><span class="disp tab" style="color:var(--ac)">${rm.occ}</span><span class="mut">inimest sees</span></div>
+      <div class="mono mut tab">Sisse ${rm.in_total} · Välja ${rm.out_total} · Tipp ${rm.peak}${rm.started_at?' · algas '+hm(Date.parse(rm.started_at)):''}</div>`
     :`<div class="disp" style="font-size:34px;color:var(--off)">Pole ühendatud</div>
       <p class="mut" style="margin:0;font-size:14.5px">Käivita kaamera. See loeb, kes ületab pildil joone, ja näitab siin, mitu inimest on sees.</p>`}
     <div class="row" style="justify-content:flex-start;gap:10px;flex-wrap:wrap">
